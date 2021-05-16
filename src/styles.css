@@ -30,8 +30,18 @@
 
   /* Color book */
   /* Dark Theme */
+  --color-dark-main: hsl(240, 13%, 13%);
+  --color-dark-background: hsl(230, 14%, 9%);
+  --color-dark-info: hsl(240, 13%, 20%);
+  --color-dark-text: hsl(0, 0%, 100%);
+  --color-dark-text-secondary: hsl(240, 7%, 40%);
 
-  /* White Theme */
+  /* Light Theme */
+  --color-light-main: hsl(0, 0%, 100%);
+  --color-light-background: hsl(217, 24%, 93%);
+  --color-light-info: hsl(218, 19%, 89%);
+  --color-light-text: hsl(216, 11%, 17%);
+  --color-light-text-secondary: hsl(202, 7%, 67%);
 
   /* Typography */
   --font-family-sans: 'Source Sans Pro', sans-serif;
@@ -63,8 +73,11 @@ body {
 
 body {
   margin: 0;
+  padding: 0;
   font-family: var(--font-family-sans);
-  /*color: var(--text-color / high-contrast-color);*/
+  font-size: 16px;
+  background-color: var(--color-background);
+  color: var(--color-text);
 }
 
 /* Type Specs */
@@ -86,8 +99,35 @@ body {
 /* App */
 .app {
   /* Color Theme */
+  --color-main: var(--color-light-main);
+  --color-background: var(--color-light-background);
+  --color-info: var(--color-light-info);
+  --color-text: var(--color-light-text);
+  --color-text-unselected: var(--color-light-text-secondary);
+  --color-secondary: hsl(225, 100%, 55%);
+  --color-text-secondary: hsl(0, 0%, 100%);
 
   /* Drop Shadows */
 
   /*background-color: var(--main-background);*/
+}
+
+
+/* Responsive */
+/* Large desktop */
+@media (min-width: 1200px) {
+}
+
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 979px) {
+}
+
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) {
+
+}
+
+/* Landscape phones and down */
+@media (max-width: 480px) {
+
 }
