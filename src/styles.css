@@ -1,1 +1,93 @@
-/* You can add global styles to this file, and also import other style files */
+/* Fonts */
+
+/* source-sans-pro-regular - latin */
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local(''),
+    url('./assets/fonts/source-sans-pro/source-sans-pro-regular.woff2') format('woff2'),
+    url('./assets/fonts/source-sans-pro/source-sans-pro-regular.woff') format('woff'),
+    url('./assets/fonts/source-sans-pro/source-sans-pro-regular.ttf') format('truetype');
+}
+
+/* source-sans-pro-600 - latin */
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: 600;
+
+  font-display: swap;
+  src: local(''),
+    url('./assets/fonts/source-sans-pro/source-sans-pro-medium.woff2') format('woff2'),
+    url('./assets/fonts/source-sans-pro/source-sans-pro-medium.woff') format('woff'),
+    url('./assets/fonts/source-sans-pro/source-sans-pro-medium.ttf') format('truetype');
+}
+
+:root {
+  /* Theming */
+
+  /* Color book */
+  /* Dark Theme */
+
+  /* White Theme */
+
+  /* Typography */
+  --font-family-sans: 'Source Sans Pro', sans-serif;
+
+  /* Font Weights */
+  --weight-regular: 400;
+  --weight-medium: 600;
+
+  /* Design Elements */
+  --transition: 300ms ease-in-out;
+}
+
+
+/* Reset */
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family-sans);
+  /*color: var(--text-color / high-contrast-color);*/
+}
+
+/* Type Specs */
+
+
+/* Accessibility */
+.visually-hidden {
+  padding: 0;
+  width: 1px;
+  height: 1px;
+  position: absolute;
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(0, 0, 99.9%, 99,9%);
+  overflow: hidden;
+  border: 0;
+}
+
+
+/* App */
+.app {
+  /* Color Theme */
+
+  /* Drop Shadows */
+
+  /*background-color: var(--main-background);*/
+}
