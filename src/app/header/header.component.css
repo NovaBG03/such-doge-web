@@ -1,18 +1,21 @@
 .header {
+  /*position: sticky;*/
   width: 100%;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
-  padding: 25px 110px;
+  padding: 15px 110px;
   background: var(--color-main);
+  overflow: hidden;
 }
 
 .logo {
-  width: 120px;
+  min-width: 130px;
   overflow: hidden;
   height: 30px;
   align-items: center;
+  cursor: pointer;
 }
 
 .logo img {
@@ -21,7 +24,7 @@
 
 .logo-text {
   font-size: 20px;
-  padding-left: 3px;
+  padding-left: 5px;
   height: 30px;
   display: inline-block;
   vertical-align: middle;
@@ -37,7 +40,7 @@ ul ul li {
 }
 
 .navigation {
-
+  transform: translateY(-0.2rem);
 }
 
 .links {
@@ -49,8 +52,9 @@ ul ul li {
 }
 
 .link {
-  margin: 0 0 0 2rem;
+  margin: 0 0 0 2.5rem;
   display: inline-block;
+  cursor: pointer;
 }
 
 .link-text {
@@ -62,18 +66,30 @@ ul ul li {
   color: var(--color-text);
 }
 
+.icon {
+  transform: translateY(0.4rem);
+  padding-right: 5px;
+  width: 24px;
+  height: 24px;
+}
+
+.link.active .icon-fill {
+  fill: var(--color-text);
+}
+
+
 .user-info {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
-  min-width: 120px;
+  min-width: 170px;
 }
 
 .balance-box {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
-  width: 146px;
+  width: 140px;
   height: 40px;
   background-color: var(--color-info);
   border-radius: 15px;
@@ -89,13 +105,35 @@ ul ul li {
   border: 0;
   border-radius: 10px;
   font-size: 20px;
+  cursor: pointer;
 }
 
 .balance {
+  margin: 0 auto;
+  padding: 0 2px;
+  overflow: hidden;
+  transform: translateX(-0.2rem);
+}
+
+.balance-value {
   display: inline;
+  font-weight: 600;
+}
+
+.currency-icon {
+  margin-right: 5px;
+  width: 1em;
+  transform: translateY(0.12rem);
 }
 
 .profile-picture {
-  height: 30px;
+  height: 40px;
   border-radius: 100%;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.arrow-down-icon {
+  margin-left: 5px;
+  cursor: pointer;
 }
