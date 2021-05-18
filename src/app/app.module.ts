@@ -8,6 +8,8 @@ import { FooterComponent } from './footer/footer.component';
 import { MemeListComponent } from './meme-list/meme-list.component';
 import { AboutComponent } from './about/about.component';
 import { ProfileComponent } from './profile/profile.component';
+import { MemeComponent } from './meme-list/meme/meme.component';
+import { EmptyMemeComponent } from './meme-list/empty-meme/empty-meme.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { ProfileComponent } from './profile/profile.component';
     FooterComponent,
     MemeListComponent,
     AboutComponent,
-    ProfileComponent
+    ProfileComponent,
+    MemeComponent,
+    EmptyMemeComponent
   ],
   imports: [
     BrowserModule,

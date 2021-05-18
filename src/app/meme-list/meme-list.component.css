@@ -1,0 +1,41 @@
+.main-container {
+  padding-top: 20px;
+}
+
+.heading {
+  display: flex;
+  flex-flow: row nowrap;
+  align-content: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 15px 5px 15px;
+}
+
+.title {
+  float: left;
+  font-size: 26px;
+  margin: auto 0;
+  font-weight: var(--weight-medium);
+}
+
+.btn-create {
+  padding: 0 11px;
+  height: 50px;
+  float: right;
+  background-color: var(--color-info);
+  font-size: 16px;
+  font-weight: var(--weight-medium);
+  border: 0;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.memes {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+}
+
+.memes * {
+  margin: 10px 5px;
+}

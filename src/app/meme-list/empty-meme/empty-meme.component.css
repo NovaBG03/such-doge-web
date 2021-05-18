@@ -1,0 +1,71 @@
+.empty-user-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  background: var(--color-info);
+  display: inline-block;
+}
+
+.empty-name {
+  width: 95px;
+  height: 18px;
+  border-radius: 15px;
+  background: var(--color-info);
+  display: inline-block;
+}
+
+.empty-description {
+  width: 95px;
+  height: 14px;
+  border-radius: 15px;
+  background: var(--color-info);
+  display: inline-block;
+}
+
+.empty-options {
+  margin: 0 0 auto auto;
+  width: 14px;
+}
+
+.empty-meme {
+  position: relative;
+  margin: 20px 0;
+  width: 250px;
+  height: 180px;
+  background-color: var(--color-info);
+  border-radius: 15px;
+}
+
+.empty-meme .empty-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.empty-image .fill {
+  fill: var(--color-text-unselected);
+}
+
+.btn-empty {
+  display: inline;
+  width: 100%;
+  height: 50px;
+  background-color: var(--color-info);
+  border-radius: 15px;
+  border: none;
+  cursor: default;
+  position: relative;
+}
+
+.btn-empty:after {
+  content: '';
+  position: absolute;
+  width: 100px;
+  height: 20px;
+  border-radius: 15px;
+  background: var(--color-text-unselected);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

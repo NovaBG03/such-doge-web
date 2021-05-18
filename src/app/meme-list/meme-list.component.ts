@@ -12,4 +12,7 @@ export class MemeListComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  getArray(length: number): any[] {
+    return Array(length);
+  }
 }
