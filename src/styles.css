@@ -125,6 +125,47 @@ body {
   padding: 15px 110px;
 }
 
+.heading {
+  display: flex;
+  flex-flow: row nowrap;
+  align-content: center;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+  width: 100%;
+  padding: 0 15px 5px 15px;
+}
+
+.heading .title {
+  float: left;
+  font-size: 26px;
+  margin: auto 0;
+  font-weight: var(--weight-medium);
+}
+
+.btn-outline {
+  display: inline;
+  width: 15.5em;
+  height: 3.125em;
+  font-size: 16px;
+  font-weight: var(--weight-medium);
+  color: var(--color-text);
+  background-color: transparent;
+  border: 3px solid var(--color-secondary);
+  border-radius: 15px;
+  cursor: pointer;
+
+  transition: var(--transition);
+}
+
+.btn-outline:hover,
+.btn-outline:focus {
+  color: var(--color-text-secondary);
+  background-color: var(--color-secondary);
+  outline: none;
+}
+
+
 @media (prefers-color-scheme: dark) {
   .app {
     --color-main: var(--color-dark-main);

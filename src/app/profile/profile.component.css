@@ -1,0 +1,164 @@
+.content {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  overflow-x: hidden;
+}
+
+.row {
+  padding: 0 15px;
+}
+
+.profile-image-card {
+  width: 340px;
+  height: 410px;
+  background: var(--color-main);
+  border-radius: 15px;
+  padding: 20px;
+}
+
+.profile-image-card img {
+  width: 300px;
+  height: 300px;
+  border-radius: 15px;
+  object-fit: cover;
+}
+
+.btn-upload {
+  width: 100%;
+  margin-top: 20px;
+  font-size: 16px;
+  border: 3px solid var(--color-info);
+}
+
+.btn-upload:hover,
+.btn-upload:focus {
+  color: var(--color-text);
+  background-color: var(--color-info);
+  outline: none;
+}
+
+.settings-row {
+  padding: 0 60px;
+}
+
+.form-group {
+  padding: 0 0 20px 0;
+}
+
+.form-group .title {
+  margin-bottom: 10px;
+}
+
+.small-title {
+  font-size: 14px;
+}
+
+.settings input {
+  display: block;
+  width: 100%;
+  min-width: 300px;
+  height: 3rem;
+  padding: 15px 20px;
+  margin: 10px 0 20px 0;
+  font-size: 16px;
+  font-weight: var(--weight-regular);
+  background: var(--color-info);
+  border-radius: 15px;
+  border: none;
+  outline: none;
+}
+
+.statistic-card {
+  position: relative;
+  width: 340px;
+  height: 90px;
+  background: var(--color-main);
+  border-radius: 15px;
+  margin: 10px;
+}
+
+.statistic-card img {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 15px;
+}
+
+.statistic-card .content {
+  position: absolute;
+  top: 20px;
+  left: 90px;
+  height: 50px;
+  display: flow;
+  flex-direction: column;
+}
+
+.content .value {
+  font-size: 24px;
+  font-weight: var(--weight-medium);
+}
+
+.content .description {
+  font-size: 16px;
+  font-weight: var(--weight-regular);
+}
+
+.image-row {
+  order: 1;
+  width: 390px;
+}
+
+.settings-row {
+  order: 2;
+}
+
+.statistics-row {
+  order: 3;
+  width: 390px;
+  transform: translateY(-50%);
+}
+
+/* Responsive */
+/* Large desktop */
+@media (min-width: 1200px) {
+  .content {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    overflow-x: hidden;
+  }
+
+  .profile-image-card {
+    width: 290px;
+    height: 360px;
+  }
+
+  .profile-image-card img {
+    width: 250px;
+    height: 250px;
+  }
+
+  .statistics-row {
+    order: 3;
+    width: auto;
+    transform: none;
+  }
+}
+
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 979px) {
+}
+
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) {
+
+}
+
+/* Landscape phones and down */
+@media (max-width: 480px) {
+
+}
+

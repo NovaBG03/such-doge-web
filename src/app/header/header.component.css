@@ -134,6 +134,7 @@ ul ul li {
   border-radius: 100%;
   margin-left: 5px;
   cursor: pointer;
+  object-fit: cover;
 }
 
 .arrow-down-icon {

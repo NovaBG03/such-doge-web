@@ -1,23 +1,3 @@
-.main-container {
-  padding-top: 20px;
-}
-
-.heading {
-  display: flex;
-  flex-flow: row nowrap;
-  align-content: center;
-  justify-content: space-between;
-  width: 100%;
-  padding: 0 15px 5px 15px;
-}
-
-.title {
-  float: left;
-  font-size: 26px;
-  margin: auto 0;
-  font-weight: var(--weight-medium);
-}
-
 .btn-create {
   padding: 0 11px;
   height: 50px;
