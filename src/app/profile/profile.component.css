@@ -72,10 +72,11 @@
 .statistic-card {
   position: relative;
   width: 340px;
-  height: 90px;
+  min-height: 90px;
   background: var(--color-main);
   border-radius: 15px;
   margin: 10px;
+  padding: 20px;
 }
 
 .statistic-card img {
@@ -91,8 +92,8 @@
   position: absolute;
   top: 20px;
   left: 90px;
-  height: 50px;
-  display: flow;
+  height: 51px;
+  display: flex;
   flex-direction: column;
 }
 
@@ -141,6 +142,20 @@
     height: 250px;
   }
 
+  .statistic-card {
+    width: auto;
+    min-width: 290px;
+  }
+
+  .image-row {
+    order: 1;
+    width: auto;
+  }
+
+  .settings-row {
+    padding: 0 2%;
+  }
+
   .statistics-row {
     order: 3;
     width: auto;
@@ -150,15 +165,112 @@
 
 /* Portrait tablet to landscape and desktop */
 @media (min-width: 768px) and (max-width: 979px) {
+  .settings-row {
+    padding: 5px;
+  }
+
+  .image-row {
+    padding: 0 5px 0 0;
+  }
+
+  .statistics-row {
+    padding: 0 5px 0 0;
+  }
 }
 
 /* Landscape phone to portrait tablet */
-@media (max-width: 767px) {
+@media (max-width: 768px) {
 
+  .heading .title {
+    margin: auto;
+  }
+
+  .image-row {
+    order: 1;
+    width: 100%;
+  }
+
+  .profile-image-card {
+    width: 420px;
+    height: auto;
+    margin: auto;
+  }
+
+  .profile-image-card img {
+    width: 380px;
+    height: 380px;
+    display: block;
+    margin: auto;
+  }
+
+  .small-title {
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  .statistics-row {
+    order: 2;
+    transform: none;
+    width: 100%;
+  }
+
+  .statistic-card {
+    margin: 10px auto;
+    width: 420px;
+  }
+
+  .settings-row {
+    order: 3;
+    width: 100%;
+    padding: 0 15px;
+  }
+
+  .settings-row .small-title {
+    display: block;
+  }
+
+  .settings input {
+    width: 420px;
+    margin: 10px auto 20px;
+  }
+
+  .form-group .title {
+    text-align: center;
+  }
+
+  .btn-outline {
+    margin: auto;
+    display: block;
+  }
+
+  .btn-upload {
+    margin-top: 20px;
+  }
 }
 
 /* Landscape phones and down */
 @media (max-width: 480px) {
+  .profile-image-card {
+    width: auto;
+  }
 
+  .profile-image-card img {
+    width: 100%;
+    height: auto;
+  }
+
+  .statistic-card {
+    width: auto;
+  }
+
+  .settings input {
+    width: 100%;
+    margin: 10px 0 20px;
+  }
+
+  .image-row {
+    background: red;
+    color: red;
+  }
 }
 
