@@ -143,6 +143,35 @@ body {
   font-weight: var(--weight-medium);
 }
 
+
+.form-group {
+  padding: 0 0 20px 0;
+}
+
+.form-group .title {
+  margin-bottom: 10px;
+  font-size: 17px;
+}
+
+.small-title {
+  font-size: 14px;
+}
+
+.doge-form .input {
+  display: block;
+  width: 100%;
+  min-width: 300px;
+  height: 3rem;
+  padding: 15px 20px;
+  margin: 10px 0 20px 0;
+  font-size: 16px;
+  font-weight: var(--weight-regular);
+  background: var(--color-info);
+  border-radius: 15px;
+  border: none;
+  outline: none;
+}
+
 .btn-outline {
   display: inline;
   width: 15.5em;
@@ -196,11 +225,38 @@ body {
   .main-container {
     padding: 15px 20px;
   }
+
+  .heading .title {
+    margin: auto;
+  }
+
+  .small-title {
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  .doge-form .small-title {
+    display: block;
+  }
+
+  .doge-form .input {
+    width: 420px;
+    margin: 10px auto 20px;
+  }
+
+  .form-group .title {
+    text-align: center;
+  }
 }
 
 /* Landscape phones and down */
 @media (max-width: 480px) {
   .main-container {
     padding: 15px 10px;
+  }
+
+  .doge-form .input {
+    width: 100%;
+    margin: 10px 0 20px;
   }
 }

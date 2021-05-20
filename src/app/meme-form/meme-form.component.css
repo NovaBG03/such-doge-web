@@ -1,0 +1,35 @@
+.doge-form {
+  padding: 0 15px;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+label.input {
+  position: relative;
+  padding-left: 140px;
+}
+
+label.input:before {
+  content: 'Upload';
+  position: absolute;
+  top: 6px;
+  bottom: 5px;
+  left: 10px;
+  padding: 6px 30px;
+  background-color: var(--color-secondary);
+  color: var(--color-text-secondary);
+  border: 0;
+  border-radius: 10px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* Landscape phone to portrait tablet */
+@media (max-width: 768px) {
+  .btn-outline {
+    margin: auto;
+    display: block;
+  }
+}

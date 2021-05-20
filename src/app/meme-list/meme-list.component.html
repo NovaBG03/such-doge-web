@@ -1,6 +1,6 @@
 <div class="heading">
   <h1 class="title">Meme list</h1>
-  <button class="btn-create">+ Upload meme</button>
+  <button class="btn-create" routerLink="/upload">+ Upload meme</button>
 </div>
 <div class="memes">
   <app-empty-meme *ngFor="let el of getArray(5)"></app-empty-meme>
