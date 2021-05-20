@@ -1,5 +1,9 @@
+.header-content {
+  cursor: default;
+}
+
 .empty-user-image {
-  width: 50px;
+  width: 54px;
   height: 50px;
   border-radius: 100%;
   background: var(--color-info);
