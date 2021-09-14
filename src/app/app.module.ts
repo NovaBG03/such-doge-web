@@ -12,6 +12,7 @@ import { MemeComponent } from './meme-list/meme/meme.component';
 import { EmptyMemeComponent } from './meme-list/empty-meme/empty-meme.component';
 import { MenuComponent } from './menu/menu.component';
 import { MemeFormComponent } from './meme-form/meme-form.component';
+import { AuthComponent } from './auth/auth.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { MemeFormComponent } from './meme-form/meme-form.component';
     MemeComponent,
     EmptyMemeComponent,
     MenuComponent,
-    MemeFormComponent
+    MemeFormComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,

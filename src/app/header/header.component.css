@@ -79,14 +79,15 @@ ul ul li {
   height: 24px;
 }
 
-.icon-fill {
-  transition: var(--transition);
-}
-
 .link.active .icon-fill {
   fill: var(--color-text);
 }
 
+.link:not(.active):hover .link-text,
+.link:not(.active):hover .icon {
+  color: var(--color-text-unselected);
+  opacity: 0.6;
+}
 
 .user-info {
   display: flex;
@@ -149,6 +150,27 @@ ul ul li {
   cursor: pointer;
 }
 
+.authentication>.link {
+  margin: 0 0 0 1.5rem;
+}
+
+.authentication .link-text {
+  color: var(--color-text-unselected);
+  text-decoration: none;
+}
+
+.authentication .btn-outline {
+  padding: 5px 10px;
+}
+
+.btn-link {
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.btn-link:hover {
+  color: var(--color-text-unselected);
+}
 
 /* Large desktop */
 @media (min-width: 1200px) {
@@ -196,6 +218,11 @@ ul ul li {
     margin: 0;
     width: 58px;
     height: 42px;
+  }
+
+  .authentication .link {
+    width: auto;
+    height: auto;
   }
 
   .link-hidden {

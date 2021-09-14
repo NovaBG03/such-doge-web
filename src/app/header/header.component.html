@@ -32,29 +32,42 @@
         <a class="link-text">Top memes</a>
       </li>
       <li class="link" routerLink="/about" routerLinkActive="active">
-        <svg class="icon icon-fill" xmlns="http://www.w3.org/2000/svg" width="45.999px" height="45.999px" viewBox="0 0 45.999 45.999"fill="#A6ADB1">
+        <svg class="icon icon-fill" xmlns="http://www.w3.org/2000/svg" width="45.999px" height="45.999px"
+             viewBox="0 0 45.999 45.999" fill="#A6ADB1">
           <path
             d="M39.264,6.736c-8.982-8.981-23.545-8.982-32.528,0c-8.982,8.982-8.981,23.545,0,32.528c8.982,8.98,23.545,8.981,32.528,0    C48.245,30.281,48.244,15.719,39.264,6.736z M25.999,33c0,1.657-1.343,3-3,3s-3-1.343-3-3V21c0-1.657,1.343-3,3-3s3,1.343,3,3V33z     M22.946,15.872c-1.728,0-2.88-1.224-2.844-2.735c-0.036-1.584,1.116-2.771,2.879-2.771c1.764,0,2.88,1.188,2.917,2.771    C25.897,14.648,24.746,15.872,22.946,15.872z"/>
         </svg>
         <a class="link-text">About</a>
       </li>
-      <li class="link link-hidden" routerLink="/menu" routerLinkActive="active">
+      <li class="link link-hidden" routerLink="/menu" routerLinkActive="active" *ngIf="isAuth">
         <svg class="icon" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path class="icon-fill" fill-rule="evenodd" clip-rule="evenodd" d="M4.60649 7H23.3933C24.0023 7 24.5005 7.49817 24.5005 8.10717V8.22617C24.5005 8.83517 24.0023 9.33333 23.3933 9.33333H4.60649C3.99749 9.33333 3.50049 8.83517 3.50049 8.22617V8.10717C3.50049 7.49817 3.99749 7 4.60649 7ZM23.3933 12.8333H4.60649C3.99749 12.8333 3.50049 13.3315 3.50049 13.9405V14.0595C3.50049 14.6685 3.99749 15.1667 4.60649 15.1667H23.3933C24.0023 15.1667 24.5005 14.6685 24.5005 14.0595V13.9405C24.5005 13.3315 24.0023 12.8333 23.3933 12.8333ZM23.3933 18.6667H4.60649C3.99749 18.6667 3.50049 19.1648 3.50049 19.7738V19.8928C3.50049 20.5018 3.99749 21 4.60649 21H23.3933C24.0023 21 24.5005 20.5018 24.5005 19.8928V19.7738C24.5005 19.1648 24.0023 18.6667 23.3933 18.6667Z" fill="#A6ADB1"/>
+          <path class="icon-fill" fill-rule="evenodd" clip-rule="evenodd"
+                d="M4.60649 7H23.3933C24.0023 7 24.5005 7.49817 24.5005 8.10717V8.22617C24.5005 8.83517 24.0023 9.33333 23.3933 9.33333H4.60649C3.99749 9.33333 3.50049 8.83517 3.50049 8.22617V8.10717C3.50049 7.49817 3.99749 7 4.60649 7ZM23.3933 12.8333H4.60649C3.99749 12.8333 3.50049 13.3315 3.50049 13.9405V14.0595C3.50049 14.6685 3.99749 15.1667 4.60649 15.1667H23.3933C24.0023 15.1667 24.5005 14.6685 24.5005 14.0595V13.9405C24.5005 13.3315 24.0023 12.8333 23.3933 12.8333ZM23.3933 18.6667H4.60649C3.99749 18.6667 3.50049 19.1648 3.50049 19.7738V19.8928C3.50049 20.5018 3.99749 21 4.60649 21H23.3933C24.0023 21 24.5005 20.5018 24.5005 19.8928V19.7738C24.5005 19.1648 24.0023 18.6667 23.3933 18.6667Z"
+                fill="#A6ADB1"/>
         </svg>
         <a class="link-text">Menu</a>
       </li>
     </ul>
   </nav>
-  <div class="user-info">
-    <div class="balance-box">
-      <button class="btn-add">+</button>
-      <div class="balance">
-        <img src="./assets/icons/doge_currency.png" alt="doge-currency" class="currency-icon">
-        <div class="balance-value">2443</div>
+  <ng-template [ngIf]="isAuth">
+    <div class="user-info">
+      <div class="balance-box">
+        <button class="btn-add">+</button>
+        <div class="balance">
+          <img src="./assets/icons/doge_currency.png" alt="doge-currency" class="currency-icon">
+          <div class="balance-value">2443</div>
+        </div>
       </div>
+      <img routerLink="profile" src="https://www.blexar.com/avatar.png" alt="profile-picture" class="profile-picture">
+      <img src="./assets/svgs/arrow-down.svg" alt="arrow-down" class="arrow-down-icon">
     </div>
-    <img routerLink="profile" src="https://www.blexar.com/avatar.png" alt="profile-picture" class="profile-picture">
-    <img src="./assets/svgs/arrow-down.svg" alt="arrow-down" class="arrow-down-icon">
+  </ng-template>
+  <div class="authentication" *ngIf="!isAuth">
+    <div class="link" routerLink="/login">
+      <a class="btn-link">Login</a>
+    </div>
+    <div class="link" routerLink="/register">
+      <a class="btn-outline">Sign Up</a>
+    </div>
   </div>
 </div>
