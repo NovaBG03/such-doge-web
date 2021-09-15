@@ -1,0 +1,74 @@
+.auth-container {
+  padding: 10px 30px;
+  background: var(--color-main);
+}
+
+.login-panel {
+  width: 50%;
+}
+
+.login-panel>.tip {
+  display: block;
+  margin: 12px 0 30px 0;
+  text-align: right;
+  color: var(--color-text-unselected);
+  font-size: 15px;
+  font-weight: var(--weight-medium);
+}
+
+.login-panel>.tip>.tip-btn {
+  color: var(--color-text-unselected);
+  cursor: pointer;
+  margin-left: 0.3em;
+}
+
+.login-panel>.headline {
+  margin: 10px 0 2px 0;
+  font-weight: var(--weight-medium);
+  font-size: 26px;
+}
+
+.login-panel>.subtitle {
+  margin: 0;
+  font-weight: var(--weight-medium);
+  font-size: 16px;
+  color: var(--color-text-unselected);
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 30px;
+}
+
+.auth-form label {
+  font-weight: var(--weight-medium);
+  margin: 0 0 9px 0;
+}
+
+.auth-form input {
+  margin: 0 0 20px 0;
+  padding: 0.7em;
+  width: 100%;
+  background: transparent;
+  border: 2px solid var(--color-light-text-unselected);
+  color: var(--color-secondary);
+  font-weight: var(--weight-medium);
+  outline: none;
+  border-radius: 7px;
+}
+
+.auth-form input::placeholder {
+  color: var(--color-light-text-unselected);
+  font-weight: var(--weight-regular);
+}
+
+.auth-form input:active,
+.auth-form input:focus {
+  border: 2px solid var(--color-secondary);
+}
+
+.auth-btn {
+  margin: 10px 0 0 0;
+}

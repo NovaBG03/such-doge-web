@@ -34,14 +34,14 @@
   --color-dark-background: hsl(230, 14%, 9%);
   --color-dark-info: hsl(240, 13%, 20%);
   --color-dark-text: hsl(0, 0%, 100%);
-  --color-dark-text-secondary: hsl(240, 7%, 40%);
+  --color-dark-text-unselected: hsl(240, 7%, 40%);
 
   /* Light Theme */
   --color-light-main: hsl(0, 0%, 100%);
   --color-light-background: hsl(217, 24%, 93%);
   --color-light-info: hsl(218, 19%, 89%);
   --color-light-text: hsl(216, 11%, 17%);
-  --color-light-text-secondary: hsl(202, 7%, 67%);
+  --color-light-text-unselected: hsl(202, 7%, 67%);
 
   /* Typography */
   --font-family-sans: 'Source Sans Pro', sans-serif;
@@ -103,7 +103,7 @@ body {
   --color-background: var(--color-light-background);
   --color-info: var(--color-light-info);
   --color-text: var(--color-light-text);
-  --color-text-unselected: var(--color-light-text-secondary);
+  --color-text-unselected: var(--color-light-text-unselected);
   --color-secondary: hsl(225, 100%, 55%);
   --color-text-secondary: hsl(0, 0%, 100%);
 
@@ -201,7 +201,7 @@ body {
     --color-background: var(--color-dark-background);
     --color-info: var(--color-dark-info);
     --color-text: var(--color-dark-text);
-    --color-text-unselected: var(--color-dark-text-secondary);
+    --color-text-unselected: var(--color-dark-text-unselected);
   }
 }
 
