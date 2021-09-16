@@ -104,7 +104,7 @@ body {
   --color-info: var(--color-light-info);
   --color-text: var(--color-light-text);
   --color-text-unselected: var(--color-light-text-unselected);
-  --color-secondary: hsl(225, 100%, 55%);
+  --color-secondary: #F9B64B;
   --color-text-secondary: hsl(0, 0%, 100%);
 
   /* Drop Shadows */
@@ -182,6 +182,7 @@ body {
   background-color: transparent;
   border: 3px solid var(--color-secondary);
   border-radius: 15px;
+  outline: none;
   cursor: pointer;
 
   transition: var(--transition);
@@ -190,10 +191,29 @@ body {
 .btn-outline:hover,
 .btn-outline:focus {
   color: var(--color-text-secondary);
-  background-color: var(--color-secondary);
-  outline: none;
+  background: var(--color-secondary);
 }
 
+.btn-solid {
+  display: inline;
+  width: 11.5em;
+  height: 3.125em;
+  font-size: 15px;
+  font-weight: var(--weight-medium);
+  color: var(--color-text-secondary);
+  background-color: var(--color-secondary);
+  border: 3px solid var(--color-secondary);
+  border-radius: 15px;
+  outline: none;
+  cursor: pointer;
+
+  transition: var(--transition);
+}
+
+.btn-solid:hover,
+.btn-solid:focus {
+  border: 3px solid var(--color-main);
+}
 
 @media (prefers-color-scheme: dark) {
   .app {

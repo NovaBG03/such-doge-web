@@ -1,10 +1,30 @@
 .auth-container {
-  padding: 10px 30px;
+  display: flex;
   background: var(--color-main);
+  margin: auto;
+  width: 80%;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.illustration-panel {
+  position: relative;
+  background: #2B2935;
+  width: 40%;
+  overflow: hidden;
+}
+
+.illustration {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 80%;
+  transform: translate(-50%, -50%);
 }
 
 .login-panel {
-  width: 50%;
+  width: 60%;
+  padding: 10px 70px 70px;
 }
 
 .login-panel>.tip {
@@ -16,7 +36,7 @@
   font-weight: var(--weight-medium);
 }
 
-.login-panel>.tip>.tip-btn {
+.login-panel>.tip>.tip-link {
   color: var(--color-text-unselected);
   cursor: pointer;
   margin-left: 0.3em;
@@ -69,6 +89,6 @@
   border: 2px solid var(--color-secondary);
 }
 
-.auth-btn {
-  margin: 10px 0 0 0;
+.btn-solid {
+  margin: 20px 0 0 0;
 }

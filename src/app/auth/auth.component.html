@@ -1,20 +1,22 @@
 <div class="auth-container">
   <div class="illustration-panel">
-    <div class="illustration"></div>
+    <img class="illustration no-select" src="/assets/images/flying_doge.png"/>
   </div>
   <div class="login-panel">
-    <p class="tip">Already have an account?
-      <a class="tip-btn" routerLink="/login">Login</a></p>
-    <h2 class="headline">Welcome to SuchDoge!</h2>
-    <h3 class="subtitle">Register your account</h3>
+    <p class="tip">{{ isRegister ? 'Already have an account?' : 'New here?' }}
+      <a class="tip-link" routerLink="/login">{{ isRegister ? 'Login' : 'Sing up'}}</a></p>
+    <h2 class="headline">{{ isRegister ? 'Welcome to SuchDoge!' : 'Hello again!'}}</h2>
+    <h3 class="subtitle">{{ isRegister ? 'Register your account' : 'Login into your account'}}</h3>
     <form class="auth-form">
       <label for="username">Username</label>
       <input id="username" type="text" placeholder="suchname">
-      <label for="email">Email</label>
-      <input id="email" type="email" placeholder="lol@suchdoge.xyz">
+      <ng-template [ngIf]="isRegister">
+        <label for="email">Email</label>
+        <input id="email" type="email" placeholder="lol@suchdoge.xyz">
+      </ng-template>
       <label for="password">Password</label>
-      <input id="password" type="password" placeholder="pls be secure">
-      <button class="auth-btn">Sign Up</button>
+      <input id="password" type="password" [placeholder]="isRegister ? 'pls be secure' : 'what was...'">
+      <button class="btn-solid">{{ isRegister ? 'Sign Up' : 'Login'}}</button>
     </form>
   </div>
 </div>
