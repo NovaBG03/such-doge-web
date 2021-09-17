@@ -1,10 +1,10 @@
 <div class="auth-container">
-  <div class="illustration-panel">
-    <img class="illustration no-select" src="/assets/images/flying_doge.png"/>
+  <div class="illustration-panel" [ngStyle]="{background: getIllustrationBackground()}">
+    <img class="illustration no-select" [src]="imageSrc"/>
   </div>
   <div class="login-panel">
     <p class="tip">{{ isRegister ? 'Already have an account?' : 'New here?' }}
-      <a class="tip-link" routerLink="/login">{{ isRegister ? 'Login' : 'Sing up'}}</a></p>
+      <a class="tip-link" [routerLink]="isRegister ? '/login' : '/register'">{{ isRegister ? 'Login' : 'Sing up'}}</a></p>
     <h2 class="headline">{{ isRegister ? 'Welcome to SuchDoge!' : 'Hello again!'}}</h2>
     <h3 class="subtitle">{{ isRegister ? 'Register your account' : 'Login into your account'}}</h3>
     <form class="auth-form">

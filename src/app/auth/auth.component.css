@@ -1,16 +1,18 @@
 .auth-container {
+  position: relative;
   display: flex;
   background: var(--color-main);
   margin: auto;
-  width: 80%;
+  width: 85%;
   border-radius: 10px;
   overflow: hidden;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
 
 .illustration-panel {
   position: relative;
   background: #2B2935;
-  width: 40%;
+  width: 45%;
   overflow: hidden;
 }
 
@@ -91,4 +93,68 @@
 
 .btn-solid {
   margin: 20px 0 0 0;
+}
+
+
+/* Responsive */
+/* Large desktop */
+@media (min-width: 1200px) {
+  .auth-container {
+    max-width: 1000px;
+  }
+
+  .illustration-panel {
+    max-width: 390px;
+  }
+}
+
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 769px) and (max-width: 979px) {
+  .auth-container {
+    width: 100%;
+  }
+}
+
+/* Landscape phone to portrait tablet */
+@media (max-width: 768px) {
+  .auth-container {
+    width: 85%;
+    justify-content: center;
+  }
+
+  .illustration-panel {
+    position: absolute;
+    inset: 0;
+    width: auto;
+    height: auto;
+    z-index: 1;
+  }
+
+  .login-panel {
+    --border-width: 5px;
+    width: calc(100% - 2 * var(--border-width));
+    margin: var(--border-width) 0;
+    border-radius: 5px;
+    padding: 10px 50px 50px;
+    background: var(--color-main);
+    z-index: 2;
+  }
+}
+
+/* Landscape phones and down */
+@media (max-width: 480px) {
+  .auth-container {
+    width: 90%;
+  }
+
+  .login-panel {
+    --border-width: 2px;
+    border-radius: 8px;
+    padding: 10px 40px 40px;
+  }
+
+  .btn-solid {
+    display: inline-block;
+    margin: 20px auto 0 auto;
+  }
 }
