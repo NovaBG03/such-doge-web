@@ -4,18 +4,44 @@
   </div>
   <div class="login-panel">
     <p class="tip">{{ isRegister ? 'Already have an account?' : 'New here?' }}
-      <a class="tip-link" [routerLink]="isRegister ? '/login' : '/register'">{{ isRegister ? 'Login' : 'Sing up'}}</a></p>
+      <a class="tip-link" [routerLink]="isRegister ? '/login' : '/register'">{{ isRegister ? 'Login' : 'Sing up'}}</a>
+    </p>
     <h2 class="headline">{{ isRegister ? 'Welcome to SuchDoge!' : 'Hello again!'}}</h2>
     <h3 class="subtitle">{{ isRegister ? 'Register your account' : 'Login into your account'}}</h3>
-    <form class="auth-form">
-      <label for="username">Username</label>
-      <input id="username" type="text" placeholder="suchname">
-      <ng-template [ngIf]="isRegister">
+    <form class="auth-form" [formGroup]="authForm">
+      <div class="form-control">
+        <label for="username">Username</label>
+        <input id="username"
+               type="text"
+               placeholder="suchname"
+               formControlName="username">
+        <ng-template [ngIf]="getControl('username').touched && getControl('username').invalid">
+          <span class="hint" *ngIf="getControl('username').errors.">{{ getControl('username') }}</span>
+        </ng-template>
+      </div>
+      <div class="form-control" *ngIf="isRegister">
         <label for="email">Email</label>
-        <input id="email" type="email" placeholder="lol@suchdoge.xyz">
-      </ng-template>
-      <label for="password">Password</label>
-      <input id="password" type="password" [placeholder]="isRegister ? 'pls be secure' : 'what was...'">
+        <input id="email"
+               type="email"
+               placeholder="lol@suchdoge.xyz"
+               formControlName="email">
+      </div>
+      <div id="passwords" formGroupName="passwords">
+        <div class="form-control">
+          <label for="password">Password</label>
+          <input id="password"
+                 type="password"
+                 [placeholder]="isRegister ? 'pls be secure' : 'what was...'"
+                 formControlName="password">
+        </div>
+        <div class="form-control" *ngIf="isRegister">
+          <label for="confirmed">Confirm Password</label>
+          <input id="confirmed"
+                 type="password"
+                 placeholder="pls be the same"
+                 formControlName="confirmed">
+        </div>
+      </div>
       <button class="btn-solid">{{ isRegister ? 'Sign Up' : 'Login'}}</button>
     </form>
   </div>

@@ -7,6 +7,7 @@
   border-radius: 10px;
   overflow: hidden;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+  --color-error: #cc0000;
 }
 
 .illustration-panel {
@@ -22,6 +23,7 @@
   top: 50%;
   width: 80%;
   transform: translate(-50%, -50%);
+  object-fit: cover;
 }
 
 .login-panel {
@@ -60,7 +62,7 @@
 .auth-form {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: stretch;
   margin-top: 30px;
 }
 
@@ -69,8 +71,16 @@
   margin: 0 0 9px 0;
 }
 
-.auth-form input {
+.auth-form .form-control {
   margin: 0 0 20px 0;
+}
+
+.auth-form .hint {
+  color: var(--color-error);
+  font-size: 13px;
+}
+
+.auth-form input {
   padding: 0.7em;
   width: 100%;
   background: transparent;
@@ -91,10 +101,18 @@
   border: 2px solid var(--color-secondary);
 }
 
+.auth-form input.ng-touched.ng-invalid {
+  border: 2px solid var(--color-error);
+}
+
 .btn-solid {
   margin: 20px 0 0 0;
 }
 
+.passwords {
+  padding: 0;
+  margin: 0;
+}
 
 /* Responsive */
 /* Large desktop */
@@ -120,21 +138,20 @@
   .auth-container {
     width: 85%;
     justify-content: center;
+    padding-top: 200px;
   }
 
   .illustration-panel {
     position: absolute;
-    inset: 0;
+    inset: 0 0 auto 0;
     width: auto;
-    height: auto;
+    height: 250px;
     z-index: 1;
   }
 
   .login-panel {
-    --border-width: 5px;
-    width: calc(100% - 2 * var(--border-width));
-    margin: var(--border-width) 0;
-    border-radius: 5px;
+    width: 90%;
+    border-radius: 8px;
     padding: 10px 50px 50px;
     background: var(--color-main);
     z-index: 2;
@@ -148,9 +165,7 @@
   }
 
   .login-panel {
-    --border-width: 2px;
-    border-radius: 8px;
-    padding: 10px 40px 40px;
+    padding: 10px 20px 40px;
   }
 
   .btn-solid {
