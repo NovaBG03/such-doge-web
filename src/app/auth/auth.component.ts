@@ -15,6 +15,27 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   authForm!: FormGroup;
 
+  get username(): AbstractControl {
+    console.log(this.getControl('username').errors)
+    return this.getControl('username');
+  }
+
+  get email(): AbstractControl {
+    return this.getControl('email');
+  }
+
+  get passwords(): AbstractControl {
+    return this.getControl('passwords');
+  }
+
+  get password(): AbstractControl {
+    return this.passwords?.get('password') as AbstractControl;
+  }
+
+  get confirmed(): AbstractControl {
+    return this.passwords?.get('confirmed') as AbstractControl;
+  }
+
   private urlSub!: Subscription;
 
   constructor(private route: ActivatedRoute) {
@@ -46,29 +67,25 @@ export class AuthComponent implements OnInit, OnDestroy {
     return '#2B2935';
   }
 
-  getControl(controlName: string): FormControl {
-    return this.authForm.get(controlName) as FormControl;
+  private getControl(controlName: string): AbstractControl {
+    return this.authForm.get(controlName) as AbstractControl;
   }
 
   private initAuthForm() {
     this.authForm = new FormGroup({
-      username: new FormControl('', [
-        Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(36)
-      ]),
+      username: new FormControl(''),
       passwords: new FormGroup({
-        password: new FormControl('', [
-          Validators.required,
-          Validators.minLength(6),
-          Validators.maxLength(50),
-          this.hasDigitsValidator(),
-          this.hasAlphabeticCharacters()
-        ])
+        password: new FormControl('')
       })
     });
 
     if (this.isRegister) {
+      this.authForm.get('username')?.setValidators([
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(36)
+      ]);
+
       this.authForm.addControl('email',
         new FormControl('', [
           Validators.required,
@@ -80,6 +97,14 @@ export class AuthComponent implements OnInit, OnDestroy {
       const passwordsGroup = this.authForm.get('passwords') as FormGroup;
 
       passwordsGroup.setValidators(this.isPasswordConfirmedValidator());
+
+      passwordsGroup.get('password')?.setValidators([
+        Validators.required,
+        Validators.minLength(6),
+        Validators.maxLength(50),
+        this.hasDigitsValidator(),
+        this.hasAlphabeticCharacters()
+      ]);
 
       passwordsGroup.addControl('confirmed',
         new FormControl('', [

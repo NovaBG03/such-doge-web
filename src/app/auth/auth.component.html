@@ -15,8 +15,10 @@
                type="text"
                placeholder="suchname"
                formControlName="username">
-        <ng-template [ngIf]="getControl('username').touched && getControl('username').invalid">
-          <span class="hint" *ngIf="getControl('username').errors.">{{ getControl('username') }}</span>
+        <ng-template [ngIf]="username.touched && username.invalid && username.errors">
+          <span class="hint" *ngIf="username.errors.required">* Username is required.</span>
+          <span class="hint" *ngIf="username.errors.minlength">* Username must be at least {{ username.errors?.minlength?.requiredLength }} characters.</span>
+          <span class="hint" *ngIf="username.errors.maxlength">* Username can not be more than {{ username.errors?.maxlength?.requiredLength }} characters.</span>
         </ng-template>
       </div>
       <div class="form-control" *ngIf="isRegister">
@@ -25,6 +27,12 @@
                type="email"
                placeholder="lol@suchdoge.xyz"
                formControlName="email">
+        <ng-template [ngIf]="email.touched && email.invalid && email.errors">
+          <span class="hint" *ngIf="email.errors.email">* Must be a valid email.</span>
+          <span class="hint" *ngIf="email.errors.required">* Email is required.</span>
+          <span class="hint" *ngIf="email.errors.minlength">* Email must be at least {{ email.errors?.minlength?.requiredLength }} characters.</span>
+          <span class="hint" *ngIf="email.errors.maxlength">* Email can not be more than {{ email.errors?.maxlength?.requiredLength }} characters.</span>
+        </ng-template>
       </div>
       <div id="passwords" formGroupName="passwords">
         <div class="form-control">
@@ -33,6 +41,13 @@
                  type="password"
                  [placeholder]="isRegister ? 'pls be secure' : 'what was...'"
                  formControlName="password">
+          <ng-template [ngIf]="password.touched && password.invalid && password.errors">
+            <span class="hint" *ngIf="password.errors.required">* Password is required.</span>
+            <span class="hint" *ngIf="password.errors.hasDigit">* Must contain at least 1 digit.</span>
+            <span class="hint" *ngIf="password.errors.required">* Must contain at least 1 alphabetic character.</span>
+            <span class="hint" *ngIf="password.errors.minlength">* Password must be at least {{ password.errors?.minlength?.requiredLength }} characters.</span>
+            <span class="hint" *ngIf="password.errors.maxlength">* Password can not be more than {{ password.errors?.maxlength?.requiredLength }} characters.</span>
+          </ng-template>
         </div>
         <div class="form-control" *ngIf="isRegister">
           <label for="confirmed">Confirm Password</label>
@@ -40,6 +55,9 @@
                  type="password"
                  placeholder="pls be the same"
                  formControlName="confirmed">
+          <ng-template [ngIf]="confirmed.touched && passwords.invalid && passwords.errors">
+            <span class="hint" *ngIf="passwords.errors.isPasswordConfirmed">* Password is not the same.</span>
+          </ng-template>
         </div>
       </div>
       <button class="btn-solid">{{ isRegister ? 'Sign Up' : 'Login'}}</button>

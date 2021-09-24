@@ -76,6 +76,7 @@
 }
 
 .auth-form .hint {
+  display: block;
   color: var(--color-error);
   font-size: 13px;
 }
@@ -102,6 +103,10 @@
 }
 
 .auth-form input.ng-touched.ng-invalid {
+  border: 2px solid var(--color-error);
+}
+
+.auth-form #passwords.ng-invalid #confirmed.ng-touched {
   border: 2px solid var(--color-error);
 }
 
