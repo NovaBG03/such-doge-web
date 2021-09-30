@@ -1,8 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {map} from "rxjs/operators";
 import {Subscription} from "rxjs";
 import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from "@angular/forms";
+import {AuthService} from "./auth.service";
 
 @Component({
   selector: 'app-auth',
@@ -16,7 +17,6 @@ export class AuthComponent implements OnInit, OnDestroy {
   authForm!: FormGroup;
 
   get username(): AbstractControl {
-    console.log(this.getControl('username').errors)
     return this.getControl('username');
   }
 
@@ -38,7 +38,9 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   private urlSub!: Subscription;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private authService: AuthService) {
   }
 
   ngOnInit(): void {
@@ -65,6 +67,23 @@ export class AuthComponent implements OnInit, OnDestroy {
     }
 
     return '#2B2935';
+  }
+
+  onAuthenticate(): void {
+    if (this.authForm.invalid) {
+      // todo display error
+      return;
+    }
+    const data = this.authForm.value;
+
+    if (this.isRegister) {
+      // todo register user
+      return;
+    }
+
+    this.authService.login(data.username, data.passwords.password)
+      .subscribe(user => this.router.navigate(['/']),
+        err => alert("ERROR"));
   }
 
   private getControl(controlName: string): AbstractControl {

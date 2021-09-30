@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthService} from "../auth/auth.service";
+import {Observable} from "rxjs";
+import {DogeUser} from "../auth/user.model";
 
 @Component({
   selector: 'app-header',
@@ -6,9 +9,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  isAuth = false;
+  user: Observable<DogeUser | null>;
 
-  constructor() { }
+  constructor(private authService: AuthService) {
+    this.user = authService.user;
+  }
 
   ngOnInit(): void {
   }
