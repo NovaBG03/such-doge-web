@@ -10,7 +10,6 @@ import {AboutComponent} from './about/about.component';
 import {ProfileComponent} from './profile/profile.component';
 import {MemeComponent} from './meme-list/meme/meme.component';
 import {EmptyMemeComponent} from './meme-list/empty-meme/empty-meme.component';
-import {MenuComponent} from './menu/menu.component';
 import {MemeFormComponent} from './meme-form/meme-form.component';
 import {AuthComponent} from './auth/auth.component';
 import {ReactiveFormsModule} from "@angular/forms";
@@ -27,7 +26,6 @@ import { HeaderDropDownComponent } from './header/header-drop-down/header-drop-d
     ProfileComponent,
     MemeComponent,
     EmptyMemeComponent,
-    MenuComponent,
     MemeFormComponent,
     AuthComponent,
     HeaderDropDownComponent

@@ -3,7 +3,6 @@
   top: calc(100% + 10px);
   right: 0;
   width: 238px;
-  height: 254px;
   background: var(--color-main);
   border-radius: 15px;
   border: 2px solid var(--color-info);
@@ -18,7 +17,7 @@
 
 .header-drop-down ul {
   margin: 0;
-  padding: 0 20px;
+  padding: 0 10px;
   list-style-type: none;
   text-indent: 0;
 }
@@ -29,8 +28,15 @@
   align-items: center;
   flex-wrap: nowrap;
   justify-content: flex-start;
-  margin: 20px 0;
+  margin: 8px 0;
+  padding: 12px 10px;
   cursor: pointer;
+  transition: var(--transition);
+}
+
+.header-drop-down li:hover {
+  background: var(--color-info);
+  border-radius: 10px;
 }
 
 .header-drop-down li>a {
@@ -61,5 +67,36 @@
   height: 0.1em;
   background: var(--color-info);
   margin: auto;
+}
+
+.toggle-box {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  background: var(--color-background);
+  border-radius: 15px;
+  margin-left: auto;
+}
+
+.toggle-box.active {
+  background: var(--color-text-unselected);
+}
+
+.toggle-box:after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--color-text);
+  transform: translate(-100%, -50%);
+  transition: var(--transition);
+}
+
+.toggle-box.active:after {
+  transform: translate(5%, -50%);
+  background: var(--color-secondary);
 }
 

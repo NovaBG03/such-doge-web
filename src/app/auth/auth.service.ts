@@ -4,13 +4,14 @@ import {environment} from "../../environments/environment";
 import {map} from "rxjs/operators";
 import {BehaviorSubject, Observable} from "rxjs";
 import {Authority, DogeUser} from "./user.model";
+import {Router} from "@angular/router";
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
   user = new BehaviorSubject<DogeUser | null>(null);
   private logOutTimeout: any;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
   }
 
   login(username: string, password: string): Observable<DogeUser> {
@@ -44,6 +45,7 @@ export class AuthService {
       clearTimeout(this.logOutTimeout);
       this.logOutTimeout = null;
     }
+    this.router.navigate(['/']);
   }
 
   private autoLogout(secondsUntilExpiration: number): void {

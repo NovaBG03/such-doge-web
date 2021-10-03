@@ -10,6 +10,7 @@ import {DogeUser} from "../auth/user.model";
 })
 export class HeaderComponent implements OnInit {
   user: Observable<DogeUser | null>;
+  isDropDownOpen = false;
 
   constructor(private authService: AuthService) {
     this.user = authService.user;
@@ -18,4 +19,15 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  openDropDown(): void {
+    this.isDropDownOpen = true;
+  }
+
+  toggleDropDown() {
+    this.isDropDownOpen = !this.isDropDownOpen;
+  }
+
+  closeDropDown() {
+    this.isDropDownOpen = false;
+  }
 }
