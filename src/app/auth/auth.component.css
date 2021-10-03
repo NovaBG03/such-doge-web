@@ -7,7 +7,6 @@
   border-radius: 10px;
   overflow: hidden;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
-  --color-error: #cc0000;
 }
 
 .illustration-panel {
@@ -77,7 +76,7 @@
 
 .auth-form .hint {
   display: block;
-  color: var(--color-error);
+  color: var(--color-danger);
   font-size: 13px;
 }
 
@@ -103,11 +102,11 @@
 }
 
 .auth-form input.ng-touched.ng-invalid {
-  border: 2px solid var(--color-error);
+  border: 2px solid var(--color-danger);
 }
 
 .auth-form #passwords.ng-invalid #confirmed.ng-touched {
-  border: 2px solid var(--color-error);
+  border: 2px solid var(--color-danger);
 }
 
 .btn-solid {

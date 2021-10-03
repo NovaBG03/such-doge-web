@@ -104,8 +104,9 @@ body {
   --color-info: var(--color-light-info);
   --color-text: var(--color-light-text);
   --color-text-unselected: var(--color-light-text-unselected);
-  --color-secondary: #F9B64B;
   --color-text-secondary: hsl(0, 0%, 100%);
+  --color-secondary: #F9B64B;
+  --color-danger: #cc0000;
 
   /* Drop Shadows */
 
