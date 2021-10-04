@@ -20,8 +20,7 @@ export class HeaderDropDownComponent implements OnInit {
   onDocumentClick(event: Event): void {
     const target = event.target as HTMLElement;
     if (!this.eRef.nativeElement.contains(event.target)) {
-      if (target.classList.contains('arrow-down-icon')
-      || target.classList.contains('arrow-down-path')) {
+      if (target.classList.contains('header-drop-down-control')) {
         return;
       }
 

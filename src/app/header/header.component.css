@@ -218,6 +218,7 @@ ul ul li {
     background: var(--color-main);
     transform: translateY(2px);
     border-top: 2px solid var(--color-background);
+    z-index: 10;
   }
 
   .links {

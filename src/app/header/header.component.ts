@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {AuthService} from "../auth/auth.service";
 import {Observable} from "rxjs";
 import {DogeUser} from "../auth/user.model";
+import {Event} from "@angular/router";
 
 @Component({
   selector: 'app-header',
@@ -11,16 +12,23 @@ import {DogeUser} from "../auth/user.model";
 export class HeaderComponent implements OnInit {
   user: Observable<DogeUser | null>;
   isDropDownOpen = false;
+  private innerWidth!: number;
 
   constructor(private authService: AuthService) {
     this.user = authService.user;
   }
 
   ngOnInit(): void {
+    this.innerWidth = window.innerWidth;
   }
 
-  openDropDown(): void {
-    this.isDropDownOpen = true;
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.innerWidth = event.target.innerWidth;
+  }
+
+  isMobile(): boolean {
+    return !!this.innerWidth && this.innerWidth <= 768 && this.isDropDownOpen;
   }
 
   toggleDropDown() {
