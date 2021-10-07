@@ -13,6 +13,7 @@ import {AuthService} from "./auth.service";
 export class AuthComponent implements OnInit, OnDestroy {
   isRegister = true;
   imageSrc = '';
+  errorMessage = '';
 
   authForm!: FormGroup;
 
@@ -70,20 +71,24 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   onAuthenticate(): void {
+    this.errorMessage = '';
+
     if (this.authForm.invalid) {
-      // todo display error
+      this.errorMessage = "Don't try to cheat"
       return;
     }
     const data = this.authForm.value;
 
     if (this.isRegister) {
-      // todo register user
+      this.authService.register(data.username, data.email, data.passwords.password)
+        .subscribe(user => null,
+          err => this.errorMessage = err);
       return;
     }
 
     this.authService.login(data.username, data.passwords.password)
       .subscribe(user => this.router.navigate(['/']),
-        err => alert("ERROR"));
+        err => this.errorMessage = err.message);
   }
 
   private getControl(controlName: string): AbstractControl {
@@ -92,9 +97,9 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   private initAuthForm() {
     this.authForm = new FormGroup({
-      username: new FormControl(''),
+      username: new FormControl('', [Validators.required]),
       passwords: new FormGroup({
-        password: new FormControl('')
+        password: new FormControl('', [Validators.required])
       })
     });
 

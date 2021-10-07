@@ -107,10 +107,7 @@ body {
   --color-text-secondary: hsl(0, 0%, 100%);
   --color-secondary: #F9B64B;
   --color-danger: #cc0000;
-
-  /* Drop Shadows */
-
-  /*background-color: var(--main-background);*/
+  --color-success: #25AE88;
 }
 
 .no-select {
@@ -196,19 +193,27 @@ body {
 }
 
 .btn-solid {
+  --btn-color: var(--color-secondary);
   display: inline;
   width: 11.5em;
   height: 3.125em;
   font-size: 15px;
   font-weight: var(--weight-medium);
   color: var(--color-text-secondary);
-  background-color: var(--color-secondary);
-  border: 3px solid var(--color-secondary);
+  background-color: var(--btn-color);
+  border: 3px solid var(--btn-color);
   border-radius: 15px;
   outline: none;
   cursor: pointer;
-
   transition: var(--transition);
+}
+
+.btn-success {
+  --btn-color: var(--color-success);
+}
+
+.btn-danger {
+  --btn-color: var(--color-danger);
 }
 
 .btn-solid:hover,

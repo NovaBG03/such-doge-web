@@ -1,8 +1,8 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
-import {map} from "rxjs/operators";
-import {BehaviorSubject, Observable} from "rxjs";
+import {catchError, map} from "rxjs/operators";
+import {BehaviorSubject, Observable, throwError} from "rxjs";
 import {Authority, DogeUser} from "./user.model";
 import {Router} from "@angular/router";
 
@@ -14,12 +14,63 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) {
   }
 
+  activate(token: string): Observable<any> {
+    const url = `${environment.suchDogeApi}/activate/${token}`;
+    const body = {};
+    return this.http.post(url, body, {observe: "response"})
+      .pipe(
+        catchError(err => {
+          let message = 'Invalid or expired token!';
+
+          // switch (err.error.message) {
+          //   case 'ERROR':
+          //     message = 'mess';
+          //     break;
+          // }
+
+          return throwError(message);
+        })
+      );
+  }
+
+  register(username: string, email: string, password: string): Observable<any> {
+    const url = `${environment.suchDogeApi}/register`;
+    const body = {username, email, password};
+    return this.http.post(url, body, {observe: "response"})
+      .pipe(
+        catchError(err => {
+          let message = 'Something went wrong!';
+          switch (err.error.message) {
+            case 'DOGE_USER_USERNAME_EXISTS':
+              message = `User ${username} already exists!`;
+              break;
+            case 'DOGE_USER_EMAIL_EXISTS':
+              message = `There is already user with email ${email}`;
+              break;
+          }
+
+          return throwError(message);
+        })
+      )
+  }
+
   login(username: string, password: string): Observable<DogeUser> {
     const url = `${environment.suchDogeApi}/login`;
     const body = {username, password};
     return this.http.post(url, body, {observe: "response"})
       .pipe(
-        map(resp => this.authenticate(resp.headers.get(environment.authHeader)))
+        map(resp => this.authenticate(resp.headers.get(environment.authHeader))),
+        catchError(err => {
+          switch (err.status) {
+            case 403:
+              err.message = 'Invalid username or password';
+              break;
+            default:
+              err.message = 'Something went wrong!';
+              break;
+          }
+          return throwError(err);
+        })
       );
   }
 
@@ -29,6 +80,11 @@ export class AuthService {
     if (!token) {
       return;
     }
+
+    /* todo
+    instead of checking token expiration
+    send request to get new updated token
+     */
 
     const jwt = this.parseJwt(token);
     const user = this.jwtToUser(jwt);

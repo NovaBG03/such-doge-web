@@ -15,6 +15,7 @@ import {AuthComponent} from './auth/auth.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import { HeaderDropDownComponent } from './header/header-drop-down/header-drop-down.component';
+import { ActivationComponent } from './auth/activation/activation.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { HeaderDropDownComponent } from './header/header-drop-down/header-drop-d
     EmptyMemeComponent,
     MemeFormComponent,
     AuthComponent,
-    HeaderDropDownComponent
+    HeaderDropDownComponent,
+    ActivationComponent
   ],
   imports: [
     BrowserModule,

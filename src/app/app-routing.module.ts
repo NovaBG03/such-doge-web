@@ -5,6 +5,7 @@ import {AboutComponent} from "./about/about.component";
 import {ProfileComponent} from "./profile/profile.component";
 import {MemeFormComponent} from "./meme-form/meme-form.component";
 import {AuthComponent} from "./auth/auth.component";
+import {ActivationComponent} from "./auth/activation/activation.component";
 
 const routes: Routes = [
   {path: '', component: MemeListComponent, pathMatch: 'full'},
@@ -13,7 +14,8 @@ const routes: Routes = [
   {path: 'profile', component: ProfileComponent},
   {path: 'upload', component: MemeFormComponent},
   {path: 'register', component: AuthComponent},
-  {path: 'login', component: AuthComponent}
+  {path: 'login', component: AuthComponent},
+  {path: 'activate/:token', component: ActivationComponent}
 ];
 
 @NgModule({

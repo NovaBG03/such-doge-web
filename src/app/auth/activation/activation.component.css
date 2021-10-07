@@ -1,0 +1,48 @@
+.activation-card {
+  position: absolute;
+  min-width: 30%;
+  top: 50%;
+  left: 50%;
+  text-align: center;
+  background: var(--color-main);
+  padding: 50px 50px 40px;
+  border-radius: 10px;
+  transform: translate(-50%, -50%);
+  box-shadow: rgb(0 0 0 / 10%) 0px 4px 6px -1px,
+              rgb(0 0 0 / 6%) 0px 2px 4px -1px;
+}
+
+.activation-card .banner {
+  width: 100px;
+}
+
+.activation-card .banner .banner-success {
+  fill: var(--color-success);
+}
+
+.activation-card .banner .banner-danger {
+  fill: var(--color-danger);
+}
+
+.activation-card .message {
+  font-size: 32px;
+  line-height: 0.9;
+  margin: 20px 0 10px;
+}
+
+.green-text {
+  color: var(--color-success);
+}
+
+.btn-solid {
+  margin-top: 20px;
+}
+
+
+/* Landscape phone to portrait tablet */
+@media (max-width: 768px) {
+  .activation-card {
+    position: absolute;
+    min-width: 80%;
+  }
+}
