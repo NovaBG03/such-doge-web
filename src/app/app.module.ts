@@ -16,6 +16,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import { HeaderDropDownComponent } from './header/header-drop-down/header-drop-down.component';
 import { ActivationComponent } from './auth/activation/activation.component';
+import { SpinnerComponent } from './util/spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { ActivationComponent } from './auth/activation/activation.component';
     MemeFormComponent,
     AuthComponent,
     HeaderDropDownComponent,
-    ActivationComponent
+    ActivationComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,

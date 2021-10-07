@@ -105,9 +105,13 @@ body {
   --color-text: var(--color-light-text);
   --color-text-unselected: var(--color-light-text-unselected);
   --color-text-secondary: hsl(0, 0%, 100%);
-  --color-secondary: #F9B64B;
+  --color-secondary: rgb(249, 182, 75);
   --color-danger: #cc0000;
   --color-success: #25AE88;
+
+  /* Drop Shadows */
+  --box-shadow-card: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
+      rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
 
 .no-select {

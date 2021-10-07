@@ -8,8 +8,7 @@
   padding: 50px 50px 40px;
   border-radius: 10px;
   transform: translate(-50%, -50%);
-  box-shadow: rgb(0 0 0 / 10%) 0px 4px 6px -1px,
-              rgb(0 0 0 / 6%) 0px 2px 4px -1px;
+  box-shadow: var(--box-shadow-card);
 }
 
 .activation-card .banner {

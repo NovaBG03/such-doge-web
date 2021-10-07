@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {concatMap, map} from "rxjs/operators";
 import {AuthService} from "../auth.service";
-import {throwError} from "rxjs";
+import {interval, throwError} from "rxjs";
 
 @Component({
   selector: 'app-activation',
@@ -10,29 +10,47 @@ import {throwError} from "rxjs";
   styleUrls: ['./activation.component.css']
 })
 export class ActivationComponent implements OnInit {
-  isReady = true;
+  isReady = false;
   errorMessage = '';
+  secondsLeft = 10;
 
-  constructor(private route: ActivatedRoute, private authService: AuthService) {
+  private interval: any;
+
+  constructor(private authService: AuthService,
+              private route: ActivatedRoute,
+              private router: Router) {
   }
 
   ngOnInit(): void {
-    // this.route.paramMap
-    //   .pipe(
-    //     map(paramMap => paramMap.get('token')),
-    //     concatMap(token => {
-    //       if (!token) {
-    //         return throwError('Invalid token!')
-    //       }
-    //       return this.authService.activate(token);
-    //     })
-    //   ).subscribe(
-    //   () => this.isReady = true,
-    //   err => {
-    //     this.errorMessage = err;
-    //     this.isReady = true;
-    //   }
-    // );
+    this.route.paramMap
+      .pipe(
+        map(paramMap => paramMap.get('token')),
+        concatMap(token => {
+          if (!token) {
+            return throwError('Invalid token!')
+          }
+          return this.authService.activate(token);
+        })
+      ).subscribe(
+      () => {
+        this.isReady = true;
+        this.startTimer();
+      },
+      err => {
+        this.errorMessage = err;
+        this.isReady = true;
+        this.startTimer();
+      }
+    );
   }
 
+  private startTimer(): void {
+    this.interval = setInterval(() => {
+      this.secondsLeft--;
+      if (this.secondsLeft <= 0) {
+        clearInterval(this.interval);
+        this.router.navigate(['/login']);
+      }
+    }, 1000);
+  }
 }
