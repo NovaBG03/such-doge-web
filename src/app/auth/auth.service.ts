@@ -61,15 +61,14 @@ export class AuthService {
       .pipe(
         map(resp => this.authenticate(resp.headers.get(environment.authHeader))),
         catchError(err => {
+          let message = 'Something went wrong!';
           switch (err.status) {
             case 403:
-              err.message = 'Invalid username or password';
-              break;
-            default:
-              err.message = 'Something went wrong!';
+              message = 'Invalid username or password';
               break;
           }
-          return throwError(err);
+
+          return throwError(message);
         })
       );
   }
@@ -114,7 +113,7 @@ export class AuthService {
   private authenticate(authHeader: string | null): DogeUser {
     const token = authHeader?.substr(environment.authPrefix.length);
     if (!token) {
-      throw new Error(`${environment.authPrefix} header missing!`);
+      throw new Error(`${environment.authHeader} header missing!`);
     }
 
     const jwt = this.parseJwt(token);
@@ -125,7 +124,7 @@ export class AuthService {
     }
 
     this.user.next(user);
-    localStorage.setItem(environment.authTokenKey, JSON.stringify(token))
+    localStorage.setItem(environment.authTokenKey, token)
     this.autoLogout(user.secondsUntilExpiration);
 
     return user;

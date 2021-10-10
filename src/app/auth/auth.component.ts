@@ -107,7 +107,7 @@ export class AuthComponent implements OnInit, OnDestroy {
     this.authService.login(data.username, data.passwords.password)
       .subscribe(user => this.router.navigate(['/']),
         err => {
-          this.errorMessage = err.message;
+          this.errorMessage = err;
           this.isLoading = false;
         });
   }
