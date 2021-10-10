@@ -123,6 +123,10 @@ body {
   user-select: none;
 }
 
+.no-scroll {
+  overflow: hidden;
+}
+
 .main-container {
   padding: 15px 60px;
 }
@@ -145,6 +149,8 @@ body {
   font-weight: var(--weight-medium);
 }
 
+
+/* Doge Form */
 
 .form-group {
   padding: 0 0 20px 0;
@@ -174,7 +180,45 @@ body {
   outline: none;
 }
 
+
+/* Doge Card */
+
+.doge-card {
+  min-width: 30%;
+  text-align: center;
+  background: var(--color-main);
+  padding: 50px 50px 40px;
+  border-radius: 10px;
+  box-shadow: var(--box-shadow-card);
+}
+
+.doge-card>.banner {
+  width: 100px;
+}
+
+.doge-card>.banner .banner-success {
+  fill: var(--color-success);
+}
+
+.doge-card>.banner .banner-danger {
+  fill: var(--color-danger);
+}
+
+.doge-card>.message {
+  font-size: 32px;
+  line-height: 0.9;
+  margin: 20px 0 10px;
+}
+
+.doge-card>.description {
+  margin-bottom: 20px;
+}
+
+
+/* Buttons */
+
 .btn-outline {
+  --btn-color: var(--color-secondary);
   display: inline;
   width: 15.5em;
   height: 3.125em;
@@ -182,7 +226,7 @@ body {
   font-weight: var(--weight-medium);
   color: var(--color-text);
   background-color: transparent;
-  border: 3px solid var(--color-secondary);
+  border: 3px solid var(--btn-color);
   border-radius: 15px;
   outline: none;
   cursor: pointer;
@@ -193,7 +237,7 @@ body {
 .btn-outline:hover,
 .btn-outline:focus {
   color: var(--color-text-secondary);
-  background: var(--color-secondary);
+  background: var(--btn-color);
 }
 
 .btn-solid {
@@ -212,6 +256,11 @@ body {
   transition: var(--transition);
 }
 
+.btn-solid:hover,
+.btn-solid:focus {
+  border: 3px solid var(--color-main);
+}
+
 .btn-success {
   --btn-color: var(--color-success);
 }
@@ -220,9 +269,19 @@ body {
   --btn-color: var(--color-danger);
 }
 
-.btn-solid:hover,
-.btn-solid:focus {
-  border: 3px solid var(--color-main);
+
+/* Text colors */
+
+.success-colored-text {
+  color: var(--color-success);
+}
+
+.danger-colored-text {
+  color: var(--color-danger);
+}
+
+.secondary-colored-text {
+  color: var(--color-secondary);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -276,6 +335,11 @@ body {
 
   .form-group .title {
     text-align: center;
+  }
+
+  .doge-card {
+    position: absolute;
+    min-width: 80%;
   }
 }
 

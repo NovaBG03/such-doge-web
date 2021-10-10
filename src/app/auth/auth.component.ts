@@ -4,6 +4,7 @@ import {map} from "rxjs/operators";
 import {Subscription} from "rxjs";
 import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from "@angular/forms";
 import {AuthService} from "./auth.service";
+import {PopUpModel} from "../util/pop-up/pop-up-model";
 
 @Component({
   selector: 'app-auth',
@@ -12,9 +13,12 @@ import {AuthService} from "./auth.service";
 })
 export class AuthComponent implements OnInit, OnDestroy {
   isRegister = true;
+  isRegisterReady = false;
   imageSrc = '';
   errorMessage = '';
+  isLoading = false;
 
+  popUpModel!: PopUpModel;
   authForm!: FormGroup;
 
   get username(): AbstractControl {
@@ -55,6 +59,7 @@ export class AuthComponent implements OnInit, OnDestroy {
           this.imageSrc = '/assets/images/kawai_doge.jpg';
         }
         this.initAuthForm();
+        this.initPopUp();
       });
   }
 
@@ -70,25 +75,41 @@ export class AuthComponent implements OnInit, OnDestroy {
     return '#2B2935';
   }
 
+  closePopUp(): void {
+    this.isRegisterReady = false;
+    this.router.navigate(['/login']);
+  }
+
   onAuthenticate(): void {
+    this.isLoading = true;
     this.errorMessage = '';
 
     if (this.authForm.invalid) {
       this.errorMessage = "Don't try to cheat"
+      this.isLoading = false;
       return;
     }
     const data = this.authForm.value;
 
     if (this.isRegister) {
       this.authService.register(data.username, data.email, data.passwords.password)
-        .subscribe(user => null,
-          err => this.errorMessage = err);
+        .subscribe(user => {
+          this.isRegisterReady = true;
+          this.isLoading = false;
+          },
+          err => {
+            this.errorMessage = err;
+            this.isLoading = false;
+          });
       return;
     }
 
     this.authService.login(data.username, data.passwords.password)
       .subscribe(user => this.router.navigate(['/']),
-        err => this.errorMessage = err.message);
+        err => {
+          this.errorMessage = err.message;
+          this.isLoading = false;
+        });
   }
 
   private getControl(controlName: string): AbstractControl {
@@ -139,6 +160,15 @@ export class AuthComponent implements OnInit, OnDestroy {
           this.hasAlphabeticCharacters()
         ]));
     }
+  }
+
+  private initPopUp(): void {
+    this.popUpModel = {
+      bannerPath: 'assets/svgs/email.svg',
+      message: 'Registration was <span class="secondary-colored-text">successful</span>',
+      description: 'Please click the activation link we sent to your email',
+      buttonText: 'Continue'
+    };
   }
 
   private hasDigitsValidator(): ValidatorFn {

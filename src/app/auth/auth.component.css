@@ -26,6 +26,7 @@
 }
 
 .login-panel {
+  position: relative;
   width: 60%;
   padding: 10px 70px 70px;
 }
@@ -122,6 +123,13 @@
 .passwords {
   padding: 0;
   margin: 0;
+}
+
+#spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -10%);
 }
 
 /* Responsive */

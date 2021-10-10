@@ -1,0 +1,7 @@
+<div class="dark-bg"></div>
+<div class="doge-card" *ngIf="model">
+  <img class="banner" [src]="model.bannerPath">
+  <div class="message" [innerHTML]="model.message"></div>
+  <div class="description">{{ model.description }}</div>
+  <button class="btn-solid" (click)="onButtonPressed()">{{ model.buttonText }}</button>
+</div>

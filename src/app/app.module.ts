@@ -17,6 +17,7 @@ import {HttpClientModule} from "@angular/common/http";
 import { HeaderDropDownComponent } from './header/header-drop-down/header-drop-down.component';
 import { ActivationComponent } from './auth/activation/activation.component';
 import { SpinnerComponent } from './util/spinner/spinner.component';
+import { PopUpComponent } from './util/pop-up/pop-up.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { SpinnerComponent } from './util/spinner/spinner.component';
     AuthComponent,
     HeaderDropDownComponent,
     ActivationComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    PopUpComponent
   ],
   imports: [
     BrowserModule,

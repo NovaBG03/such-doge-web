@@ -8,7 +8,10 @@
     </p>
     <h2 class="headline">{{ isRegister ? 'Welcome to SuchDoge!' : 'Hello again!'}}</h2>
     <h3 class="subtitle">{{ isRegister ? 'Register your account' : 'Login into your account'}}</h3>
-    <form class="auth-form" [formGroup]="authForm" (ngSubmit)="onAuthenticate()">
+    <form class="auth-form"
+          [ngStyle]="{'visibility': isLoading ? 'hidden' : 'visible'}"
+          [formGroup]="authForm"
+          (ngSubmit)="onAuthenticate()">
       <div class="error-message" *ngIf="errorMessage">*{{ errorMessage }}</div>
       <div class="form-control">
         <label for="username">Username</label>
@@ -18,8 +21,12 @@
                formControlName="username">
         <ng-template [ngIf]="username.touched && username.invalid && username.errors">
           <span class="hint" *ngIf="username.errors.required">* Username is required.</span>
-          <span class="hint" *ngIf="username.errors.minlength">* Username must be at least {{ username.errors?.minlength?.requiredLength }} characters.</span>
-          <span class="hint" *ngIf="username.errors.maxlength">* Username can not be more than {{ username.errors?.maxlength?.requiredLength }} characters.</span>
+          <span class="hint"
+                *ngIf="username.errors.minlength">* Username must be at least {{ username.errors?.minlength?.requiredLength }}
+            characters.</span>
+          <span class="hint"
+                *ngIf="username.errors.maxlength">* Username can not be more than {{ username.errors?.maxlength?.requiredLength }}
+            characters.</span>
         </ng-template>
       </div>
       <div class="form-control" *ngIf="isRegister">
@@ -31,8 +38,12 @@
         <ng-template [ngIf]="email.touched && email.invalid && email.errors">
           <span class="hint" *ngIf="email.errors.email">* Must be a valid email.</span>
           <span class="hint" *ngIf="email.errors.required">* Email is required.</span>
-          <span class="hint" *ngIf="email.errors.minlength">* Email must be at least {{ email.errors?.minlength?.requiredLength }} characters.</span>
-          <span class="hint" *ngIf="email.errors.maxlength">* Email can not be more than {{ email.errors?.maxlength?.requiredLength }} characters.</span>
+          <span class="hint"
+                *ngIf="email.errors.minlength">* Email must be at least {{ email.errors?.minlength?.requiredLength }}
+            characters.</span>
+          <span class="hint"
+                *ngIf="email.errors.maxlength">* Email can not be more than {{ email.errors?.maxlength?.requiredLength }}
+            characters.</span>
         </ng-template>
       </div>
       <div id="passwords" formGroupName="passwords">
@@ -46,8 +57,12 @@
             <span class="hint" *ngIf="password.errors.required">* Password is required.</span>
             <span class="hint" *ngIf="password.errors.hasDigit">* Must contain at least 1 digit.</span>
             <span class="hint" *ngIf="password.errors.hasAlphabeticCharacters">* Must contain at least 1 alphabetic character.</span>
-            <span class="hint" *ngIf="password.errors.minlength">* Password must be at least {{ password.errors?.minlength?.requiredLength }} characters.</span>
-            <span class="hint" *ngIf="password.errors.maxlength">* Password can not be more than {{ password.errors?.maxlength?.requiredLength }} characters.</span>
+            <span class="hint"
+                  *ngIf="password.errors.minlength">* Password must be at least {{ password.errors?.minlength?.requiredLength }}
+              characters.</span>
+            <span class="hint"
+                  *ngIf="password.errors.maxlength">* Password can not be more than {{ password.errors?.maxlength?.requiredLength }}
+              characters.</span>
           </ng-template>
         </div>
         <div class="form-control" *ngIf="isRegister">
@@ -61,7 +76,11 @@
           </ng-template>
         </div>
       </div>
-      <button class="btn-solid">{{ isRegister ? 'Sign Up' : 'Login'}}</button>
+      <button class="btn-solid" *ngIf="!isLoading">{{ isRegister ? 'Sign Up' : 'Login'}}</button>
     </form>
+    <app-spinner id="spinner" *ngIf="isLoading"></app-spinner>
   </div>
 </div>
+<app-pop-up *ngIf="isRegister && isRegisterReady"
+            [model]="popUpModel"
+            (buttonPressed)="closePopUp()"></app-pop-up>
