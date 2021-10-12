@@ -3,5 +3,6 @@ export const environment = {
   suchDogeApi: 'http://localhost:8080',
   authPrefix: "Bearer ",
   authHeader: "Authorization",
-  authTokenKey: 'dogeAuthToken'
+  authTokenKey: 'dogeAuthToken',
+  preferredThemeKey: 'dogePreferredTheme'
 };

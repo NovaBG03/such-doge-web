@@ -91,7 +91,7 @@
   padding: 0.7em;
   width: 100%;
   background: transparent;
-  border: 2px solid var(--color-light-text-unselected);
+  border: 2px solid var(--color-text-unselected);
   color: var(--color-secondary);
   font-weight: var(--weight-medium);
   outline: none;
@@ -99,7 +99,7 @@
 }
 
 .auth-form input::placeholder {
-  color: var(--color-light-text-unselected);
+  color: var(--color-text-unselected);
   font-weight: var(--weight-regular);
 }
 

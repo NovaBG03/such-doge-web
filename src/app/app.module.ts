@@ -14,10 +14,10 @@ import {MemeFormComponent} from './meme-form/meme-form.component';
 import {AuthComponent} from './auth/auth.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
-import { HeaderDropDownComponent } from './header/header-drop-down/header-drop-down.component';
-import { ActivationComponent } from './auth/activation/activation.component';
-import { SpinnerComponent } from './util/spinner/spinner.component';
-import { PopUpComponent } from './util/pop-up/pop-up.component';
+import {HeaderDropDownComponent} from './header/header-drop-down/header-drop-down.component';
+import {ActivationComponent} from './auth/activation/activation.component';
+import {SpinnerComponent} from './util/spinner/spinner.component';
+import {PopUpComponent} from './util/pop-up/pop-up.component';
 
 @NgModule({
   declarations: [

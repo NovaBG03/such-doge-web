@@ -7,9 +7,9 @@
   font-weight: 400;
   font-display: swap;
   src: local(''),
-    url('./assets/fonts/source-sans-pro/source-sans-pro-regular.woff2') format('woff2'),
-    url('./assets/fonts/source-sans-pro/source-sans-pro-regular.woff') format('woff'),
-    url('./assets/fonts/source-sans-pro/source-sans-pro-regular.ttf') format('truetype');
+  url('./assets/fonts/source-sans-pro/source-sans-pro-regular.woff2') format('woff2'),
+  url('./assets/fonts/source-sans-pro/source-sans-pro-regular.woff') format('woff'),
+  url('./assets/fonts/source-sans-pro/source-sans-pro-regular.ttf') format('truetype');
 }
 
 /* source-sans-pro-600 - latin */
@@ -20,29 +20,14 @@
 
   font-display: swap;
   src: local(''),
-    url('./assets/fonts/source-sans-pro/source-sans-pro-medium.woff2') format('woff2'),
-    url('./assets/fonts/source-sans-pro/source-sans-pro-medium.woff') format('woff'),
-    url('./assets/fonts/source-sans-pro/source-sans-pro-medium.ttf') format('truetype');
+  url('./assets/fonts/source-sans-pro/source-sans-pro-medium.woff2') format('woff2'),
+  url('./assets/fonts/source-sans-pro/source-sans-pro-medium.woff') format('woff'),
+  url('./assets/fonts/source-sans-pro/source-sans-pro-medium.ttf') format('truetype');
 }
 
+/* Theming */
+
 :root {
-  /* Theming */
-
-  /* Color book */
-  /* Dark Theme */
-  --color-dark-main: hsl(240, 13%, 13%);
-  --color-dark-background: hsl(230, 14%, 9%);
-  --color-dark-info: hsl(240, 13%, 20%);
-  --color-dark-text: hsl(0, 0%, 100%);
-  --color-dark-text-unselected: hsl(240, 7%, 40%);
-
-  /* Light Theme */
-  --color-light-main: hsl(0, 0%, 100%);
-  --color-light-background: hsl(217, 24%, 93%);
-  --color-light-info: hsl(218, 19%, 89%);
-  --color-light-text: hsl(216, 11%, 17%);
-  --color-light-text-unselected: hsl(202, 7%, 67%);
-
   /* Typography */
   --font-family-sans: 'Source Sans Pro', sans-serif;
 
@@ -52,8 +37,35 @@
 
   /* Design Elements */
   --transition: 300ms ease-in-out;
+
+  /* Drop Shadows */
+  --box-shadow-card: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
+  rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
 
+.light-theme {
+  --color-main: hsl(0, 0%, 100%);
+  --color-background: hsl(217, 24%, 93%);
+  --color-info: hsl(218, 19%, 89%);
+  --color-text: hsl(216, 11%, 17%);
+  --color-text-unselected: hsl(202, 7%, 67%);
+}
+
+.dark-theme {
+  --color-main: hsl(240, 13%, 13%);
+  --color-background: hsl(230, 14%, 9%);
+  --color-info: hsl(240, 13%, 20%);
+  --color-text: hsl(0, 0%, 100%);
+  --color-text-unselected: hsl(240, 7%, 40%);
+}
+
+.app {
+  /* Additional Colors */
+  --color-text-secondary: hsl(0, 0%, 100%);
+  --color-secondary: rgb(249, 182, 75);
+  --color-danger: #cc0000;
+  --color-success: #25AE88;
+}
 
 /* Reset */
 html {
@@ -77,7 +89,7 @@ body {
   padding: 0;
   font-family: var(--font-family-sans);
   font-size: 16px;
-  background-color: var(--color-background);
+  background: var(--color-background);
 }
 
 /* Type Specs */
@@ -90,28 +102,9 @@ body {
   height: 1px;
   position: absolute;
   clip: rect(1px, 1px, 1px, 1px);
-  clip-path: inset(0, 0, 99.9%, 99,9%);
+  clip-path: inset(0, 0, 99.9%, 99, 9%);
   overflow: hidden;
   border: 0;
-}
-
-
-/* App */
-.app {
-  /* Color Theme */
-  --color-main: var(--color-light-main);
-  --color-background: var(--color-light-background);
-  --color-info: var(--color-light-info);
-  --color-text: var(--color-light-text);
-  --color-text-unselected: var(--color-light-text-unselected);
-  --color-text-secondary: hsl(0, 0%, 100%);
-  --color-secondary: rgb(249, 182, 75);
-  --color-danger: #cc0000;
-  --color-success: #25AE88;
-
-  /* Drop Shadows */
-  --box-shadow-card: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
-      rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
 
 .no-select {
@@ -192,25 +185,25 @@ body {
   box-shadow: var(--box-shadow-card);
 }
 
-.doge-card>.banner {
+.doge-card > .banner {
   width: 100px;
 }
 
-.doge-card>.banner .banner-success {
+.doge-card > .banner .banner-success {
   fill: var(--color-success);
 }
 
-.doge-card>.banner .banner-danger {
+.doge-card > .banner .banner-danger {
   fill: var(--color-danger);
 }
 
-.doge-card>.message {
+.doge-card > .message {
   font-size: 32px;
   line-height: 0.9;
   margin: 20px 0 10px;
 }
 
-.doge-card>.description {
+.doge-card > .description {
   margin-bottom: 20px;
 }
 
@@ -225,7 +218,7 @@ body {
   font-size: 16px;
   font-weight: var(--weight-medium);
   color: var(--color-text);
-  background-color: transparent;
+  background: transparent;
   border: 3px solid var(--btn-color);
   border-radius: 15px;
   outline: none;
@@ -248,7 +241,7 @@ body {
   font-size: 15px;
   font-weight: var(--weight-medium);
   color: var(--color-text-secondary);
-  background-color: var(--btn-color);
+  background: var(--btn-color);
   border: 3px solid var(--btn-color);
   border-radius: 15px;
   outline: none;
@@ -284,15 +277,6 @@ body {
   color: var(--color-secondary);
 }
 
-@media (prefers-color-scheme: dark) {
-  .app {
-    --color-main: var(--color-dark-main);
-    --color-background: var(--color-dark-background);
-    --color-info: var(--color-dark-info);
-    --color-text: var(--color-dark-text);
-    --color-text-unselected: var(--color-dark-text-unselected);
-  }
-}
 
 /* Responsive */
 /* Large desktop */

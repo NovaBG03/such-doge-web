@@ -1,19 +1,27 @@
-import {Component, ElementRef, EventEmitter, HostListener, OnInit, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, HostListener, OnDestroy, OnInit, Output} from '@angular/core';
 import {AuthService} from "../../auth/auth.service";
+import {ThemeService} from "../../util/theme.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-header-drop-down',
   templateUrl: './header-drop-down.component.html',
   styleUrls: ['./header-drop-down.component.css']
 })
-export class HeaderDropDownComponent implements OnInit {
-  isDarkMode = false;
-
+export class HeaderDropDownComponent implements OnInit, OnDestroy {
   @Output() close = new EventEmitter<void>();
 
-  constructor(private eRef: ElementRef, private authService: AuthService) { }
+  isDarkMode = false;
+  private themeSub!: Subscription;
+
+  constructor(private eRef: ElementRef,
+              private authService: AuthService,
+              private themeService: ThemeService) {
+  }
 
   ngOnInit(): void {
+    this.themeSub = this.themeService.isDarkThemeActive()
+      .subscribe(isDarkMode => this.isDarkMode = isDarkMode);
   }
 
   @HostListener('document:click', ['$event'])
@@ -30,6 +38,7 @@ export class HeaderDropDownComponent implements OnInit {
 
   toggleDarkMode(): void {
     this.isDarkMode = !this.isDarkMode;
+    this.themeService.toggleColorTheme();
   }
 
   logout(): void {
@@ -39,5 +48,9 @@ export class HeaderDropDownComponent implements OnInit {
 
   closeDropDown(): void {
     this.close.emit();
+  }
+
+  ngOnDestroy(): void {
+    this.themeSub?.unsubscribe();
   }
 }
