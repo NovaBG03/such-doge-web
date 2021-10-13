@@ -6,12 +6,16 @@ input[type="file"] {
   display: none;
 }
 
-label.input {
+.file-upload>.input {
   position: relative;
   padding-left: 140px;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-label.input:before {
+.file-upload>.input:before {
   content: 'Upload';
   position: absolute;
   top: 6px;
@@ -31,5 +35,12 @@ label.input:before {
   .btn-outline {
     margin: auto;
     display: block;
+  }
+}
+
+/* Landscape phones and down */
+@media (max-width: 480px) {
+  .btn-outline {
+    width: 80%;
   }
 }

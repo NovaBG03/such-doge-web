@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {MemeListComponent} from "./meme-list/meme-list.component";
+import {MemeListComponent} from "./meme/meme-list/meme-list.component";
 import {AboutComponent} from "./about/about.component";
 import {ProfileComponent} from "./profile/profile.component";
-import {MemeFormComponent} from "./meme-form/meme-form.component";
+import {MemeFormComponent} from "./meme/meme-form/meme-form.component";
 import {AuthComponent} from "./auth/auth.component";
 import {ActivationComponent} from "./auth/activation/activation.component";
 

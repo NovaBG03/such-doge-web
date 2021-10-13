@@ -5,12 +5,12 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {HeaderComponent} from './header/header.component';
 import {FooterComponent} from './footer/footer.component';
-import {MemeListComponent} from './meme-list/meme-list.component';
+import {MemeListComponent} from './meme/meme-list/meme-list.component';
 import {AboutComponent} from './about/about.component';
 import {ProfileComponent} from './profile/profile.component';
-import {MemeComponent} from './meme-list/meme/meme.component';
-import {EmptyMemeComponent} from './meme-list/empty-meme/empty-meme.component';
-import {MemeFormComponent} from './meme-form/meme-form.component';
+import {MemeCardComponent} from './meme/meme-list/meme-card/meme-card.component';
+import {EmptyMemeComponent} from './meme/meme-list/empty-meme/empty-meme.component';
+import {MemeFormComponent} from './meme/meme-form/meme-form.component';
 import {AuthComponent} from './auth/auth.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
@@ -27,7 +27,7 @@ import {PopUpComponent} from './util/pop-up/pop-up.component';
     MemeListComponent,
     AboutComponent,
     ProfileComponent,
-    MemeComponent,
+    MemeCardComponent,
     EmptyMemeComponent,
     MemeFormComponent,
     AuthComponent,

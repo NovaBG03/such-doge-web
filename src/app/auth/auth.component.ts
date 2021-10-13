@@ -85,7 +85,7 @@ export class AuthComponent implements OnInit, OnDestroy {
     this.errorMessage = '';
 
     if (this.authForm.invalid) {
-      this.errorMessage = "Don't try to cheat"
+      this.errorMessage = "Don't try to cheat";
       this.isLoading = false;
       return;
     }

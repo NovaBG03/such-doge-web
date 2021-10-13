@@ -145,16 +145,16 @@ body {
 
 /* Doge Form */
 
-.form-group {
+.doge-form .form-group {
   padding: 0 0 20px 0;
 }
 
-.form-group .title {
+.doge-form .form-group .title {
   margin-bottom: 10px;
   font-size: 17px;
 }
 
-.small-title {
+.doge-form .small-label {
   font-size: 14px;
 }
 
@@ -303,12 +303,12 @@ body {
     margin: auto;
   }
 
-  .small-title {
+  .small-label {
     margin-top: 20px;
     text-align: center;
   }
 
-  .doge-form .small-title {
+  .doge-form .small-label {
     display: block;
   }
 
@@ -336,5 +336,6 @@ body {
   .doge-form .input {
     width: 100%;
     margin: 10px 0 20px;
+    min-width: revert;
   }
 }
