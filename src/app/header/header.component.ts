@@ -1,7 +1,7 @@
 import {Component, HostListener, OnInit} from '@angular/core';
 import {AuthService} from "../auth/auth.service";
 import {Observable} from "rxjs";
-import {DogeUser} from "../auth/user.model";
+import {DogeUser} from "../auth/model/user.model";
 import {Event} from "@angular/router";
 
 @Component({

@@ -1,0 +1,27 @@
+<div class="dark-bg"></div>
+<div class="doge-card fixed" [ngClass]="{'hidden-cropper': isLoading}">
+  <div class="close-icon" (click)="cancelUpload()">x</div>
+  <div class="message">Resize your image</div>
+  <image-cropper id="image-cropper"
+                 [imageFile]="image"
+                 [aspectRatio]="25 / 18"
+                 [maintainAspectRatio]="true"
+                 [containWithinAspectRatio]="true"
+                 [resizeToWidth]="960"
+                 [cropperMinWidth]="360"
+                 [onlyScaleDown]="true"
+                 [roundCropper]="false"
+                 format="png"
+                 (imageLoaded)="imageLoaded()"
+                 (imageCropped)="imageCropped($event)"
+  ></image-cropper>
+
+  <div class="spinner-center" *ngIf="isLoading">
+    <app-spinner></app-spinner>
+  </div>
+
+  <div class="buttons">
+    <button class="btn-solid btn-danger" (click)="cancelUpload()">Cancel</button>
+    <button class="btn-solid" (click)="saveChanges()">Upload</button>
+  </div>
+</div>

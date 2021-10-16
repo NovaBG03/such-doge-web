@@ -13,11 +13,14 @@ import {EmptyMemeComponent} from './meme/meme-list/empty-meme/empty-meme.compone
 import {MemeFormComponent} from './meme/meme-form/meme-form.component';
 import {AuthComponent} from './auth/auth.component';
 import {ReactiveFormsModule} from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {HeaderDropDownComponent} from './header/header-drop-down/header-drop-down.component';
 import {ActivationComponent} from './auth/activation/activation.component';
 import {SpinnerComponent} from './util/spinner/spinner.component';
 import {PopUpComponent} from './util/pop-up/pop-up.component';
+import {AuthInterceptor} from "./auth/auth.interceptor";
+import {ImageCropperModule} from "ngx-image-cropper";
+import { ImageResizerComponent } from './util/image-resizer/image-resizer.component';
 
 @NgModule({
   declarations: [
@@ -34,15 +37,23 @@ import {PopUpComponent} from './util/pop-up/pop-up.component';
     HeaderDropDownComponent,
     ActivationComponent,
     SpinnerComponent,
-    PopUpComponent
+    PopUpComponent,
+    ImageResizerComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     ReactiveFormsModule,
+    ImageCropperModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -1,0 +1,61 @@
+.close-icon {
+  display: inline-block;
+  position: fixed;
+  right: 9px;
+  top: 5px;
+  font-size: 30px;
+  line-height: 0.5;
+  padding: 4px;
+  cursor: pointer;
+}
+
+.doge-card {
+  padding: 20px 40px;
+}
+
+.doge-card > .message {
+  margin: 0 auto 20px;
+}
+
+.doge-card.hidden-cropper {
+  overflow: hidden !important;
+}
+
+.hidden-cropper > #image-cropper {
+  position: fixed;
+  top: 200%;
+}
+
+.spinner-center {
+  margin: 20% 0;
+}
+
+.buttons {
+  display: flex;
+  margin-top: 20px;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 769px) and (max-width: 979px) {
+  .doge-card {
+    min-width: 70%;
+  }
+}
+
+/* Landscape phone to portrait tablet */
+@media (max-width: 768px) {
+  .doge-card {
+    padding: 20px 30px;
+  }
+}
+
+/* Landscape phones and down */
+@media (max-width: 480px) {
+  .doge-card {
+    width: 95%;
+    height: auto;
+    padding: 25px 10px 20px;
+  }
+}

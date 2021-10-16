@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {catchError, map} from "rxjs/operators";
 import {BehaviorSubject, Observable, throwError} from "rxjs";
-import {Authority, DogeUser} from "./user.model";
+import {DogeUser} from "./model/user.model";
 import {Router} from "@angular/router";
 
 @Injectable({providedIn: 'root'})
@@ -85,8 +85,7 @@ export class AuthService {
     send request to get new updated token
      */
 
-    const jwt = this.parseJwt(token);
-    const user = this.jwtToUser(jwt);
+    const user = new DogeUser(token);
     if (!user.isExpired) {
       this.user.next(user);
       this.autoLogout(user.secondsUntilExpiration);
@@ -116,8 +115,7 @@ export class AuthService {
       throw new Error(`${environment.authHeader} header missing!`);
     }
 
-    const jwt = this.parseJwt(token);
-    const user = this.jwtToUser(jwt);
+    const user = new DogeUser(token);
 
     if (user.isExpired) {
       throw new Error(`JWT is expired!`);
@@ -129,33 +127,4 @@ export class AuthService {
 
     return user;
   }
-
-  private parseJwt(token: string): Jwt {
-    const base64Url = token.split('.')[1];
-
-    const base64 = base64Url.replace(/-/g, '+')
-      .replace(/_/g, '/');
-
-    const jsonPayload = decodeURIComponent(atob(base64).split('')
-      .map(x => '%' + ('00' + x.charCodeAt(0).toString(16)).slice(-2))
-      .join(''));
-
-    return JSON.parse(jsonPayload);
-  }
-
-  private jwtToUser(jwt: Jwt) {
-    return new DogeUser(
-      jwt.sub,
-      jwt.authorities.map(x => x.authority as Authority),
-      new Date(jwt.iat * 1000),
-      new Date(jwt.exp * 1000)
-    );
-  }
-}
-
-interface Jwt {
-  sub: string;
-  authorities: { authority: string }[];
-  iat: number;
-  exp: number;
 }

@@ -8,9 +8,12 @@ export class MemeService {
   constructor(private http: HttpClient) {
   }
 
-  postMeme(meme: File, title: string, description: string): Observable<any> {
-    const url = `${environment.suchDogeApi}/meme`;
-    const body = {title, description};
-    return this.http.post(url, body);
+  postMeme(image: Blob, title: string, description: string): Observable<any> {
+    const url = `${environment.suchDogeApi}/meme/test`;
+    const formData = new FormData();
+    formData.append('image', image);
+    console.log("Sending!")
+    console.log(image);
+    return this.http.post(url, formData);
   }
 }

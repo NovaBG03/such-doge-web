@@ -11,7 +11,10 @@ export class MemeFormComponent implements OnInit {
   acceptedImageTypes = ['image/jpeg', 'image/png'];
   errorMessage = '';
 
-  memeFile: File | null = null;
+  isResizing = false;
+  fileMeme: File | null = null;
+  resizedMeme: Blob | null = null;
+
   memeForm!: FormGroup;
 
   get title(): AbstractControl {
@@ -26,39 +29,49 @@ export class MemeFormComponent implements OnInit {
   }
 
   get fileName() {
-    return (this.memeFile as File).name
+    return (this.fileMeme as File).name
   }
 
   ngOnInit(): void {
     this.initMemeForm();
   }
 
+  onSelect(files: FileList | null) {
+    if (files && this.isImage(files.item(0))) {
+      this.fileMeme = files.item(0);
+      this.isResizing = true;
+    } else {
+      this.fileMeme = null;
+      this.isResizing = false;
+    }
+  }
+
+  setResizedImage(resizedImage: Blob | null): void {
+    this.isResizing = false;
+    this.resizedMeme = resizedImage;
+
+    if (!resizedImage) {
+      this.fileMeme = null;
+    }
+  }
+
   onSubmit(): void {
     this.errorMessage = '';
-    if (this.memeForm.invalid || !this.memeFile) {
+    if (this.memeForm.invalid || !this.resizedMeme) {
       this.errorMessage = "Don't try to cheat";
       return;
     }
 
-    console.log(this.title.value, this.description.value);
-    this.memeService.postMeme(this.memeFile, this.title.value, this.description.value)
+    this.memeService.postMeme(this.resizedMeme, this.title.value, this.description.value)
       .subscribe(value => {
+        console.log(value);
         this.memeForm.reset();
-        this.memeFile = null;
+        this.fileMeme = null;
       });
   }
 
   asInputElement(target: EventTarget | null): HTMLInputElement {
     return target as HTMLInputElement;
-  }
-
-  onDrop(files: FileList | null) {
-    if (files && this.isImage(files.item(0))) {
-      this.memeFile = files.item(0);
-    }
-    else {
-      this.memeFile = null;
-    }
   }
 
   private isImage(file: File | null): boolean {
