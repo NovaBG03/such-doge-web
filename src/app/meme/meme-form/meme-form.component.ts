@@ -42,6 +42,7 @@ export class MemeFormComponent implements OnInit {
       this.isResizing = true;
     } else {
       this.fileMeme = null;
+      this.resizedMeme = null;
       this.isResizing = false;
     }
   }

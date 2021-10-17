@@ -9,11 +9,12 @@ export class MemeService {
   }
 
   postMeme(image: Blob, title: string, description: string): Observable<any> {
-    const url = `${environment.suchDogeApi}/meme/test`;
+    const url = `${environment.suchDogeApi}/meme`;
     const formData = new FormData();
     formData.append('image', image);
+    formData.append('title', title);
+    formData.append('description', description);
     console.log("Sending!")
-    console.log(image);
     return this.http.post(url, formData);
   }
 }
