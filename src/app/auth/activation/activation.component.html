@@ -1,6 +1,5 @@
 <div class="doge-card">
   <ng-template [ngIf]="isReady">
-
     <svg *ngIf="!errorMessage" class="banner" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
       <circle class="banner-success" cx="25" cy="25" r="25"/>
       <path fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -8,10 +7,10 @@
     </svg>
     <svg *ngIf="errorMessage" class="banner" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"
          xml:space="preserve">
-  <circle class="banner-danger" cx="25" cy="25" r="25"/>
+      <circle class="banner-danger" cx="25" cy="25" r="25"/>
       <path fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10"
             d="m16 34 9-9 9-9M16 16l9 9 9 9"/>
-  </svg>
+    </svg>
     <div *ngIf="!errorMessage" class="message">Activation was <span class="success-colored-text">successful</span></div>
     <div *ngIf="errorMessage" class="message">{{ errorMessage }}</div>
     <div class="description">You will be redirected in {{ secondsLeft }} seconds</div>

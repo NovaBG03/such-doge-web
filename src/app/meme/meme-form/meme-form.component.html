@@ -1,13 +1,34 @@
 <div class="heading">
   <h1 class="title">Upload Meme</h1>
 </div>
-<form class="doge-form" [formGroup]="memeForm" (ngSubmit)="onSubmit()">
+<form *ngIf="!isLoading" class="doge-form" [formGroup]="memeForm" (ngSubmit)="onSubmit()">
   <div class="form-group">
     <div class="title">Meme Info</div>
     <label class="small-label" for="title">Title</label>
     <input class="input" type="text" id="title" formControlName="title">
+    <ng-template [ngIf]="title.touched && title.invalid && title.errors">
+      <span class="hint" *ngIf="title.errors.required">* Title is required.</span>
+      <span class="hint"
+            *ngIf="title.errors.minlength">* Title must be at least {{ title.errors?.minlength?.requiredLength }}
+        characters.</span>
+      <span class="hint"
+            *ngIf="title.errors.maxlength">* Title can not be more than {{ title.errors?.maxlength?.requiredLength }}
+        characters.</span>
+    </ng-template>
+  </div>
+  <div class="form-group">
     <label class="small-label" for="description">Description</label>
     <input class="input" type="text" id="description" formControlName="description">
+    <ng-template [ngIf]="description.touched && description.invalid && description.errors">
+      <span class="hint"
+            *ngIf="description.errors.minlength">
+        * Description must be at least {{ description.errors?.minlength?.requiredLength }}
+        characters.</span>
+      <span class="hint"
+            *ngIf="description.errors.maxlength">
+        * Description can not be more than {{ description.errors?.maxlength?.requiredLength }}
+        characters.</span>
+    </ng-template>
   </div>
   <div class="form-group">
     <label class="small-label">Image</label>
@@ -25,7 +46,17 @@
   <button class="btn-outline" type="submit">Submit</button>
 </form>
 
+<app-spinner id="spinner" *ngIf="isLoading"></app-spinner>
+
 <app-image-resizer *ngIf="isResizing && fileMeme"
                    [image]="fileMeme"
                    (imageResized)="setResizedImage($event)">
 </app-image-resizer>
+
+<app-pop-up *ngIf="errorPopUpModel.description"
+            [model]="errorPopUpModel"
+            (buttonPressed)="errorPopUpModel.description = ''"></app-pop-up>
+
+<app-pop-up *ngIf="isReady"
+            [model]="successPopUpModel"
+            (buttonPressed)="isReady = false"></app-pop-up>

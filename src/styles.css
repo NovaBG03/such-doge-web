@@ -166,7 +166,7 @@ body {
   min-width: 300px;
   height: 3rem;
   padding: 15px 20px;
-  margin: 10px 0 20px 0;
+  margin: 10px 0 3px 0;
   font-size: 16px;
   font-weight: var(--weight-regular);
   background: var(--color-info);
@@ -175,6 +175,11 @@ body {
   outline: none;
 }
 
+form .hint {
+  display: block;
+  color: var(--color-danger);
+  font-size: 13px;
+}
 
 /* Doge Card */
 .dark-bg {
@@ -218,7 +223,7 @@ body {
 
 .doge-card > .message {
   font-size: 32px;
-  line-height: 0.9;
+  line-height: 0.95;
   margin: 20px 0 10px;
 }
 
@@ -350,7 +355,7 @@ body {
 
   .doge-form .input {
     width: 420px;
-    margin: 10px auto 20px;
+    margin: 10px auto 3px;
   }
 
   .form-group .title {
@@ -371,7 +376,7 @@ body {
 
   .doge-form .input {
     width: 100%;
-    margin: 10px 0 20px;
+    margin: 10px 0 3px;
     min-width: revert;
   }
 }

@@ -3,4 +3,5 @@ export interface PopUpModel {
   message: string;
   description: string;
   buttonText: string;
+  buttonStyle?: string;
 }

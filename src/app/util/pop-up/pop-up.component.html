@@ -3,5 +3,7 @@
   <img class="banner" [src]="model.bannerPath">
   <div class="message" [innerHTML]="model.message"></div>
   <div class="description">{{ model.description }}</div>
-  <button class="btn-solid" (click)="onButtonPressed()">{{ model.buttonText }}</button>
+  <button class="btn-solid"
+          [ngClass]="getButtonStyleClass"
+          (click)="onButtonPressed()">{{ model.buttonText }}</button>
 </div>

@@ -10,6 +10,13 @@ export class PopUpComponent implements OnInit, OnDestroy {
   @Input() model!: PopUpModel;
   @Output() buttonPressed = new EventEmitter<void>();
 
+  get getButtonStyleClass(): string {
+    if (!this.model || !this.model.buttonStyle) {
+      return '';
+    }
+    return `btn-${this.model.buttonStyle}`;
+  }
+
   constructor(private renderer: Renderer2) { }
 
   ngOnInit(): void {

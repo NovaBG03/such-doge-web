@@ -30,11 +30,22 @@ input[type="file"] {
   cursor: pointer;
 }
 
+#spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 /* Landscape phone to portrait tablet */
 @media (max-width: 768px) {
   .btn-outline {
     margin: auto;
     display: block;
+  }
+
+  form .hint {
+    text-align: center;
   }
 }
 

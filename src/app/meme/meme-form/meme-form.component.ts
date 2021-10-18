@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {AbstractControl, FormControl, FormGroup} from "@angular/forms";
+import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
 import {MemeService} from "../meme.service";
+import {PopUpModel} from "../../util/pop-up/pop-up-model";
 
 @Component({
   selector: 'app-meme-form',
@@ -9,7 +10,10 @@ import {MemeService} from "../meme.service";
 })
 export class MemeFormComponent implements OnInit {
   acceptedImageTypes = ['image/jpeg', 'image/png'];
-  errorMessage = '';
+  errorPopUpModel!: PopUpModel;
+  successPopUpModel!: PopUpModel;
+  isLoading = false;
+  isReady = false;
 
   isResizing = false;
   fileMeme: File | null = null;
@@ -25,15 +29,17 @@ export class MemeFormComponent implements OnInit {
     return this.getControl('description');
   }
 
-  constructor(private memeService: MemeService) {
-  }
-
   get fileName() {
     return (this.fileMeme as File).name
   }
 
+  constructor(private memeService: MemeService) {
+  }
+
   ngOnInit(): void {
     this.initMemeForm();
+    this.initErrorPopUp();
+    this.initSuccessPopUp();
   }
 
   onSelect(files: FileList | null) {
@@ -57,18 +63,31 @@ export class MemeFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.errorMessage = '';
-    if (this.memeForm.invalid || !this.resizedMeme) {
-      this.errorMessage = "Don't try to cheat";
+    this.errorPopUpModel.description = '';
+    if (this.memeForm.invalid) {
+      this.errorPopUpModel.description = "Don't try to cheat";
       return;
     }
 
+    if (!this.resizedMeme) {
+      this.errorPopUpModel.description = "No image uploaded!";
+      return;
+    }
+
+    this.isLoading = true;
     this.memeService.postMeme(this.resizedMeme, this.title.value, this.description.value)
-      .subscribe(value => {
-        console.log(value);
-        this.memeForm.reset();
-        this.fileMeme = null;
-      });
+      .subscribe(() => {
+          this.memeForm.reset();
+          this.resizedMeme = null;
+          this.fileMeme = null;
+          this.isLoading = false;
+          this.isReady = true;
+        },
+        err => {
+          this.errorPopUpModel.description = err;
+          this.isLoading = false;
+          this.isReady = false;
+        });
   }
 
   asInputElement(target: EventTarget | null): HTMLInputElement {
@@ -79,14 +98,41 @@ export class MemeFormComponent implements OnInit {
     return !!file && this.acceptedImageTypes.includes(file['type'])
   }
 
-  private initMemeForm() {
+  private initMemeForm(): void {
     this.memeForm = new FormGroup({
-      title: new FormControl('', []),
-      description: new FormControl('', [])
+      title: new FormControl('', [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(30)]
+      ),
+      description: new FormControl('', [
+        Validators.minLength(3),
+        Validators.maxLength(100)
+      ])
     });
   }
 
   private getControl(controlName: string): AbstractControl {
     return this.memeForm.get(controlName) as AbstractControl;
+  }
+
+  private initErrorPopUp(): void {
+    this.errorPopUpModel = {
+      bannerPath: 'assets/svgs/error-cross.svg',
+      message: 'Error',
+      description: '',
+      buttonText: 'Continue',
+      buttonStyle: 'danger'
+    }
+  }
+
+  private initSuccessPopUp() {
+    this.successPopUpModel = {
+      bannerPath: 'assets/svgs/success-tick.svg',
+      message: 'Your meme has been <span class="success-colored-text">uploaded successfully</span>',
+      description: 'It is scheduled to be reviewed by our team',
+      buttonText: 'Continue',
+      buttonStyle: 'success'
+    }
   }
 }
