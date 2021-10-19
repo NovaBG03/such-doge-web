@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {Meme} from "../../model/meme.model";
 
 @Component({
   selector: 'app-meme-card',
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./meme-card.component.css']
 })
 export class MemeCardComponent implements OnInit {
+  @Input() meme!: Meme;
 
   constructor() { }
 

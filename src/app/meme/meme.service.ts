@@ -2,11 +2,38 @@ import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable, throwError} from "rxjs";
 import {environment} from "../../environments/environment";
-import {catchError} from "rxjs/operators";
+import {catchError, map} from "rxjs/operators";
+import {MemeListResponseDto, MemeResponseDto} from "./model/memeResponse.dto";
+import {Meme} from "./model/meme.model";
+import {DomSanitizer} from "@angular/platform-browser";
+import {MemeCountDto} from "./model/memeCount.dto";
 
 @Injectable({providedIn: 'root'})
 export class MemeService {
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private sanitizer: DomSanitizer) {
+  }
+
+  getMemeCount(): Observable<number> {
+    const url = `${environment.suchDogeApi}/meme/count`;
+    return this.http.get<MemeCountDto>(url)
+      .pipe(
+        map(memeCountDto => memeCountDto.count)
+      );
+  }
+
+  getMemePage(page: number, size: number): Observable<Meme[]> {
+    const url = `${environment.suchDogeApi}/meme`;
+    return this.http.get<MemeListResponseDto>(url, {
+      params: {
+        page: page,
+        size: size
+      }
+    }).pipe(
+      map(memeListResponseDto =>
+        memeListResponseDto.memes.map(memeResponseDto =>
+          this.memeResponseDtoToMeme(memeResponseDto)
+        )
+      ));
   }
 
   postMeme(image: Blob, title: string, description: string): Observable<any> {
@@ -30,5 +57,20 @@ export class MemeService {
           return throwError(message);
         })
       );
+  }
+
+  private memeResponseDtoToMeme(dto: MemeResponseDto): Meme {
+    const objectUrl = 'data:image/png;base64,' + dto.imageBytes;
+    const imageUrl = this.sanitizer.bypassSecurityTrustUrl(objectUrl);
+
+    const meme: Meme = {
+      id: dto.id,
+      title: dto.title,
+      description: dto.description,
+      imageUrl: imageUrl,
+      publisherUsername: dto.publisherUsername,
+      publishedOn: new Date(dto.publishedOn)
+    };
+    return meme;
   }
 }

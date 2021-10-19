@@ -23,7 +23,7 @@ input[type="file"] {
   left: 10px;
   padding: 6px 30px;
   background-color: var(--color-secondary);
-  color: var(--color-text-secondary);
+  color: var(--color-white);
   border: 0;
   border-radius: 10px;
   font-size: 18px;

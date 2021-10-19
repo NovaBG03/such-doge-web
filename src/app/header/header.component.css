@@ -112,7 +112,7 @@ ul ul li {
   height: 30px;
   display: inline;
   background-color: var(--color-secondary);
-  color: var(--color-text-secondary);
+  color: var(--color-white);
   border: 0;
   border-radius: 10px;
   font-size: 20px;

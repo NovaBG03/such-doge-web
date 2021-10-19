@@ -1,10 +1,15 @@
 .card {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+
   height: 360px;
   width: 290px;
   border-radius: 15px;
   padding: 20px;
   margin: auto;
   background-color: var(--color-main);
+  box-shadow: var(--box-shadow-card);
 }
 
 .card-header {

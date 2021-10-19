@@ -61,7 +61,7 @@
 
 .app {
   /* Additional Colors */
-  --color-text-secondary: hsl(0, 0%, 100%);
+  --color-white: hsl(0, 0%, 100%);
   --color-secondary: rgb(249, 182, 75);
   --color-danger: #cc0000;
   --color-success: #25AE88;
@@ -253,7 +253,7 @@ form .hint {
 
 .btn-outline:hover,
 .btn-outline:focus {
-  color: var(--color-text-secondary);
+  color: var(--color-white);
   background: var(--btn-color);
 }
 
@@ -264,7 +264,7 @@ form .hint {
   height: 3.125em;
   font-size: 15px;
   font-weight: var(--weight-medium);
-  color: var(--color-text-secondary);
+  color: var(--color-white);
   background: var(--btn-color);
   border: 3px solid var(--btn-color);
   border-radius: 15px;
@@ -378,5 +378,16 @@ form .hint {
     width: 100%;
     margin: 10px 0 3px;
     min-width: revert;
+  }
+
+  .visually-hidden-phone {
+    padding: 0;
+    width: 1px;
+    height: 1px;
+    position: absolute;
+    clip: rect(1px, 1px, 1px, 1px);
+    clip-path: inset(0, 0, 99.9%, 99, 9%);
+    overflow: hidden;
+    border: 0;
   }
 }
