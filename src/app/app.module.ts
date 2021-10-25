@@ -8,8 +8,8 @@ import {FooterComponent} from './footer/footer.component';
 import {MemeListComponent} from './meme/meme-list/meme-list.component';
 import {AboutComponent} from './about/about.component';
 import {ProfileComponent} from './profile/profile.component';
-import {MemeCardComponent} from './meme/meme-list/meme-card/meme-card.component';
-import {EmptyMemeComponent} from './meme/meme-list/empty-meme/empty-meme.component';
+import {MemeCardComponent} from './meme/meme-cards/meme-card/meme-card.component';
+import {EmptyMemeCardComponent} from './meme/meme-cards/empty-meme-card/empty-meme-card.component';
 import {MemeFormComponent} from './meme/meme-form/meme-form.component';
 import {AuthComponent} from './auth/auth.component';
 import {ReactiveFormsModule} from "@angular/forms";
@@ -21,6 +21,8 @@ import {PopUpComponent} from './util/pop-up/pop-up.component';
 import {AuthInterceptor} from "./auth/auth.interceptor";
 import {ImageCropperModule} from "ngx-image-cropper";
 import { ImageResizerComponent } from './util/image-resizer/image-resizer.component';
+import { MemeMyComponent } from './meme/meme-my/meme-my.component';
+import { PaginationComponent } from './util/pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -31,14 +33,16 @@ import { ImageResizerComponent } from './util/image-resizer/image-resizer.compon
     AboutComponent,
     ProfileComponent,
     MemeCardComponent,
-    EmptyMemeComponent,
+    EmptyMemeCardComponent,
     MemeFormComponent,
     AuthComponent,
     HeaderDropDownComponent,
     ActivationComponent,
     SpinnerComponent,
     PopUpComponent,
-    ImageResizerComponent
+    ImageResizerComponent,
+    MemeMyComponent,
+    PaginationComponent
   ],
   imports: [
     BrowserModule,

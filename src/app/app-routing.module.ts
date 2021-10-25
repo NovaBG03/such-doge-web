@@ -6,11 +6,13 @@ import {ProfileComponent} from "./profile/profile.component";
 import {MemeFormComponent} from "./meme/meme-form/meme-form.component";
 import {AuthComponent} from "./auth/auth.component";
 import {ActivationComponent} from "./auth/activation/activation.component";
+import {MemeMyComponent} from "./meme/meme-my/meme-my.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'all', pathMatch: 'full'},
   {path: 'all', component: MemeListComponent},
   {path: 'top', component: MemeListComponent},
+  {path: 'my', component: MemeMyComponent},
   {path: 'about', component: AboutComponent},
   {path: 'profile', component: ProfileComponent},
   {path: 'upload', component: MemeFormComponent},

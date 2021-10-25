@@ -1,17 +1,17 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {MemeService} from "../meme.service";
 import {Meme} from "../model/meme.model";
-import {ActivatedRoute, Params, Router} from "@angular/router";
-import {concatMap, tap} from "rxjs/operators";
 import {environment} from "../../../environments/environment";
 import {Subscription} from "rxjs";
+import {MemeService} from "../meme.service";
+import {ActivatedRoute, Params, Router} from "@angular/router";
+import {concatMap, tap} from "rxjs/operators";
 
 @Component({
-  selector: 'app-meme-list',
-  templateUrl: './meme-list.component.html',
-  styleUrls: ['./meme-list.component.css']
+  selector: 'app-meme-my',
+  templateUrl: './meme-my.component.html',
+  styleUrls: ['./meme-my.component.css']
 })
-export class MemeListComponent implements OnInit, OnDestroy {
+export class MemeMyComponent implements OnInit, OnDestroy {
   memes: Meme[] = [];
   isLoading = true;
   memesCount = 0;
@@ -94,4 +94,5 @@ export class MemeListComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.loadMemesSub?.unsubscribe();
   }
+
 }
