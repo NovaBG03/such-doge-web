@@ -14,14 +14,11 @@
   cursor: pointer;
 }
 
-.memes {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-evenly;
-}
-
-.memes * {
-  margin: 10px 5px;
+.memes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  grid-gap: 1em;
+  margin-top: 10px;
 }
 
 .page-navigation-block {
@@ -84,6 +81,15 @@
 
 .page-selector .btn-page a {
   color: inherit;
+}
+
+.not-found-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -70%);
+  font-size: 24px;
+  font-weight: var(--weight-medium);
 }
 
 /* Landscape phone to portrait tablet */

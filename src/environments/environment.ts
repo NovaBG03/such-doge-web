@@ -4,5 +4,6 @@ export const environment = {
   authPrefix: "Bearer ",
   authHeader: "Authorization",
   authTokenKey: 'dogeAuthToken',
-  preferredThemeKey: 'dogePreferredTheme'
+  preferredThemeKey: 'dogePreferredTheme',
+  defaultMemePageSize: 8
 };

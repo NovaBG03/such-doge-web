@@ -3,13 +3,20 @@
   <button class="btn-create" routerLink="/upload">+ Upload meme</button>
 </div>
 
-<div class="memes">
-  <!--  <app-empty-meme *ngFor="let el of getArray(5)"></app-empty-meme>-->
-  <!--  <app-meme-card *ngFor="let el of getArray(20)"></app-meme-card>-->
-  <app-meme-card *ngFor="let meme of memes" [meme]="meme"></app-meme-card>
+<div class="page-content">
+  <div class="memes-grid">
+    <ng-template [ngIf]="isLoading">
+      <app-empty-meme *ngFor="let el of getArray(size)"></app-empty-meme>
+    </ng-template>
+
+    <ng-template [ngIf]="!isLoading">
+      <app-meme-card *ngFor="let meme of memes" [meme]="meme"></app-meme-card>
+      <div class="not-found-center" *ngIf="!memes || !memes.length">No memes yet</div>
+    </ng-template>
+  </div>
 </div>
 
-<div class="page-navigation-block no-select">
+<div class="page-navigation-block no-select" *ngIf="validParams">
   <ul class="page-selector">
     <li class="btn-page visually-hidden-phone" *ngIf="currentPage != 1"
         (click)="moveToPage(currentPage - 1)">

@@ -1,31 +1,79 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MemeService} from "../meme.service";
 import {Meme} from "../model/meme.model";
+import {ActivatedRoute, Params, Router} from "@angular/router";
+import {concatMap, tap} from "rxjs/operators";
+import {environment} from "../../../environments/environment";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-meme-list',
   templateUrl: './meme-list.component.html',
   styleUrls: ['./meme-list.component.css']
 })
-export class MemeListComponent implements OnInit {
+export class MemeListComponent implements OnInit, OnDestroy {
   memes: Meme[] = [];
+  isLoading = true;
   lastPage = 1;
-
   currentPage = 1;
-  private size = 3;
+  size = environment.defaultMemePageSize;
 
-  constructor(private memeService: MemeService) {
+  private loadMemesSub!: Subscription;
+
+  get validParams(): boolean {
+    return this.currentPage >= 1 && this.size >= 1;
+  }
+
+  constructor(private memeService: MemeService,
+              private route: ActivatedRoute,
+              private router: Router) {
   }
 
   ngOnInit(): void {
-    this.memeService.getMemeCount()
-      .subscribe(count => this.lastPage = Math.ceil(count / this.size));
-
-    this.memeService.getMemePage(this.currentPage - 1, this.size)
-      .subscribe(memes => this.memes = memes);
+     this.loadMemesSub = this.route.queryParams
+      .pipe(
+        tap(() => {
+          this.isLoading = true;
+          window.scroll(0, 0);
+        }),
+        tap(params => {
+          if (params.size) {
+            this.size = +params.size;
+          } else {
+            this.size = environment.defaultMemePageSize;
+          }
+          if (params.page) {
+            this.currentPage = +params.page;
+          } else {
+            this.currentPage = 1;
+          }
+        }),
+        tap(() => {
+          if (!this.validParams) {
+            this.navigateToDefaultPage();
+          }
+        }),
+        concatMap(() => {
+          return this.memeService.getMemeCount()
+            .pipe(
+              tap(count => this.lastPage = Math.ceil(count / this.size))
+            )
+        }),
+        tap(() => {
+          if (this.currentPage > this.lastPage) {
+            this.navigateToDefaultPage();
+          }
+        }),
+        concatMap(() => {
+          return this.memeService.getMemePage(this.currentPage - 1, this.size)
+        })
+      ).subscribe(memes => {
+      this.memes = memes;
+      this.isLoading = false;
+    });
   }
 
-  getArray(length: string): any[] {
+  getArray(length: number): any[] {
     return Array(length);
   }
 
@@ -40,10 +88,29 @@ export class MemeListComponent implements OnInit {
   }
 
   moveToPage(page: number | string): void {
-    const pageNumber = page as number;
+    const pageNumber = +page;
     if (!pageNumber) {
       return;
     }
-    this.currentPage = pageNumber;
+
+    const updatedQueryParams: Params = {
+      size: this.size,
+      page: page
+    };
+
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: updatedQueryParams
+    });
+  }
+
+  private navigateToDefaultPage() {
+    this.router.navigate([], {
+      relativeTo: this.route,
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.loadMemesSub?.unsubscribe();
   }
 }

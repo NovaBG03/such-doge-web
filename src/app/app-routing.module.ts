@@ -8,7 +8,8 @@ import {AuthComponent} from "./auth/auth.component";
 import {ActivationComponent} from "./auth/activation/activation.component";
 
 const routes: Routes = [
-  {path: '', component: MemeListComponent, pathMatch: 'full'},
+  {path: '', redirectTo: 'all', pathMatch: 'full'},
+  {path: 'all', component: MemeListComponent},
   {path: 'top', component: MemeListComponent},
   {path: 'about', component: AboutComponent},
   {path: 'profile', component: ProfileComponent},
