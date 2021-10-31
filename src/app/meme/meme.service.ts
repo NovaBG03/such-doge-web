@@ -13,18 +13,47 @@ export class MemeService {
   constructor(private http: HttpClient, private sanitizer: DomSanitizer) {
   }
 
-  getMemeCount(): Observable<number> {
-    const url = `${environment.suchDogeApi}/meme/count`;
+  getMemesCount(): Observable<number> {
+    const url = `${environment.suchDogeApi}/meme/public/count`;
     return this.http.get<MemeCountDto>(url)
       .pipe(
         map(memeCountDto => memeCountDto.count)
       );
   }
 
-  getMemePage(page: number, size: number): Observable<Meme[]> {
-    const url = `${environment.suchDogeApi}/meme`;
+  getMyMemesCount(isApproved: boolean, isPending: boolean): Observable<number> {
+    const url = `${environment.suchDogeApi}/meme/my/count`;
+    return this.http.get<MemeCountDto>(url, {
+      params: {
+        approved: isApproved,
+        pending: isPending
+      }
+    }).pipe(
+      map(memeCountDto => memeCountDto.count)
+    );
+  }
+
+  getMemesPage(page: number, size: number): Observable<Meme[]> {
+    const url = `${environment.suchDogeApi}/meme/public`;
     return this.http.get<MemeListResponseDto>(url, {
       params: {
+        page: page,
+        size: size
+      }
+    }).pipe(
+      map(memeListResponseDto =>
+        memeListResponseDto.memes.map(memeResponseDto =>
+          this.memeResponseDtoToMeme(memeResponseDto)
+        )
+      ));
+  }
+
+  getMyMemesPage(page: number, size: number, isApproved: boolean, isPending: boolean): Observable<Meme[]> {
+    const url = `${environment.suchDogeApi}/meme/my`;
+    return this.http.get<MemeListResponseDto>(url, {
+      params: {
+        approved: isApproved,
+        pending: isPending,
         page: page,
         size: size
       }

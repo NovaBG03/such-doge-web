@@ -319,6 +319,16 @@ form .hint {
   z-index: 0 !important;
 }
 
+
+/* Meme Grid*/
+.meme-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  grid-gap: 1em;
+  margin-top: 10px;
+}
+
+
 /* Responsive */
 /* Large desktop */
 @media (min-width: 1200px) {
@@ -338,10 +348,6 @@ form .hint {
 @media (max-width: 768px) {
   .main-container {
     padding: 15px 20px;
-  }
-
-  .heading .title {
-    margin: auto;
   }
 
   .small-label {

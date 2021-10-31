@@ -17,6 +17,10 @@ export class MemeMyComponent implements OnInit, OnDestroy {
   memesCount = 0;
   currentPage = 1;
   size = environment.defaultMemePageSize;
+  isApproved = true;
+  isPending = true;
+  approvedCheckboxValue = false;
+  pendingCheckboxValue = false;
 
   private loadMemesSub!: Subscription;
 
@@ -33,11 +37,30 @@ export class MemeMyComponent implements OnInit, OnDestroy {
           window.scroll(0, 0);
         }),
         tap(params => {
+          if (!params.approved) {
+            this.isApproved = true;
+          } else if (this.isValidBoolean(params.approved)) {
+            this.isApproved = JSON.parse(params.approved);
+          } else {
+            console.log("invalid approved")
+            this.navigateToDefaultPage();
+          }
+
+          if (!params.pending) {
+            this.isPending = true;
+          } else if (this.isValidBoolean(params.pending)) {
+            this.isPending = JSON.parse(params.pending);
+          } else {
+            console.log("invalid pending")
+            this.navigateToDefaultPage();
+          }
+
           if (!params.size) {
             this.size = environment.defaultMemePageSize;
           } else if (+params.size >= 1) {
             this.size = +params.size;
           } else {
+            console.log("invalid size")
             this.navigateToDefaultPage();
           }
 
@@ -46,17 +69,27 @@ export class MemeMyComponent implements OnInit, OnDestroy {
           } else if (+params.page >= 1) {
             this.currentPage = +params.page;
           } else {
+            console.log("invalid page")
             this.navigateToDefaultPage();
           }
         }),
+        tap(() => {
+          const different = this.isApproved != this.isPending;
+          this.approvedCheckboxValue = different && this.isApproved;
+          this.pendingCheckboxValue = different && this.isPending;
+        }),
         concatMap(() => {
-          return this.memeService.getMemeCount()
+          return this.memeService.getMyMemesCount(this.isApproved, this.isPending)
             .pipe(
               tap(count => this.memesCount = count)
             )
         }),
         concatMap(() => {
-          return this.memeService.getMemePage(this.currentPage - 1, this.size)
+          return this.memeService.getMyMemesPage(
+            this.currentPage - 1,
+            this.size,
+            this.isApproved,
+            this.isPending)
         })
       ).subscribe(memes => {
         this.memes = memes;
@@ -75,6 +108,8 @@ export class MemeMyComponent implements OnInit, OnDestroy {
     }
 
     const updatedQueryParams: Params = {
+      approved: this.isApproved,
+      pending: this.isPending,
       size: this.size,
       page: page
     };
@@ -85,14 +120,55 @@ export class MemeMyComponent implements OnInit, OnDestroy {
     });
   }
 
-  private navigateToDefaultPage() {
+  pendingOnlyToggle($event: Event): void {
+    $event.preventDefault();
+
+    const persistedQueryParams: Params = {
+      approved: this.isPending && !this.isApproved,
+      pending: true,
+      page: 1
+    };
+
     this.router.navigate([], {
       relativeTo: this.route,
+      queryParams: persistedQueryParams,
+      queryParamsHandling: 'merge'
     });
+  }
+
+  approvedOnlyToggle($event: Event): void {
+    $event.preventDefault();
+
+    const persistedQueryParams: Params = {
+      approved: true,
+      pending: this.isApproved && !this.isPending,
+      page: 1
+    };
+
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: persistedQueryParams,
+      queryParamsHandling: 'merge'
+    });
+  }
+
+  private navigateToDefaultPage() {
+    const persistedQueryParams: Params = {
+      approved: this.isApproved,
+      pending: this.isPending
+    };
+
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: persistedQueryParams
+    });
+  }
+
+  private isValidBoolean(str: String) {
+    return str.toLowerCase() === 'true' || str.toLowerCase() === 'false';
   }
 
   ngOnDestroy(): void {
     this.loadMemesSub?.unsubscribe();
   }
-
 }

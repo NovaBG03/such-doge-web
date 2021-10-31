@@ -12,7 +12,7 @@ import {MemeCardComponent} from './meme/meme-cards/meme-card/meme-card.component
 import {EmptyMemeCardComponent} from './meme/meme-cards/empty-meme-card/empty-meme-card.component';
 import {MemeFormComponent} from './meme/meme-form/meme-form.component';
 import {AuthComponent} from './auth/auth.component';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {HeaderDropDownComponent} from './header/header-drop-down/header-drop-down.component';
 import {ActivationComponent} from './auth/activation/activation.component';
@@ -44,13 +44,14 @@ import { PaginationComponent } from './util/pagination/pagination.component';
     MemeMyComponent,
     PaginationComponent
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    ImageCropperModule,
-    AppRoutingModule
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        ImageCropperModule,
+        AppRoutingModule,
+        FormsModule
+    ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
