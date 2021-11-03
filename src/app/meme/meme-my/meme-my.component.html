@@ -1,10 +1,12 @@
 <div class="heading">
   <h1 class="title">My Memes</h1>
-  <div class="meme-filters">
-    <input type="checkbox" id="approved" [ngModel]="approvedCheckboxValue" (change)="approvedOnlyToggle($event)">
-    <label for="approved">Approved only</label>
-    <input style="margin-left: 10px;" type="checkbox" id="pending" [ngModel]="pendingCheckboxValue" (change)="pendingOnlyToggle($event)">
-    <label for="pending">Pending only</label>
+  <div class="meme-filters no-select">
+    <label class="big-checkbox" [ngClass]="{active: approvedCheckbox.checked}" for="approved">Approved only
+      <input type="checkbox" id="approved" [ngModel]="approvedCheckboxValue" (change)="approvedOnlyToggle($event)" #approvedCheckbox>
+    </label>
+    <label class="big-checkbox" [ngClass]="{active: pendingCheckbox.checked}" for="pending">Pending only
+      <input type="checkbox" id="pending" [ngModel]="pendingCheckboxValue" (change)="pendingOnlyToggle($event)" #pendingCheckbox>
+    </label>
   </div>
 </div>
 
