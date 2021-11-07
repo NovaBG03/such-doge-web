@@ -251,10 +251,22 @@ form .hint {
   transition: var(--transition);
 }
 
+.btn-outline:disabled {
+  opacity: 0.5;
+  cursor: default;
+  border: 4px solid var(--btn-color);
+}
+
 .btn-outline:hover,
 .btn-outline:focus {
   color: var(--color-white);
   background: var(--btn-color);
+}
+
+.btn-outline:disabled:hover,
+.btn-outline:disabled:focus {
+  color: var(--color-text);
+  background: transparent;
 }
 
 .btn-solid {
@@ -284,6 +296,10 @@ form .hint {
 
 .btn-danger {
   --btn-color: var(--color-danger);
+}
+
+.btn-grey {
+  --btn-color: var(--color-text-unselected);
 }
 
 

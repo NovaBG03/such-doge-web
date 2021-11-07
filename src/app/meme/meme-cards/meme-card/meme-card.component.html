@@ -9,7 +9,17 @@
   </div>
   <img [src]="meme.imageUrl" [alt]="meme.description" class="meme no-select">
   <div class="meme-navigation">
-    <button class="btn-outline btn-success">Approve</button>
-    <button class="btn-outline">Deny</button>
+    <ng-template [ngIf]="meme.isApproved == undefined || meme.isApproved" [ngIfElse]="notApprovedNavigation">
+      <button class="btn-outline">Donate</button>
+    </ng-template>
+    <ng-template #notApprovedNavigation>
+      <ng-template [ngIf]="isModeratorModeOn">
+        <button class="btn-outline btn-success">Approve</button>
+        <button class="btn-outline btn-danger">Deny</button>
+      </ng-template>
+      <ng-template [ngIf]="!isModeratorModeOn">
+        <button class="btn-outline btn-grey" disabled>Pending Approval</button>
+      </ng-template>
+    </ng-template>
   </div>
 </div>

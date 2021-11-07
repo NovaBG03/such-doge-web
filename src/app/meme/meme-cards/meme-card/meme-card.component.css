@@ -68,10 +68,12 @@
   cursor: pointer;
 }
 
-.btn-outline {
-  width: 49%;
-}
-
-.meme-navigation>.btn-outline:last-of-type {
-  margin-left: 2%;
+.meme-navigation {
+  display: flex;
+  display: flex;
+  justify-content: center;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
 }

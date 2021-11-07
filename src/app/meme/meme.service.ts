@@ -7,6 +7,7 @@ import {MemeListResponseDto, MemeResponseDto} from "./model/memeResponse.dto";
 import {Meme} from "./model/meme.model";
 import {DomSanitizer} from "@angular/platform-browser";
 import {MemeCountDto} from "./model/memeCount.dto";
+import {MemeMyListResponseDto, MemeMyResponseDto} from "./model/memeMyResponse.dto";
 
 @Injectable({providedIn: 'root'})
 export class MemeService {
@@ -50,7 +51,7 @@ export class MemeService {
 
   getMyMemesPage(page: number, size: number, isApproved: boolean, isPending: boolean): Observable<Meme[]> {
     const url = `${environment.suchDogeApi}/meme/my`;
-    return this.http.get<MemeListResponseDto>(url, {
+    return this.http.get<MemeMyListResponseDto>(url, {
       params: {
         approved: isApproved,
         pending: isPending,
@@ -58,9 +59,9 @@ export class MemeService {
         size: size
       }
     }).pipe(
-      map(memeListResponseDto =>
-        memeListResponseDto.memes.map(memeResponseDto =>
-          this.memeResponseDtoToMeme(memeResponseDto)
+      map(memeMyListResponseDto =>
+        memeMyListResponseDto.memes.map(memeMyResponseDto =>
+          this.memeMyResponseDtoToMeme(memeMyResponseDto)
         )
       ));
   }
@@ -89,17 +90,32 @@ export class MemeService {
   }
 
   private memeResponseDtoToMeme(dto: MemeResponseDto): Meme {
-    const objectUrl = 'data:image/png;base64,' + dto.imageBytes;
-    const imageUrl = this.sanitizer.bypassSecurityTrustUrl(objectUrl);
-
     const meme: Meme = {
       id: dto.id,
       title: dto.title,
       description: dto.description,
-      imageUrl: imageUrl,
+      imageUrl: this.createImageUrl(dto.imageBytes),
       publisherUsername: dto.publisherUsername,
-      publishedOn: new Date(dto.publishedOn)
+      publishedOn: new Date(dto.publishedOn),
     };
     return meme;
+  }
+
+  private memeMyResponseDtoToMeme(dto: MemeMyResponseDto): Meme {
+    const meme: Meme = {
+      id: dto.id,
+      title: dto.title,
+      description: dto.description,
+      imageUrl: this.createImageUrl(dto.imageBytes),
+      publisherUsername: dto.publisherUsername,
+      publishedOn: new Date(dto.publishedOn),
+      isApproved: dto.approved
+    };
+    return meme;
+  }
+
+  private createImageUrl(imageBytes: string) {
+    const objectUrl = 'data:image/png;base64,' + imageBytes;
+    return this.sanitizer.bypassSecurityTrustUrl(objectUrl);
   }
 }

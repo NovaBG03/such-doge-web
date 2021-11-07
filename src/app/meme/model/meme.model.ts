@@ -7,4 +7,5 @@ export interface Meme {
   imageUrl: SafeUrl;
   publisherUsername: string;
   publishedOn: Date;
+  isApproved?: boolean
 }

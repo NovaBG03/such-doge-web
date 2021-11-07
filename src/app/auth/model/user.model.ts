@@ -18,6 +18,12 @@ export class DogeUser {
     this.expiration = new Date(jwt.exp * 1000);
   }
 
+  get isModeratorOrAdmin(): boolean {
+    console.log(this);
+    return this.authorities.includes(Authority.Moderator)
+      || this.authorities.includes(Authority.Admin);
+  }
+
   get isExpired(): boolean {
     return this.secondsUntilExpiration <= 0;
   }

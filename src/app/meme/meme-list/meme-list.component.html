@@ -16,7 +16,7 @@
   </div>
 </div>
 
-<app-pagination *ngIf="!isLoading"
+<app-pagination *ngIf="!isLoading && memesCount"
                 [size]="size" [currentPage]="currentPage" [elementsCount]="memesCount"
                 (nextPage)="moveToPage($event)"
                 (invalidPage)="moveToPage(1)"></app-pagination>

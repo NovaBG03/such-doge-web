@@ -8,8 +8,10 @@ import {Meme} from "../../model/meme.model";
 })
 export class MemeCardComponent implements OnInit {
   @Input() meme!: Meme;
+  isModeratorModeOn = false;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
   }
