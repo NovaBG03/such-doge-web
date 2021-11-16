@@ -73,8 +73,10 @@
         </svg>
         <a class="link-text">About</a>
       </li>
-      <li class="link link-hidden header-drop-down-control" [ngClass]="{active: isDropDownOpen}" (click)="toggleDropDown()" *ngIf="user | async">
-        <svg class="icon header-drop-down-control" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <li class="link link-hidden header-drop-down-control" [ngClass]="{active: isDropDownOpen}"
+          (click)="toggleDropDown()" *ngIf="user | async">
+        <svg class="icon header-drop-down-control" width="28" height="28" viewBox="0 0 28 28" fill="none"
+             xmlns="http://www.w3.org/2000/svg">
           <path class="icon-fill header-drop-down-control" fill-rule="evenodd" clip-rule="evenodd"
                 d="M4.60649 7H23.3933C24.0023 7 24.5005 7.49817 24.5005 8.10717V8.22617C24.5005 8.83517 24.0023 9.33333 23.3933 9.33333H4.60649C3.99749 9.33333 3.50049 8.83517 3.50049 8.22617V8.10717C3.50049 7.49817 3.99749 7 4.60649 7ZM23.3933 12.8333H4.60649C3.99749 12.8333 3.50049 13.3315 3.50049 13.9405V14.0595C3.50049 14.6685 3.99749 15.1667 4.60649 15.1667H23.3933C24.0023 15.1667 24.5005 14.6685 24.5005 14.0595V13.9405C24.5005 13.3315 24.0023 12.8333 23.3933 12.8333ZM23.3933 18.6667H4.60649C3.99749 18.6667 3.50049 19.1648 3.50049 19.7738V19.8928C3.50049 20.5018 3.99749 21 4.60649 21H23.3933C24.0023 21 24.5005 20.5018 24.5005 19.8928V19.7738C24.5005 19.1648 24.0023 18.6667 23.3933 18.6667Z"
                 fill="#A6ADB1"/>
@@ -88,7 +90,10 @@
       <div class="balance-box">
         <button class="btn-add">+</button>
         <div class="balance">
-          <img src="./assets/icons/doge_currency.png" alt="doge-currency" class="currency-icon">
+          <svg class="currency-icon" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 226.8 226.8">
+            <path class="icon-fill" d="M116.3 74.9h-16.2v32h25.5v13.4h-25.5v32h17c4.4 0 36 .5 35.9-37.3 0-37.7-30.6-40.1-36.7-40.1z"/>
+            <path class="icon-fill" d="M113.6 0a113.6 113.6 0 1 0 0 227.2 113.6 113.6 0 0 0 0-227.2zm4.5 175H76.9v-54.7H62.4v-13.4H77V52.2h35.3c8.4 0 63.7-1.8 63.7 62.4 0 65.2-57.8 60.4-57.8 60.4z"/>
+          </svg>
           <div class="balance-value">2443</div>
         </div>
       </div>

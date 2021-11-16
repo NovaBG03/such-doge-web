@@ -120,6 +120,11 @@ ul ul li {
 }
 
 .balance {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
   margin: 0 auto;
   padding: 0 2px;
   overflow: hidden;
@@ -133,8 +138,11 @@ ul ul li {
 
 .currency-icon {
   margin-right: 5px;
-  width: 1em;
-  transform: translateY(0.12rem);
+  width: 1.2em;
+}
+
+.currency-icon .icon-fill {
+  fill: var(--color-text);
 }
 
 .profile-picture {

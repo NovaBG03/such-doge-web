@@ -1,7 +1,8 @@
 import {Component, ElementRef, EventEmitter, HostListener, OnDestroy, OnInit, Output} from '@angular/core';
 import {AuthService} from "../../auth/auth.service";
 import {ThemeService} from "../../util/theme.service";
-import {Subscription} from "rxjs";
+import {Observable, Subscription} from "rxjs";
+import {DogeUser} from "../../auth/model/user.model";
 
 @Component({
   selector: 'app-header-drop-down',
@@ -11,12 +12,14 @@ import {Subscription} from "rxjs";
 export class HeaderDropDownComponent implements OnInit, OnDestroy {
   @Output() close = new EventEmitter<void>();
 
+  user: Observable<DogeUser | null>;
   isDarkMode = false;
   private themeSub!: Subscription;
 
   constructor(private eRef: ElementRef,
               private authService: AuthService,
               private themeService: ThemeService) {
+    this.user = authService.user;
   }
 
   ngOnInit(): void {
