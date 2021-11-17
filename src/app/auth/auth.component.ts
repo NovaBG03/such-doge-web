@@ -2,9 +2,11 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {map} from "rxjs/operators";
 import {Subscription} from "rxjs";
-import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from "@angular/forms";
+import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "./auth.service";
 import {PopUpModel} from "../util/pop-up/pop-up-model";
+import {environment} from "../../environments/environment";
+import * as CustomValidators from "../util/validation/custom-validator.functions";
 
 @Component({
   selector: 'app-auth',
@@ -127,28 +129,29 @@ export class AuthComponent implements OnInit, OnDestroy {
     if (this.isRegister) {
       this.authForm.get('username')?.setValidators([
         Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(36)
+        Validators.minLength(environment.minUsernameLength),
+        Validators.maxLength(environment.maxUsernameLength)
       ]);
 
       this.authForm.addControl('email',
         new FormControl('', [
           Validators.required,
-          Validators.minLength(3),
-          Validators.maxLength(254),
+          Validators.minLength(environment.minEmailLength),
+          Validators.maxLength(environment.maxEmailLength),
           Validators.email
         ]));
 
       const passwordsGroup = this.authForm.get('passwords') as FormGroup;
 
-      passwordsGroup.setValidators(this.isPasswordConfirmedValidator());
+      passwordsGroup.setValidators(
+        CustomValidators.isPasswordConfirmedValidator('password', 'confirmed'));
 
       passwordsGroup.get('password')?.setValidators([
         Validators.required,
-        Validators.minLength(6),
-        Validators.maxLength(50),
-        this.hasDigitsValidator(),
-        this.hasAlphabeticCharacters()
+        Validators.minLength(environment.minPasswordLength),
+        Validators.maxLength(environment.maxPasswordLength),
+        CustomValidators.hasDigitsValidator(),
+        CustomValidators.hasAlphabeticCharacters()
       ]);
 
       passwordsGroup.addControl('confirmed',
@@ -156,8 +159,8 @@ export class AuthComponent implements OnInit, OnDestroy {
           Validators.required,
           Validators.minLength(6),
           Validators.maxLength(50),
-          this.hasDigitsValidator(),
-          this.hasAlphabeticCharacters()
+          CustomValidators.hasDigitsValidator(),
+          CustomValidators.hasAlphabeticCharacters()
         ]));
     }
   }
@@ -169,29 +172,5 @@ export class AuthComponent implements OnInit, OnDestroy {
       description: 'Please click the activation link we sent to your email',
       buttonText: 'Continue'
     };
-  }
-
-  private hasDigitsValidator(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const hasDigits = control.value && /\d/.test(control.value);
-      return hasDigits ? null : {hasDigit: {value: control.value}};
-    }
-  }
-
-  private hasAlphabeticCharacters(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const hasAlphabeticCharacters = control.value && /[a-z]/.test(control.value);
-      return hasAlphabeticCharacters ? null : {hasAlphabeticCharacters: {value: control.value}};
-    }
-  }
-
-  private isPasswordConfirmedValidator(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const password = control.get('password')?.value;
-      const confirmPassword = control.get('confirmed')?.value;
-
-      const isPasswordConfirmed = password === confirmPassword;
-      return isPasswordConfirmed ? null : {isPasswordConfirmed: {value: control.value}};
-    }
   }
 }

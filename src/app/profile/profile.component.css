@@ -48,7 +48,7 @@
   min-height: 90px;
   background: var(--color-main);
   border-radius: 15px;
-  margin: 10px;
+  margin: 10px 10px 10px 0;
   padding: 20px;
 }
 
@@ -90,9 +90,10 @@
 }
 
 .statistics-row {
+  position: absolute;
+  top: 580px;
   order: 3;
   width: 390px;
-  transform: translateY(-50%);
   margin-bottom: 25px;
 }
 
@@ -131,9 +132,9 @@
   }
 
   .statistics-row {
+    position: unset;
     order: 3;
     width: auto;
-    transform: none;
   }
 }
 
@@ -163,7 +164,7 @@
   .profile-image-card {
     width: 420px;
     height: auto;
-    margin: auto;
+    margin: 0 auto 25px;
   }
 
   .profile-image-card img {
@@ -174,8 +175,8 @@
   }
 
   .statistics-row {
+    position: unset;
     order: 2;
-    transform: none;
     width: 100%;
   }
 

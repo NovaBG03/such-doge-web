@@ -147,16 +147,20 @@ body {
 
 /* Doge Form */
 
-.doge-form .form-group {
-  padding: 0 0 20px 0;
+.doge-form {
+  margin: 0 0 20px 0;
 }
 
-.doge-form .form-group .title {
+.doge-form .form-group {
+  margin-bottom: 15px;
+}
+
+.doge-form .title {
   margin-bottom: 10px;
   font-size: 17px;
 }
 
-.doge-form .small-label {
+.small-label {
   font-size: 14px;
 }
 
@@ -366,13 +370,13 @@ form .hint {
     padding: 15px 20px;
   }
 
-  .small-label {
-    margin-top: 20px;
-    text-align: center;
+  .doge-form .form-group {
+    margin-bottom: 20px;
   }
 
-  .doge-form .small-label {
+  .small-label {
     display: block;
+    text-align: center;
   }
 
   .doge-form .input {
@@ -380,7 +384,7 @@ form .hint {
     margin: 10px auto 3px;
   }
 
-  .form-group .title {
+  .doge-form .title {
     text-align: center;
   }
 
