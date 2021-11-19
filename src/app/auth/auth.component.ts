@@ -157,8 +157,8 @@ export class AuthComponent implements OnInit, OnDestroy {
       passwordsGroup.addControl('confirmed',
         new FormControl('', [
           Validators.required,
-          Validators.minLength(6),
-          Validators.maxLength(50),
+          Validators.minLength(environment.minPasswordLength),
+          Validators.maxLength(environment.maxPasswordLength),
           CustomValidators.hasDigitsValidator(),
           CustomValidators.hasAlphabeticCharacters()
         ]));

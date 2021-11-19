@@ -16,3 +16,8 @@ export interface UserInfoDto {
   enabledAt: string,
   authorities: { authority: string }[]
 }
+
+export interface UserInfoUpdateDto {
+  email?: string,
+  publicKey?: string,
+}

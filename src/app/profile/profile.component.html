@@ -10,37 +10,87 @@
     </div>
   </div>
   <div class="row settings-row" style="flex: 2;">
-    <form class="doge-form" [formGroup]="userInfoForm" *ngIf="userInfo">
+    <form class="doge-form" (ngSubmit)="updateUserInfo()" [formGroup]="userInfoForm" *ngIf="userInfo">
       <div class="title" hidden>Account settings</div>
       <div class="form-group">
         <label class="small-label" for="username">Username</label>
-        <input class="input" type="text" id="username" formControlName="username">
+        <input readonly [ngClass]="{highlighted: isUsernameChanged}" class="input" type="text" id="username"
+               formControlName="username">
+        <ng-template [ngIf]="username.touched && username.invalid && username.errors">
+          <span class="hint" *ngIf="username.errors.required">* Username is required.</span>
+          <span class="hint"
+                *ngIf="username.errors.minlength as error">* Username must be at least {{ error.requiredLength }}
+            characters.</span>
+          <span class="hint"
+                *ngIf="username.errors.maxlength as error">* Username can not be more than {{ error.requiredLength }}
+            characters.</span>
+        </ng-template>
       </div>
       <div class="form-group">
         <label class="small-label" for="email">Email</label>
-        <input class="input" type="text" id="email" formControlName="email">
+        <input [ngClass]="{highlighted: isEmailChanged}" class="input" type="text" id="email" formControlName="email">
+        <ng-template [ngIf]="email.touched && email.invalid && email.errors">
+          <span class="hint" *ngIf="email.errors.email">* Must be a valid email.</span>
+          <span class="hint" *ngIf="email.errors.required">* Email is required.</span>
+          <span class="hint"
+                *ngIf="email.errors.minlength as error">* Email must be at least {{ error.requiredLength }}
+            characters.</span>
+          <span class="hint"
+                *ngIf="email.errors.maxlength as error">* Email can not be more than {{ error.requiredLength }}
+            characters.</span>
+        </ng-template>
       </div>
       <div class="form-group">
         <label class="small-label" for="public-key">Public key</label>
-        <input class="input" type="text" id="public-key" formControlName="publicKey">
+        <input [ngClass]="{highlighted: isPublicKeyChanged}" class="input" type="text" id="public-key"
+               formControlName="publicKey">
       </div>
-      <button class="btn-outline" type="submit">Save changes</button>
+      <button [ngClass]="{'visually-hidden': !(userInfoForm.valid && isUserInfoChanged)}"
+              [disabled]="!(userInfoForm.valid && isUserInfoChanged)"
+              class="btn-outline" type="submit">Update profile
+      </button>
     </form>
-    <form class="doge-form form-group" [formGroup]="passwordsForm">
+    <form class="doge-form form-group" (ngSubmit)="changePassword()" [formGroup]="passwordsForm">
       <div class="title">Password management</div>
       <div class="form-group">
         <label class="small-label" for="current-password">Current password</label>
-        <input class="input" type="text" id="current-password" formGroupName="currentPassword">
+        <input class="input" type="password" id="current-password" formControlName="current">
+        <ng-template [ngIf]="currentPass.touched && currentPass.invalid && currentPass.errors">
+          <span class="hint" *ngIf="currentPass.errors.required">* Current password is required.</span>
+          <span class="hint"
+                *ngIf="currentPass.errors.minlength as error">* Current Password must be at least {{ error.requiredLength }}
+            characters.</span>
+          <span class="hint"
+                *ngIf="currentPass.errors.maxlength as error">* Current Password can not be more than {{ error.requiredLength }}
+            characters.</span>
+        </ng-template>
       </div>
       <div class="form-group">
         <label class="small-label" for="new-password">New password</label>
-        <input class="input" type="text" id="new-password" formGroupName="newPassword">
+        <input class="input" type="password" id="new-password" formControlName="new">
+        <ng-template [ngIf]="newPass.touched && newPass.invalid && newPass.errors">
+          <span class="hint" *ngIf="newPass.errors.required">* New password is required.</span>
+          <span class="hint" *ngIf="newPass.errors.hasDigit">* Must contain at least 1 digit.</span>
+          <span class="hint" *ngIf="newPass.errors.hasAlphabeticCharacters">* Must contain at least 1 alphabetic character.</span>
+          <span class="hint"
+                *ngIf="newPass.errors.minlength as error">* New password must be at least {{ error.requiredLength }}
+            characters.</span>
+          <span class="hint"
+                *ngIf="newPass.errors.maxlength as error">* New password can not be more than {{ error.requiredLength }}
+            characters.</span>
+        </ng-template>
       </div>
       <div class="form-group">
         <label class="small-label" for="confirm-password">Confirm new password</label>
-        <input class="input" type="text" id="confirm-password" formControlName="confirmPassword">
+        <input class="input" type="password" id="confirm-password" formControlName="confirm">
+        <ng-template [ngIf]="confirmPass.touched && passwordsForm.invalid && passwordsForm.errors">
+          <span class="hint" *ngIf="passwordsForm.errors.isPasswordConfirmed">* Password is not the same.</span>
+        </ng-template>
       </div>
-      <button class="btn-outline" type="submit">Save changes</button>
+      <button [ngClass]="{'visually-hidden': !(passwordsForm.touched && passwordsForm.valid)}"
+              [disabled]="!(passwordsForm.touched && passwordsForm.valid)"
+              class="btn-outline" type="submit">Change password
+      </button>
     </form>
   </div>
   <div class="row statistics-row">
@@ -82,3 +132,11 @@
     </div>
   </div>
 </div>
+
+<app-pop-up *ngIf="errorPopUpModel.description"
+            [model]="errorPopUpModel"
+            (buttonPressed)="errorPopUpModel.description = ''"></app-pop-up>
+
+<app-pop-up *ngIf="isReady"
+            [model]="successPopUpModel"
+            (buttonPressed)="isReady = false"></app-pop-up>

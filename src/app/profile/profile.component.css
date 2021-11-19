@@ -97,6 +97,19 @@
   margin-bottom: 25px;
 }
 
+.input.highlighted {
+  outline: 3px solid var(--color-text-unselected);
+  outline-offset: -3px;
+}
+
+.input:read-only {
+  cursor: default;
+  color: var(--color-text-unselected);
+  background: var(--color-background);
+  outline: 3px solid var(--color-info);
+  outline-offset: -3px;
+}
+
 /* Responsive */
 /* Large desktop */
 @media (min-width: 1200px) {

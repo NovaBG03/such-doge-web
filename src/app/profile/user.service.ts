@@ -1,10 +1,11 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
-import {UserInfo, UserInfoDto} from "./model/userInfo.model";
+import {Observable, throwError} from "rxjs";
+import {UserInfo, UserInfoDto, UserInfoUpdateDto} from "./model/userInfo.model";
 import {environment} from "../../environments/environment";
-import {map, tap} from "rxjs/operators";
+import {catchError, map} from "rxjs/operators";
 import {Authority} from "../auth/model/authority.model";
+import {ChangePasswordDto} from "./model/password.model";
 
 @Injectable({providedIn: 'root'})
 export class UserService {
@@ -16,9 +17,51 @@ export class UserService {
     const url = `${environment.suchDogeApi}/me`;
     return this.http.get<UserInfoDto>(url)
       .pipe(
-        tap(console.log),
         map(userInfoDto => this.userInfoDtoToUserInfo(userInfoDto)),
-        tap(console.log)
+      );
+  }
+
+  updateUserInfo(userInfo: UserInfoUpdateDto): Observable<UserInfo> {
+    const url = `${environment.suchDogeApi}/me`;
+    return this.http.patch<UserInfoDto>(url, userInfo)
+      .pipe(
+        map(userInfoDto => this.userInfoDtoToUserInfo(userInfoDto)),
+        catchError(err => {
+          let message = 'Something went wrong!';
+          switch (err.error.message) {
+            case 'DOGE_USER_EMAIL_EXISTS':
+              message = `There is already user with email ${userInfo.email}`;
+              break;
+            case 'DOGE_USER_EMAIL_INVALID':
+              message = `Invalid email ${userInfo.email}`;
+              break;
+          }
+
+          return throwError(message);
+        })
+      );
+  }
+
+  changePassword(passwords: ChangePasswordDto): Observable<any> {
+    const url = `${environment.suchDogeApi}/me/password`
+    return this.http.post(url, passwords, {observe: 'response'})
+      .pipe(
+        catchError(err => {
+          let message = 'Something went wrong!';
+          switch (err.error.message) {
+            case 'PASSWORDS_DOES_NOT_MATCH':
+              message = `New password and Confirm password does not match`;
+              break;
+            case 'WRONG_OLD_PASSWORD':
+              message = `Invalid current password`;
+              break;
+            case 'NEW_PASSWORD_AND_OLD_PASSWORD_ARE_THE_SAME':
+              message = `New password and old password can not be the same`;
+              break;
+          }
+
+          return throwError(message);
+        })
       );
   }
 

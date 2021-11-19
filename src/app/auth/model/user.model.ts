@@ -19,7 +19,6 @@ export class DogeUser {
   }
 
   get isModeratorOrAdmin(): boolean {
-    console.log(this);
     return this.authorities.includes(Authority.Moderator)
       || this.authorities.includes(Authority.Admin);
   }
