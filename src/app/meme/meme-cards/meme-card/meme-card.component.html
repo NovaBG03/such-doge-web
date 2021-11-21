@@ -13,11 +13,11 @@
       <button class="btn-outline">Donate</button>
     </ng-template>
     <ng-template #notApprovedNavigation>
-      <ng-template [ngIf]="isModeratorModeOn">
+      <ng-template [ngIf]="isModeratorMode">
         <button class="btn-outline btn-success">Approve</button>
         <button class="btn-outline btn-danger">Deny</button>
       </ng-template>
-      <ng-template [ngIf]="!isModeratorModeOn">
+      <ng-template [ngIf]="!isModeratorMode">
         <button class="btn-outline btn-grey" disabled>Pending Approval</button>
       </ng-template>
     </ng-template>

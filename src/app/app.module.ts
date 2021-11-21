@@ -23,6 +23,7 @@ import {ImageCropperModule} from "ngx-image-cropper";
 import { ImageResizerComponent } from './util/image-resizer/image-resizer.component';
 import { MemeMyComponent } from './meme/meme-my/meme-my.component';
 import { PaginationComponent } from './util/pagination/pagination.component';
+import { MemePendingComponent } from './meme/admin/meme-pending/meme-pending.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { PaginationComponent } from './util/pagination/pagination.component';
     PopUpComponent,
     ImageResizerComponent,
     MemeMyComponent,
-    PaginationComponent
+    PaginationComponent,
+    MemePendingComponent
   ],
     imports: [
         BrowserModule,

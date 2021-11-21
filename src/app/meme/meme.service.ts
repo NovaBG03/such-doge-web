@@ -34,6 +34,14 @@ export class MemeService {
     );
   }
 
+  getPendingMemesCount(): Observable<number> {
+    const url = `${environment.suchDogeApi}/meme/pending/count`;
+    return this.http.get<MemeCountDto>(url)
+      .pipe(
+        map(memeCountDto => memeCountDto.count)
+      );
+  }
+
   getMemesPage(page: number, size: number): Observable<Meme[]> {
     const url = `${environment.suchDogeApi}/meme/public`;
     return this.http.get<MemeListResponseDto>(url, {
@@ -64,6 +72,23 @@ export class MemeService {
           this.memeMyResponseDtoToMeme(memeMyResponseDto)
         )
       ));
+  }
+
+  getPendingMemesPage(page: number, size: number): Observable<Meme[]> {
+    const url = `${environment.suchDogeApi}/meme/pending`;
+    return this.http.get<MemeListResponseDto>(url, {
+      params: {
+        page: page,
+        size: size
+      }
+    }).pipe(
+      map(memeListResponseDto =>
+        memeListResponseDto.memes.map(memeResponseDto => {
+          const meme = this.memeResponseDtoToMeme(memeResponseDto);
+          meme.isApproved = false;
+          return meme;
+        }))
+    );
   }
 
   postMeme(image: Blob, title: string, description: string): Observable<any> {

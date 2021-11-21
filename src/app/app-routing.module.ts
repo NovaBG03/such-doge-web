@@ -7,8 +7,10 @@ import {MemeFormComponent} from "./meme/meme-form/meme-form.component";
 import {AuthComponent} from "./auth/auth.component";
 import {ActivationComponent} from "./auth/activation/activation.component";
 import {MemeMyComponent} from "./meme/meme-my/meme-my.component";
-import {AuthGuard} from "./auth/auth.guard";
-import {NotAuthenticatedGuard} from "./auth/not-authenticated.guard";
+import {AuthGuard} from "./auth/guards/auth.guard";
+import {NotAuthenticatedGuard} from "./auth/guards/not-authenticated.guard";
+import {MemePendingComponent} from "./meme/admin/meme-pending/meme-pending.component";
+import {ModeratorOrAdminGuard} from "./auth/guards/moderator-or-admin.guard";
 
 const routes: Routes = [
   {path: '', redirectTo: 'all', pathMatch: 'full'},
@@ -18,6 +20,7 @@ const routes: Routes = [
   {path: 'my', component: MemeMyComponent, canActivate: [AuthGuard]},
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
   {path: 'upload', component: MemeFormComponent, canActivate: [AuthGuard]},
+  {path: 'admin', component: MemePendingComponent, canActivate: [ModeratorOrAdminGuard]},
   {path: 'register', component: AuthComponent, canActivate: [NotAuthenticatedGuard]},
   {path: 'login', component: AuthComponent, canActivate: [NotAuthenticatedGuard]},
   {path: 'activate/:token', component: ActivationComponent},

@@ -8,7 +8,7 @@ import {Meme} from "../../model/meme.model";
 })
 export class MemeCardComponent implements OnInit {
   @Input() meme!: Meme;
-  isModeratorModeOn = false;
+  @Input() isModeratorMode = false;
 
   constructor() {
   }
