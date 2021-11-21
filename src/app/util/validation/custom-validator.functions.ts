@@ -23,3 +23,13 @@ export function isPasswordConfirmedValidator(passwordPath: string, confirmedPath
     return isPasswordConfirmed ? null : {isPasswordConfirmed: {value: control.value}};
   }
 }
+
+export function notOnlyWhitespaceValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    if (!control.value || control.value.length === 0) {
+      return null;
+    }
+    const isNotOnlyWhitespace = (control.value || '').trim().length !== 0;
+    return isNotOnlyWhitespace ? null : {notOnlyWhitespace: {value: control.value}};
+  };
+}

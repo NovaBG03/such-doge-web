@@ -20,6 +20,7 @@
                placeholder="suchname"
                formControlName="username">
         <ng-template [ngIf]="username.touched && username.invalid && username.errors">
+          <span class="hint" *ngIf="username.errors.notOnlyWhitespace">* Username is only white space.</span>
           <span class="hint" *ngIf="username.errors.required">* Username is required.</span>
           <span class="hint"
                 *ngIf="username.errors.minlength">* Username must be at least {{ username.errors?.minlength?.requiredLength }}

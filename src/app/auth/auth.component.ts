@@ -130,7 +130,8 @@ export class AuthComponent implements OnInit, OnDestroy {
       this.authForm.get('username')?.setValidators([
         Validators.required,
         Validators.minLength(environment.minUsernameLength),
-        Validators.maxLength(environment.maxUsernameLength)
+        Validators.maxLength(environment.maxUsernameLength),
+        CustomValidators.notOnlyWhitespaceValidator()
       ]);
 
       this.authForm.addControl('email',

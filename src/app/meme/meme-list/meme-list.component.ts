@@ -5,6 +5,7 @@ import {ActivatedRoute, Params, Router} from "@angular/router";
 import {concatMap, tap} from "rxjs/operators";
 import {environment} from "../../../environments/environment";
 import {Subscription} from "rxjs";
+import {AuthService} from "../../auth/auth.service";
 
 @Component({
   selector: 'app-meme-list',
@@ -20,7 +21,8 @@ export class MemeListComponent implements OnInit, OnDestroy {
 
   private loadMemesSub!: Subscription;
 
-  constructor(private memeService: MemeService,
+  constructor(public authService: AuthService,
+              private memeService: MemeService,
               private route: ActivatedRoute,
               private router: Router) {
   }

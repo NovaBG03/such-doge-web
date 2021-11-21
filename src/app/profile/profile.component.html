@@ -17,6 +17,7 @@
         <input readonly [ngClass]="{highlighted: isUsernameChanged}" class="input" type="text" id="username"
                formControlName="username">
         <ng-template [ngIf]="username.touched && username.invalid && username.errors">
+          <span class="hint" *ngIf="username.errors.notOnlyWhitespace">* Username is only white space.</span>
           <span class="hint" *ngIf="username.errors.required">* Username is required.</span>
           <span class="hint"
                 *ngIf="username.errors.minlength as error">* Username must be at least {{ error.requiredLength }}
@@ -44,6 +45,9 @@
         <label class="small-label" for="public-key">Public key</label>
         <input [ngClass]="{highlighted: isPublicKeyChanged}" class="input" type="text" id="public-key"
                formControlName="publicKey">
+        <ng-template [ngIf]="publicKey.touched && publicKey.invalid && publicKey.errors">
+          <span class="hint" *ngIf="publicKey.errors.notOnlyWhitespace">* Public key is only white space.</span>
+        </ng-template>
       </div>
       <button [ngClass]="{'visually-hidden': !(userInfoForm.valid && isUserInfoChanged)}"
               [disabled]="!(userInfoForm.valid && isUserInfoChanged)"

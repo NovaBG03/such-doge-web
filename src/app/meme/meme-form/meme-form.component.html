@@ -7,6 +7,7 @@
     <label class="small-label" for="title">Title</label>
     <input class="input" type="text" id="title" formControlName="title">
     <ng-template [ngIf]="title.touched && title.invalid && title.errors">
+      <span class="hint" *ngIf="title.errors.notOnlyWhitespace">* Title is only white space.</span>
       <span class="hint" *ngIf="title.errors.required">* Title is required.</span>
       <span class="hint"
             *ngIf="title.errors.minlength">* Title must be at least {{ title.errors?.minlength?.requiredLength }}

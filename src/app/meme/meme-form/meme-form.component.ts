@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
 import {MemeService} from "../meme.service";
 import {PopUpModel} from "../../util/pop-up/pop-up-model";
+import * as CustomValidators from "../../util/validation/custom-validator.functions";
 
 @Component({
   selector: 'app-meme-form',
@@ -103,8 +104,9 @@ export class MemeFormComponent implements OnInit {
       title: new FormControl('', [
         Validators.required,
         Validators.minLength(3),
-        Validators.maxLength(30)]
-      ),
+        Validators.maxLength(30),
+        CustomValidators.notOnlyWhitespaceValidator()
+      ]),
       description: new FormControl('', [
         Validators.minLength(3),
         Validators.maxLength(100)

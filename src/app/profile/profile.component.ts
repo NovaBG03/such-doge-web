@@ -123,16 +123,19 @@ export class ProfileComponent implements OnInit {
       username: new FormControl(this.userInfo.username, [
         Validators.required,
         Validators.minLength(environment.minUsernameLength),
-        Validators.maxLength(environment.maxUsernameLength)
+        Validators.maxLength(environment.maxUsernameLength),
+        CustomValidators.notOnlyWhitespaceValidator()
       ]),
       email: new FormControl(this.userInfo.email, [
         Validators.required,
         Validators.minLength(environment.minEmailLength),
         Validators.maxLength(environment.maxEmailLength),
-        Validators.email
+        Validators.email,
       ]),
       // todo add public key validation
-      publicKey: new FormControl(this.userInfo.publicKey, [])
+      publicKey: new FormControl(this.userInfo.publicKey, [
+        CustomValidators.notOnlyWhitespaceValidator()
+      ])
     });
   }
 
