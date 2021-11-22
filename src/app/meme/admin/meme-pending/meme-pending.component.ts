@@ -28,6 +28,11 @@ export class MemePendingComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.loadMemes();
+  }
+  loadMemes() {
+    this.isLoading = true;
+    this.loadMemesSub?.unsubscribe();
     this.loadMemesSub = this.route.queryParams
       .pipe(
         tap(() => {
@@ -65,6 +70,7 @@ export class MemePendingComponent implements OnInit, OnDestroy {
         this.isLoading = false;
       });
   }
+
 
   getArray(length: number): any[] {
     return Array(length);

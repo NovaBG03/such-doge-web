@@ -14,7 +14,7 @@
     </ng-template>
     <ng-template #notApprovedNavigation>
       <ng-template [ngIf]="isModeratorMode">
-        <button class="btn-outline btn-success">Approve</button>
+        <button class="btn-outline btn-success" (click)="approve()">Approve</button>
         <button class="btn-outline btn-danger">Deny</button>
       </ng-template>
       <ng-template [ngIf]="!isModeratorMode">
@@ -23,3 +23,11 @@
     </ng-template>
   </div>
 </div>
+
+<app-pop-up *ngIf="errorPopUpModel.description"
+            [model]="errorPopUpModel"
+            (buttonPressed)="errorPopUpModel.description = ''"></app-pop-up>
+
+<app-pop-up *ngIf="isReady"
+            [model]="successPopUpModel"
+            (buttonPressed)="memeUpdatedSuccessfully()"></app-pop-up>

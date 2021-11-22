@@ -98,7 +98,7 @@ export class MemeService {
     formData.append('title', title);
     formData.append('description', description);
 
-    return this.http.post(url, formData, {observe: "response"})
+    return this.http.post(url, formData, {observe: 'response'})
       .pipe(
         catchError(err => {
           let message = 'Something went wrong!';
@@ -108,6 +108,24 @@ export class MemeService {
           //     message = 'mess';
           //     break;
           // }
+
+          return throwError(message);
+        })
+      );
+  }
+
+  approveMeme(memeId: number): Observable<any> {
+    const url = `${environment.suchDogeApi}/meme/approve/${memeId}`
+    return this.http.post(url, {}, {observe: 'response'})
+      .pipe(
+        catchError(err => {
+          let message = 'Something went wrong!';
+
+          switch (err.error.message) {
+            case 'MEME_ALREADY_APPROVED':
+              message = 'Meme is already approved';
+              break;
+          }
 
           return throwError(message);
         })
