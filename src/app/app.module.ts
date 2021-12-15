@@ -20,10 +20,18 @@ import {SpinnerComponent} from './util/spinner/spinner.component';
 import {PopUpComponent} from './util/pop-up/pop-up.component';
 import {AuthInterceptor} from "./auth/auth.interceptor";
 import {ImageCropperModule} from "ngx-image-cropper";
-import { ImageResizerComponent } from './util/image-resizer/image-resizer.component';
-import { MemeMyComponent } from './meme/meme-my/meme-my.component';
-import { PaginationComponent } from './util/pagination/pagination.component';
-import { MemePendingComponent } from './meme/admin/meme-pending/meme-pending.component';
+import {ImageResizerComponent} from './util/image-resizer/image-resizer.component';
+import {MemeMyComponent} from './meme/meme-my/meme-my.component';
+import {PaginationComponent} from './util/pagination/pagination.component';
+import {MemePendingComponent} from './meme/admin/meme-pending/meme-pending.component';
+import {NotificationPanelComponent} from "./notification-panel/notification-panel.component";
+import {
+  InfoNotificationComponent
+} from './notification-panel/notifications/info-notification/info-notification.component';
+import {
+  EmailNotificationComponent
+} from './notification-panel/notifications/email-notification/email-notification.component';
+import {NotificationPlaceholderDirective} from './notification-panel/notification-placeholder.directive';
 
 @NgModule({
   declarations: [
@@ -44,16 +52,20 @@ import { MemePendingComponent } from './meme/admin/meme-pending/meme-pending.com
     ImageResizerComponent,
     MemeMyComponent,
     PaginationComponent,
-    MemePendingComponent
+    MemePendingComponent,
+    NotificationPanelComponent,
+    InfoNotificationComponent,
+    EmailNotificationComponent,
+    NotificationPlaceholderDirective
   ],
-    imports: [
-        BrowserModule,
-        HttpClientModule,
-        ReactiveFormsModule,
-        ImageCropperModule,
-        AppRoutingModule,
-        FormsModule
-    ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    ImageCropperModule,
+    AppRoutingModule,
+    FormsModule
+  ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

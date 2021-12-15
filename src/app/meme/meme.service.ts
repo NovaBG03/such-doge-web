@@ -103,11 +103,11 @@ export class MemeService {
         catchError(err => {
           let message = 'Something went wrong!';
 
-          // switch (err.error.message) {
-          //   case 'ERROR':
-          //     message = 'mess';
-          //     break;
-          // }
+          switch (err.error.message) {
+            case 'USER_NOT_CONFIRMED':
+              message = 'Please, confirm your email before uploading memes';
+              break;
+          }
 
           return throwError(message);
         })
@@ -124,6 +124,9 @@ export class MemeService {
           switch (err.error.message) {
             case 'MEME_ALREADY_APPROVED':
               message = 'Meme is already approved';
+              break;
+            case 'USER_NOT_CONFIRMED':
+              message = 'Please, confirm your email before approving memes';
               break;
           }
 

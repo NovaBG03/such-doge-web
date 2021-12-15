@@ -1,0 +1,7 @@
+<div class="notifications">
+  <ng-container *ngFor="let notification of notifications; let i = index">
+    <ng-template appNotificationPlaceholder
+                 [notification]="notification"
+                 [index]="i"></ng-template>
+  </ng-container>
+</div>

@@ -29,7 +29,7 @@
 
 :root {
   /* Typography */
-  --font-family-sans: 'Source Sans Pro', sans-serif;
+  --font-family-source-sans: 'Source Sans Pro', sans-serif;
 
   /* Font Weights */
   --weight-regular: 400;
@@ -40,7 +40,9 @@
 
   /* Drop Shadows */
   --box-shadow-card: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
-  rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+                     rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+  --box-shadow-notification: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+                             rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
 
 .light-theme {
@@ -89,7 +91,7 @@ body {
 body {
   margin: 0;
   padding: 0;
-  font-family: var(--font-family-sans);
+  font-family: var(--font-family-source-sans);
   font-size: 16px;
   background: var(--color-background);
 }
@@ -144,9 +146,56 @@ body {
   font-weight: var(--weight-medium);
 }
 
+/* Notification Card */
+.notification {
+  --notification-color: var(--color-secondary);
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.75em 1em;
+  border-radius: 15px;
+  background: var(--color-main);
+  border: 2px solid var(--color-info);
+  box-shadow: var(--box-shadow-notification);
+  opacity: 0.95;
+}
+
+.notification.danger {
+  --notification-color: var(--color-danger);
+}
+
+.notification.success {
+  --notification-color: var(--color-success);
+}
+
+.notification>.title {
+  display: inline-block;
+  color: var(--notification-color);
+}
+
+.notification>.message {
+  margin-top: 0.5em;
+  padding-left: 0.3em;
+}
+
+.notification>.options {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  gap: 1.5em;
+}
+
+.notification .option {
+  font-family: var(--font-family-source-sans);
+  font-size: 1rem;
+  padding: 0.2em;
+  border: unset;
+  background: unset;
+  cursor: pointer;
+}
+
 
 /* Doge Form */
-
 .doge-form {
   margin: 0 0 20px 0;
 }
