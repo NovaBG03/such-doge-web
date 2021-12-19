@@ -9,13 +9,19 @@ export class DogeUser {
   private readonly issuedAt: Date;
   private readonly expiration: Date;
 
-  constructor(token: string) {
-    const jwt = this.parseJwt(token);
-    this.token = token;
+  public refreshToken: string;
+
+  constructor(authToken: string, refreshToken: string) {
+    const jwt = this.parseJwt(authToken);
     this.username = jwt.sub;
     this.authorities = jwt.authorities.map(x => x.authority as Authority);
     this.issuedAt = new Date(jwt.iat * 1000);
     this.expiration = new Date(jwt.exp * 1000);
+    this.token = authToken;
+    this.refreshToken = refreshToken;
+    console.log(authToken);
+    console.log(refreshToken);
+    console.log(this);
   }
 
   get isModeratorOrAdmin(): boolean {
