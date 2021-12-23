@@ -20,7 +20,7 @@ export class AuthInterceptor implements HttpInterceptor {
     return this.authService.user.pipe(
       take(1),
       exhaustMap(user => {
-        if (!user) {
+        if (!user || user.isExpired) {
           return next.handle(request);
         }
         const headers = {[environment.authHeader]: environment.authPrefix + user.token}

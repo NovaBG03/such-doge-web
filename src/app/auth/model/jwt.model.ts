@@ -4,3 +4,8 @@ export interface Jwt {
   iat: number;
   exp: number;
 }
+
+export interface AuthTokens {
+  authToken: string;
+  refreshToken: string;
+}
