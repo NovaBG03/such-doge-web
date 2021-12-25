@@ -10,6 +10,7 @@ import {AuthTokens} from "./model/jwt.model";
 @Injectable({providedIn: 'root'})
 export class AuthService {
   user = new BehaviorSubject<DogeUser | null>(null);
+  autoLoginFinished = new BehaviorSubject(false);
   private logOutTimeout: any;
 
   constructor(private http: HttpClient, private router: Router) {
@@ -113,10 +114,12 @@ export class AuthService {
 
     if (!refreshToken) {
       localStorage.removeItem(environment.authTokenKey);
+      this.autoLoginFinished.next(true)
       return;
     }
 
-    this.refreshAccess(refreshToken).subscribe();
+    this.refreshAccess(refreshToken)
+      .subscribe(() => this.autoLoginFinished.next(true));
   }
 
   logout(): void {

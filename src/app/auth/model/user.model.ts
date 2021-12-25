@@ -20,11 +20,11 @@ export class DogeUser {
     this.authorities = jwt.authorities.map(x => x.authority as Authority);
     this.issuedAt = new Date(jwt.iat * 1000);
     this.expiration = new Date(jwt.exp * 1000);
+    console.log(this.authorities);
   }
 
   get isModeratorOrAdmin(): boolean {
-    return this.authorities.includes(Authority.Moderator)
-      || this.authorities.includes(Authority.Admin);
+    return this.hasAnyAuthority([Authority.Admin, Authority.Moderator]);
   }
 
   get isExpired(): boolean {
@@ -33,6 +33,15 @@ export class DogeUser {
 
   get secondsUntilExpiration(): number {
     return this.expiration.getTime() - new Date().getTime();
+  }
+
+  hasAnyAuthority(authorities: Authority[]): boolean {
+    for (const currentAuthority of authorities) {
+      if (this.authorities.includes(currentAuthority)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   private parseJwt(token: string): Jwt {
