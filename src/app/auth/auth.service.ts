@@ -119,7 +119,9 @@ export class AuthService {
     }
 
     this.refreshAccess(refreshToken)
-      .subscribe(() => this.autoLoginFinished.next(true));
+      .subscribe(
+        () => this.autoLoginFinished.next(true),
+        err => this.autoLoginFinished.next(true));
   }
 
   logout(): void {
