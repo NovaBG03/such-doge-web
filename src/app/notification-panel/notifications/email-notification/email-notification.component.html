@@ -4,6 +4,7 @@
     {{ notification.title }}</div>
   <div class="message">{{ notification.message }}</div>
   <div class="options">
-    <button class="option">Resend email</button>
+    <button class="option" [routerLink]="['/profile']">Change email</button>
+    <button class="option">Resend</button>
   </div>
 </div>

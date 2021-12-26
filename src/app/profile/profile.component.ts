@@ -6,6 +6,7 @@ import {UserInfo} from "./model/userInfo.model";
 import {environment} from "../../environments/environment";
 import * as CustomValidators from "../util/validation/custom-validator.functions";
 import {PopUpModel} from "../util/pop-up/pop-up-model";
+import {tap} from "rxjs/operators";
 
 @Component({
   selector: 'app-profile',
@@ -87,7 +88,13 @@ export class ProfileComponent implements OnInit {
     this.userService.updateUserInfo({
       email: this.isEmailChanged ? this.email.value : null,
       publicKey: this.isPublicKeyChanged ? this.publicKey.value : null
-    }).subscribe(
+    }).pipe(
+      tap(() => {
+        if (this.isEmailChanged) {
+          this.authService.refresh();
+        }
+      })
+    ).subscribe(
       userInfo => {
         this.userInfo = userInfo;
         this.resetUserInfoForm();

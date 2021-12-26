@@ -1,11 +1,19 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpResponse} from "@angular/common/http";
 import {environment} from "../../environments/environment";
-import {catchError, concatMap, map} from "rxjs/operators";
+import {catchError, concatMap, map, tap} from "rxjs/operators";
 import {BehaviorSubject, Observable, of, throwError} from "rxjs";
 import {DogeUser} from "./model/user.model";
 import {Router} from "@angular/router";
 import {AuthTokens} from "./model/jwt.model";
+import {NotificationService} from "../notification-panel/notification.service";
+import {
+  EmailNotificationComponent
+} from "../notification-panel/notifications/email-notification/email-notification.component";
+import {NotificationCategory} from "../notification-panel/notification.model";
+import {
+  InfoNotificationComponent
+} from "../notification-panel/notifications/info-notification/info-notification.component";
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
@@ -13,7 +21,9 @@ export class AuthService {
   autoLoginFinished = new BehaviorSubject(false);
   private logOutTimeout: any;
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient,
+              private router: Router,
+              private notificationService: NotificationService) {
   }
 
   register(username: string, email: string, password: string): Observable<any> {
@@ -79,12 +89,20 @@ export class AuthService {
     );
   }
 
+  refresh(): void {
+    const refreshToken = this.user.getValue()?.refreshToken;
+    if (refreshToken) {
+      this.refreshAccess(refreshToken).subscribe();
+    }
+  }
+
   login(username: string, password: string): Observable<DogeUser> {
     const url = `${environment.suchDogeApi}/login`;
     const body = {username, password};
 
     return this.http.post(url, body, {observe: "response"})
       .pipe(
+        tap(() => this.notificationService.clearNotifications()),
         map(resp => {
           const {authToken, refreshToken} = AuthService.getTokens(resp);
           return this.authenticate(authToken, refreshToken);
@@ -109,6 +127,25 @@ export class AuthService {
       );
   }
 
+  logout(): void {
+    this.user.next(null);
+    localStorage.removeItem(environment.authTokenKey);
+    localStorage.removeItem(environment.refreshTokenKey);
+    if (this.logOutTimeout) {
+      clearTimeout(this.logOutTimeout);
+      this.logOutTimeout = null;
+    }
+
+    this.notificationService.clearNotifications();
+    this.notificationService.notify({
+          component: InfoNotificationComponent,
+          category: NotificationCategory.Info,
+          title: 'You have been logged out',
+          message: 'Enjoy :)'
+        });
+    this.router.navigate(['/']);
+  }
+
   autoLogin(): void {
     const refreshToken = localStorage.getItem(environment.refreshTokenKey);
 
@@ -122,17 +159,6 @@ export class AuthService {
       .subscribe(
         () => this.autoLoginFinished.next(true),
         err => this.autoLoginFinished.next(true));
-  }
-
-  logout(): void {
-    this.user.next(null);
-    localStorage.removeItem(environment.authTokenKey);
-    localStorage.removeItem(environment.refreshTokenKey);
-    if (this.logOutTimeout) {
-      clearTimeout(this.logOutTimeout);
-      this.logOutTimeout = null;
-    }
-    this.router.navigate(['/']);
   }
 
   private autoLogout(user: DogeUser): void {
@@ -160,8 +186,22 @@ export class AuthService {
     localStorage.setItem(environment.authTokenKey, authToken)
     localStorage.setItem(environment.refreshTokenKey, refreshToken)
     this.autoLogout(user);
+    this.checkAccountStatus(user);
 
     return user;
+  }
+
+  private checkAccountStatus(user: DogeUser | null) {
+    if (user?.isNotConfirmed) {
+      this.notificationService.notify({
+            component: EmailNotificationComponent,
+            category: NotificationCategory.Danger,
+            title: 'Email is not confirmed',
+            message: 'Please confirm your email to access all of the site\'s functionality!'
+          });
+    } else {
+      this.notificationService.removeEmailConfirmation();
+    }
   }
 
   private static getTokens(resp: HttpResponse<Object>): AuthTokens {

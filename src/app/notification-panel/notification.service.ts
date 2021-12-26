@@ -6,32 +6,33 @@ import {EmailNotificationComponent} from "./notifications/email-notification/ema
 
 @Injectable({providedIn: 'root'})
 export class NotificationService {
-  private notifications: NotificationModel[] = [
-    {
-      component: EmailNotificationComponent,
-      category: NotificationCategory.Danger,
-      title: 'Email is not confirmed',
-      message: 'Please confirm your email to access all of the sites functionality!'
-    },
-    {
-      component: InfoNotificationComponent,
-      category: NotificationCategory.Info,
-      title: 'Welcome to my site',
-      message: 'Enjoy :)'
-    },
-    {
-      component: InfoNotificationComponent,
-      category: NotificationCategory.Success,
-      title: 'Meme uploaded successfully',
-      message: 'You can check your meme status at my memes!'
-    },
-    {
-      component: InfoNotificationComponent,
-      category: NotificationCategory.Danger,
-      title: 'Error',
-      message: ''
-    }
-  ];
+  private notifications: NotificationModel[] = []
+  // [
+  //   {
+  //     component: EmailNotificationComponent,
+  //     category: NotificationCategory.Danger,
+  //     title: 'Email is not confirmed',
+  //     message: 'Please confirm your email to access all of the sites functionality!'
+  //   },
+  //   {
+  //     component: InfoNotificationComponent,
+  //     category: NotificationCategory.Info,
+  //     title: 'Welcome to my site',
+  //     message: 'Enjoy :)'
+  //   },
+  //   {
+  //     component: InfoNotificationComponent,
+  //     category: NotificationCategory.Success,
+  //     title: 'Meme uploaded successfully',
+  //     message: 'You can check your meme status at my memes!'
+  //   },
+  //   {
+  //     component: InfoNotificationComponent,
+  //     category: NotificationCategory.Danger,
+  //     title: 'Error',
+  //     message: ''
+  //   }
+  // ];
 
   private notificationSubject = new Subject<NotificationModel[]>();
 
@@ -50,14 +51,31 @@ export class NotificationService {
     return notificationsClone;
   }
 
-  public notify(notification: NotificationModel) {
+  public notify(notification: NotificationModel): void {
+    if (notification.component === EmailNotificationComponent
+      && this.notifications.find(n => n.component === EmailNotificationComponent)) {
+      return;
+    }
+
     this.notifications.push(notification);
     this.notificationSubject.next(this.getNotifications());
   }
 
-  public removeNotification(index: number) {
+  public removeNotification(index: number): void {
     this.notifications.splice(index, 1);
     this.notificationSubject.next(this.getNotifications());
+  }
+
+  public removeEmailConfirmation(): void {
+    const emailNotificationIndex = this.notifications.findIndex(n => n.component === EmailNotificationComponent);
+    if (emailNotificationIndex >= 0) {
+      this.removeNotification(emailNotificationIndex);
+    }
+  }
+
+  public clearNotifications(): void {
+    this.notifications = [];
+    this.notificationSubject.next(this.getNotifications())
   }
 
   public getCategoryIcon(category: NotificationCategory): string {
@@ -73,7 +91,7 @@ export class NotificationService {
     }
   }
 
-  public getCategoryClass(category: NotificationCategory): {[s: string]: boolean} {
+  public getCategoryClass(category: NotificationCategory): { [s: string]: boolean } {
     return {[category]: true};
   }
 }

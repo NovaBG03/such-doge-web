@@ -27,6 +27,10 @@ export class DogeUser {
     return this.hasAnyAuthority([Authority.Admin, Authority.Moderator]);
   }
 
+  get isNotConfirmed(): boolean {
+    return this.hasAnyAuthority([Authority.NotConfirmedUser]);
+  }
+
   get isExpired(): boolean {
     return this.secondsUntilExpiration <= 0;
   }

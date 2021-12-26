@@ -34,6 +34,7 @@ export class ActivationComponent implements OnInit {
       ).subscribe(
       () => {
         this.isReady = true;
+        this.authService.refresh();
         this.startTimer();
       },
       err => {
