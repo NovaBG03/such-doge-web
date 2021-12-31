@@ -1,87 +1,74 @@
 import {NotificationCategory, NotificationModel} from "./notification.model";
 import {Injectable} from "@angular/core";
 import {Observable, Subject} from "rxjs";
-import {InfoNotificationComponent} from "./notifications/info-notification/info-notification.component";
 import {EmailNotificationComponent} from "./notifications/email-notification/email-notification.component";
 
 @Injectable({providedIn: 'root'})
 export class NotificationService {
   private notifications: NotificationModel[] = []
-  // [
-  //   {
-  //     component: EmailNotificationComponent,
-  //     category: NotificationCategory.Danger,
-  //     title: 'Email is not confirmed',
-  //     message: 'Please confirm your email to access all of the sites functionality!'
-  //   },
-  //   {
-  //     component: InfoNotificationComponent,
-  //     category: NotificationCategory.Info,
-  //     title: 'Welcome to my site',
-  //     message: 'Enjoy :)'
-  //   },
-  //   {
-  //     component: InfoNotificationComponent,
-  //     category: NotificationCategory.Success,
-  //     title: 'Meme uploaded successfully',
-  //     message: 'You can check your meme status at my memes!'
-  //   },
-  //   {
-  //     component: InfoNotificationComponent,
-  //     category: NotificationCategory.Danger,
-  //     title: 'Error',
-  //     message: ''
-  //   }
-  // ];
 
-  private notificationSubject = new Subject<NotificationModel[]>();
+  private notificationSubject = new Subject<void>();
+
+  get notificationsCount(): number {
+    return this.notifications.length;
+  };
 
   constructor() {
   }
 
-  public notificationsChanged(): Observable<NotificationModel[]> {
+  public notificationsChanged(): Observable<void> {
     return this.notificationSubject.asObservable();
   }
 
-  public getNotifications(): NotificationModel[] {
+  public getNotifications(count?: number): NotificationModel[] {
+    if (!count) {
+      count = this.notifications.length;
+    }
+
+    let startingIndex = this.notifications.length - count;
+    if (startingIndex < 0) {
+      startingIndex = 0;
+    }
+
     const notificationsClone: NotificationModel[] = [];
-    this.notifications.forEach(notification =>
-      notificationsClone.push(Object.assign({}, notification))
-    );
+    this.notifications.slice(startingIndex)
+      .forEach(notification =>
+        notificationsClone.push(Object.assign({}, notification))
+      );
     return notificationsClone;
   }
 
-  public notify(notification: NotificationModel): void {
-    if (notification.component === EmailNotificationComponent
-      && this.notifications.find(n => n.component === EmailNotificationComponent)) {
-      return;
-    }
+  public pushNotification(...notifications: NotificationModel[]): void {
+    let isChanged = false;
+    notifications.forEach(notification => {
+      if (notification.component === EmailNotificationComponent
+        && this.notifications.find(n => n.component === EmailNotificationComponent)) {
+        return;
+      }
+      this.notifications.push(notification);
+      isChanged = true;
+    })
 
-    this.notifications.push(notification);
-    this.notificationSubject.next(this.getNotifications());
-  }
-
-  public removeNotification(index: number): void {
-    this.notifications.splice(index, 1);
-    this.notificationSubject.next(this.getNotifications());
-  }
-
-  public removeEmailConfirmation(): void {
-    const emailNotificationIndex = this.notifications.findIndex(n => n.component === EmailNotificationComponent);
-    if (emailNotificationIndex >= 0) {
-      this.removeNotification(emailNotificationIndex);
+    if (isChanged) {
+      this.notificationSubject.next();
     }
   }
 
-  public clearNotifications(): void {
+  public clearAllNotifications(): void {
     this.notifications = [];
-    this.notificationSubject.next(this.getNotifications())
+    this.notificationSubject.next();
+  }
+
+  public closeAllNotifications(): void {
+    this.notifications = this.notifications.filter(notification =>
+      notification.component === EmailNotificationComponent);
+    this.notificationSubject.next();
   }
 
   public getCategoryIcon(category: NotificationCategory): string {
     switch (category) {
       case NotificationCategory.Danger:
-        return '🚨️';
+        return '📌';
       case NotificationCategory.Success:
         return '📗';
       case NotificationCategory.Info:
@@ -91,7 +78,35 @@ export class NotificationService {
     }
   }
 
-  public getCategoryClass(category: NotificationCategory): { [s: string]: boolean } {
-    return {[category]: true};
+  public removeNotification(notification: NotificationModel): void {
+    const index = this.notifications.findIndex(n => NotificationService.shallowEqual(n, notification));
+    this.removeNotificationAt(index);
+  }
+
+  public removeEmailConfirmation(): void {
+    const emailNotificationIndex = this.notifications.findIndex(n => n.component === EmailNotificationComponent);
+    this.removeNotificationAt(emailNotificationIndex);
+  }
+
+  private removeNotificationAt(index: number): void {
+    if (index < 0 || index > this.notifications.length) {
+      return;
+    }
+    this.notifications.splice(index, 1);
+    this.notificationSubject.next();
+  }
+
+  private static shallowEqual(object1: any, object2: any) {
+    const keys1 = Object.keys(object1);
+    const keys2 = Object.keys(object2);
+    if (keys1.length !== keys2.length) {
+      return false;
+    }
+    for (let key of keys1) {
+      if (object1[key] !== object2[key]) {
+        return false;
+      }
+    }
+    return true;
   }
 }

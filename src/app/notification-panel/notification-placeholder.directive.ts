@@ -24,7 +24,7 @@ export class NotificationPlaceholderDirective implements OnDestroy {
 
     this.closedSub?.unsubscribe();
     componentRef.instance.closed.subscribe(() => {
-      this.notificationService.removeNotification(this.index);
+      this.notificationService.removeNotification(notificationModel);
       this.closedSub?.unsubscribe();
     })
   }

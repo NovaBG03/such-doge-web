@@ -221,7 +221,7 @@ ul ul li {
     left: 0;
     bottom: 0;
     width: 100vw;
-    height: 62px;
+    height: var(--bottom-navigation-height);
     padding-bottom: 2px;
     background: var(--color-main);
     transform: translateY(2px);

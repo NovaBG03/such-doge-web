@@ -1,4 +1,4 @@
-<div class="notification" [ngClass]="notificationService.getCategoryClass(notification.category)">
+<div class="notification" [ngClass]="notification.category">
   <div class="title">
     <span>{{ notificationService.getCategoryIcon(notification.category) }}</span>
     {{ notification.title }}</div>

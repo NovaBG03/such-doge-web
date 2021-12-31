@@ -102,7 +102,7 @@ export class AuthService {
 
     return this.http.post(url, body, {observe: "response"})
       .pipe(
-        tap(() => this.notificationService.clearNotifications()),
+        tap(() => this.notificationService.clearAllNotifications()),
         map(resp => {
           const {authToken, refreshToken} = AuthService.getTokens(resp);
           return this.authenticate(authToken, refreshToken);
@@ -136,8 +136,8 @@ export class AuthService {
       this.logOutTimeout = null;
     }
 
-    this.notificationService.clearNotifications();
-    this.notificationService.notify({
+    this.notificationService.clearAllNotifications();
+    this.notificationService.pushNotification({
           component: InfoNotificationComponent,
           category: NotificationCategory.Info,
           title: 'You have been logged out',
@@ -193,7 +193,7 @@ export class AuthService {
 
   private checkAccountStatus(user: DogeUser | null) {
     if (user?.isNotConfirmed) {
-      this.notificationService.notify({
+      this.notificationService.pushNotification({
             component: EmailNotificationComponent,
             category: NotificationCategory.Danger,
             title: 'Email is not confirmed',

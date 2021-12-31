@@ -37,6 +37,7 @@
 
   /* Design Elements */
   --transition: 300ms ease-in-out;
+  --bottom-navigation-height: 3.875rem;
 
   /* Drop Shadows */
   --box-shadow-card: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
@@ -152,11 +153,10 @@ body {
   width: 100%;
   margin-top: 0.5rem;
   padding: 0.75em 1em;
-  border-radius: 15px;
+  border-radius: 1rem;
+  border: 0.125em solid var(--color-info);
   background: var(--color-main);
-  border: 2px solid var(--color-info);
   box-shadow: var(--box-shadow-notification);
-  opacity: 0.95;
 }
 
 .notification.danger {

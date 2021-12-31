@@ -1,10 +1,10 @@
-<div class="notification" [ngClass]="notificationService.getCategoryClass(notification.category)">
+<div class="notification" [ngClass]="notification.category">
   <div class="title">
     <span>{{ notificationService.getCategoryIcon(notification.category) }}</span>
     {{ notification.title }}</div>
   <div class="message">{{ notification.message }}</div>
   <div class="options">
-    <button class="option" [routerLink]="['/profile']">Change email</button>
     <button class="option">Resend</button>
+    <button class="option" [routerLink]="['/profile']">Change email</button>
   </div>
 </div>
