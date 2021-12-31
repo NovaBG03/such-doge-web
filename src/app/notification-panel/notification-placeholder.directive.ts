@@ -10,8 +10,6 @@ import {Subscription} from "rxjs";
 export class NotificationPlaceholderDirective implements OnDestroy {
   private closedSub!: Subscription;
 
-  @Input() index!: number;
-
   @Input() set notification(notificationModel: NotificationModel) {
     const notificationFactory = this.componentFactoryResolver
       .resolveComponentFactory(notificationModel.component);

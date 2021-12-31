@@ -7,13 +7,9 @@ import {DogeUser} from "./model/user.model";
 import {Router} from "@angular/router";
 import {AuthTokens} from "./model/jwt.model";
 import {NotificationService} from "../notification-panel/notification.service";
-import {
-  EmailNotificationComponent
-} from "../notification-panel/notifications/email-notification/email-notification.component";
+import {EmailNotificationComponent} from "../notification-panel/notifications/email-notification/email-notification.component";
 import {NotificationCategory} from "../notification-panel/notification.model";
-import {
-  InfoNotificationComponent
-} from "../notification-panel/notifications/info-notification/info-notification.component";
+import {InfoNotificationComponent} from "../notification-panel/notifications/info-notification/info-notification.component";
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
@@ -61,6 +57,27 @@ export class AuthService {
           //     break;
           // }
 
+          return throwError(message);
+        })
+      );
+  }
+
+  requestActivationLink(): Observable<number> {
+    const url = `${environment.suchDogeApi}/requestActivation`;
+    const body = {};
+    return this.http.post<{ secondsTillNextRequest: number }>(url, body)
+      .pipe(
+        map(res => res.secondsTillNextRequest),
+        catchError(err => {
+          let message: string | number = 'Something went wrong!';
+
+          if (err.error.message === 'USER_ALREADY_ENABLED') {
+            this.refresh();
+            message = 'Your account is already enabled';
+          } else if (err.error.message.startsWith('CAN_NOT_SENT_NEW_TOKEN_SECONDS_LEFT_')) {
+            let secondsLeft = +err.error.message.substr('CAN_NOT_SENT_NEW_TOKEN_SECONDS_LEFT_'.length);
+            message = secondsLeft;
+          }
           return throwError(message);
         })
       );
@@ -131,6 +148,7 @@ export class AuthService {
     this.user.next(null);
     localStorage.removeItem(environment.authTokenKey);
     localStorage.removeItem(environment.refreshTokenKey);
+    localStorage.removeItem(environment.newRequestDateKey);
     if (this.logOutTimeout) {
       clearTimeout(this.logOutTimeout);
       this.logOutTimeout = null;

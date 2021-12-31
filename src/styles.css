@@ -183,6 +183,7 @@ body {
   flex-wrap: nowrap;
   justify-content: flex-end;
   gap: 1.5em;
+  margin-top: 0.25rem;
 }
 
 .notification .option {
@@ -192,6 +193,10 @@ body {
   border: unset;
   background: unset;
   cursor: pointer;
+}
+
+.notification .option.disabled {
+  cursor: default;
 }
 
 

@@ -24,10 +24,9 @@
   </div>
 
   <div class="notifications" *ngIf="showNotifications">
-    <ng-container *ngFor="let notification of notifications; let i = index">
+    <ng-container *ngFor="let notification of notifications">
       <ng-template appNotificationPlaceholder
-                   [notification]="notification"
-                   [index]="i"></ng-template>
+                   [notification]="notification"></ng-template>
     </ng-container>
   </div>
 </div>
