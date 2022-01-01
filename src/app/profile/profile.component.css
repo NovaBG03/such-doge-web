@@ -1,34 +1,38 @@
-.content {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
-  overflow-x: hidden;
+.content-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8.5rem, 0.5fr));
+  align-items: start;
+  gap: 1.5rem 0;
 }
 
-.row {
-  padding: 0 15px;
+.content-grid>* {
+  min-width: 18em;
+}
+
+.profile {
+  grid-column: span 2;
 }
 
 .profile-image-card {
-  width: 340px;
-  height: 410px;
   background: var(--color-main);
-  border-radius: 15px;
-  padding: 20px;
+  border-radius: 1rem;
+  padding: 1.25em;
 }
 
 .profile-image-card img {
-  width: 300px;
-  height: 300px;
-  border-radius: 15px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 1rem;
   object-fit: cover;
 }
 
 .btn-upload {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
   width: 100%;
-  margin-top: 20px;
-  font-size: 16px;
-  border: 3px solid var(--color-info);
+  margin-top: 0.625em !important;
+  border: 0.1875em solid var(--color-info);
 }
 
 .btn-upload:hover,
@@ -38,199 +42,133 @@
   outline: none;
 }
 
-.settings-row {
-  padding: 0 60px;
+.btn-outline {
+  display: block;
+  margin: auto;
+}
+
+.settings {
+  grid-column: span 3;
+  grid-row: span 2;
+  padding: 0 1em;
+  margin: 0 2rem;
+}
+
+.statistics {
+  grid-column: span 2;
 }
 
 .statistic-card {
   position: relative;
-  width: 340px;
-  min-height: 90px;
+  width: 100%;
+  min-height: 5.625em;
   background: var(--color-main);
-  border-radius: 15px;
-  margin: 10px 10px 10px 0;
-  padding: 20px;
+  border-radius: 1rem;
+  margin: 0.625em 0;
+  padding: 1.25em;
 }
 
 .statistic-card img {
   position: absolute;
-  top: 20px;
-  left: 20px;
-  width: 50px;
-  height: 50px;
-  border-radius: 15px;
+  top: 1.25em;
+  left: 1.25em;
+  width: 3.125em;
+  aspect-ratio: 1 / 1;
+  border-radius: 1rem;
 }
 
-.statistic-card .content {
+.statistic-card .card-content {
   position: absolute;
-  top: 20px;
-  left: 90px;
-  height: 51px;
+  top: 1.25em;
+  left: 5.625em;
+  max-height: 3.125em;
   display: flex;
   flex-direction: column;
+  max-width: calc(100% - 6.875em);
 }
 
-.content .value {
-  font-size: 24px;
+.statistic-card .card-content>*{
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.card-content .value {
+  font-size: 1.5rem;
   font-weight: var(--weight-medium);
 }
 
-.content .description {
-  font-size: 16px;
+.card-content .description {
+  font-size: 1rem;
   font-weight: var(--weight-regular);
 }
 
-.image-row {
-  order: 1;
-  width: 390px;
-}
-
-.settings-row {
-  order: 2;
-}
-
-.statistics-row {
-  position: absolute;
-  top: 580px;
-  order: 3;
-  width: 390px;
-  margin-bottom: 25px;
-}
-
 .input.highlighted {
-  outline: 3px solid var(--color-text-unselected);
-  outline-offset: -3px;
+  outline: 0.1875em solid var(--color-text-unselected);
+  outline-offset: -0.1875em;
 }
 
 .input:read-only {
   cursor: default;
   color: var(--color-text-unselected);
   background: var(--color-background);
-  outline: 3px solid var(--color-info);
-  outline-offset: -3px;
+  outline: 0.1875em solid var(--color-info);
+  outline-offset: -0.1875em;
 }
 
 /* Responsive */
 /* Large desktop */
 @media (min-width: 1200px) {
-  .content {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
-    overflow-x: hidden;
-  }
-
   .profile-image-card {
-    width: 290px;
-    height: 360px;
+    margin-left: auto;
+    max-width: 25em;
   }
 
-  .profile-image-card img {
-    width: 250px;
-    height: 250px;
+  .settings {
+    margin: 0 5%;
   }
 
-  .statistic-card {
-    width: auto;
-    min-width: 290px;
-  }
-
-  .image-row {
-    order: 1;
-    width: auto;
-  }
-
-  .settings-row {
-    padding: 0 2%;
-  }
-
-  .statistics-row {
-    position: unset;
-    order: 3;
-    width: auto;
-  }
-}
-
-/* Portrait tablet to landscape and desktop */
-@media (min-width: 768px) and (max-width: 979px) {
-  .settings-row {
-    padding: 5px;
-  }
-
-  .image-row {
-    padding: 0 5px 0 0;
-  }
-
-  .statistics-row {
-    padding: 0 5px 0 0;
+  .statistics {
+    max-width: 25em;
   }
 }
 
 /* Landscape phone to portrait tablet */
 @media (max-width: 768px) {
-
-  .image-row {
-    order: 1;
-    width: 100%;
+  .content-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem 0;
   }
 
-  .profile-image-card {
-    width: 420px;
-    height: auto;
-    margin: 0 auto 25px;
-  }
-
-  .profile-image-card img {
-    width: 380px;
-    height: 380px;
-    display: block;
+  .content-grid>* {
+    grid-column: span 1 !important;
+    width: min(80%, 25em);
     margin: auto;
-  }
-
-  .statistics-row {
-    position: unset;
-    order: 2;
-    width: 100%;
+    padding: 0;
   }
 
   .statistic-card {
-    margin: 10px auto;
-    width: 420px;
+    margin-top: 10px;
   }
 
-  .settings-row {
+  .settings {
     order: 3;
+  }
+
+  .doge-form .input {
     width: 100%;
-    padding: 0 15px;
   }
 
-  .settings-row .title {
+  .settings .title {
     display: block;
-  }
-
-  .btn-outline {
-    margin: auto;
-    display: block;
-  }
-
-  .btn-upload {
-    margin-top: 20px;
   }
 }
 
 /* Landscape phones and down */
 @media (max-width: 480px) {
-  .profile-image-card {
-    width: auto;
-  }
-
-  .profile-image-card img {
-    width: 100%;
-    height: auto;
-  }
-
-  .statistic-card {
-    width: auto;
+  .content-grid>* {
+    width: 95%;
   }
 }
 

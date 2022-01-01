@@ -2,14 +2,26 @@
   <h1 class="title">Profile</h1>
 </div>
 
-<div class="content">
-  <div class="row image-row">
+<div class="content-grid">
+  <div class="profile">
     <div class="profile-image-card">
       <img src="https://www.blexar.com/avatar.png" alt="profile-image">
-      <button class="btn-outline btn-upload">+ Upload new photo</button>
+      <div class="file-upload">
+        <label class="btn-outline btn-upload" for="profile-img" (click)="memeFileInput.value = ''">
+          + Upload new photo
+          <input class="visually-hidden"
+                 id="profile-img"
+                 type="file"
+                 accept="image/jpeg,image/png"
+                 (change)="onSelect(asInputElement($event.target).files)"
+                 #memeFileInput>
+        </label>
+        <button class="btn-outline btn-upload" *ngIf="false">Test</button>
+      </div>
     </div>
   </div>
-  <div class="row settings-row" style="flex: 2;">
+
+  <div class="settings">
     <form class="doge-form" (ngSubmit)="updateUserInfo()" [formGroup]="userInfoForm" *ngIf="userInfo">
       <div class="title" hidden>Account settings</div>
       <div class="form-group">
@@ -97,45 +109,51 @@
       </button>
     </form>
   </div>
-  <div class="row statistics-row">
+
+  <div class="statistics">
     <div class="small-label">Personal Statistics</div>
     <div class="statistic-card">
       <img src="./assets/icons/like.png" alt="statistic-image">
-      <div class="content">
+      <div class="card-content">
+        <div class="value">2 562</div>
+        <div class="description">Likes delivered for all timeeeeeeeeeeeeeeeeeeee</div>
+      </div>
+    </div>
+    <div class="statistic-card">
+      <img src="./assets/icons/like.png" alt="statistic-image">
+      <div class="card-content">
         <div class="value">2 562</div>
         <div class="description">Likes delivered for all time</div>
       </div>
     </div>
     <div class="statistic-card">
       <img src="./assets/icons/like.png" alt="statistic-image">
-      <div class="content">
+      <div class="card-content">
         <div class="value">2 562</div>
         <div class="description">Likes delivered for all time</div>
       </div>
     </div>
     <div class="statistic-card">
       <img src="./assets/icons/like.png" alt="statistic-image">
-      <div class="content">
+      <div class="card-content">
         <div class="value">2 562</div>
         <div class="description">Likes delivered for all time</div>
       </div>
     </div>
     <div class="statistic-card">
       <img src="./assets/icons/like.png" alt="statistic-image">
-      <div class="content">
-        <div class="value">2 562</div>
-        <div class="description">Likes delivered for all time</div>
-      </div>
-    </div>
-    <div class="statistic-card">
-      <img src="./assets/icons/like.png" alt="statistic-image">
-      <div class="content">
+      <div class="card-content">
         <div class="value">2 562</div>
         <div class="description">Likes delivered for all time</div>
       </div>
     </div>
   </div>
 </div>
+
+<app-image-resizer *ngIf="isResizing && fileMeme"
+                   [image]="fileMeme"
+                   (imageResized)="setResizedImage($event)">
+</app-image-resizer>
 
 <app-pop-up *ngIf="errorPopUpModel.description"
             [model]="errorPopUpModel"

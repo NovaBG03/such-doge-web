@@ -29,7 +29,8 @@
 
 :root {
   /* Typography */
-  --font-family-source-sans: 'Source Sans Pro', sans-serif;
+  --font-family-primary: 'Source Sans Pro', sans-serif;
+  --font-family-secondary: Arial;
 
   /* Font Weights */
   --weight-regular: 400;
@@ -92,7 +93,7 @@ body {
 body {
   margin: 0;
   padding: 0;
-  font-family: var(--font-family-source-sans);
+  font-family: var(--font-family-primary);
   font-size: 16px;
   background: var(--color-background);
 }
@@ -187,7 +188,7 @@ body {
 }
 
 .notification .option {
-  font-family: var(--font-family-source-sans);
+  font-family: var(--font-family-primary);
   font-size: 1rem;
   padding: 0.2em;
   border: unset;
@@ -291,6 +292,9 @@ form .hint {
 
 
 /* Buttons */
+[class^='btn'], [class*='btn']{
+  font-family: var(--font-family-secondary);
+}
 
 .btn-outline {
   --btn-color: var(--color-secondary);

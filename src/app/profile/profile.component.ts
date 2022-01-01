@@ -14,10 +14,15 @@ import {tap} from "rxjs/operators";
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
+  acceptedImageTypes = ['image/jpeg', 'image/png'];
   userInfo!: UserInfo;
 
   userInfoForm!: FormGroup;
   passwordsForm!: FormGroup;
+
+  isResizing = false;
+  fileMeme: File | null = null;
+  resizedMeme: Blob | null = null;
 
   errorPopUpModel!: PopUpModel;
   successPopUpModel!: PopUpModel;
@@ -123,6 +128,34 @@ export class ProfileComponent implements OnInit {
       },
       error => this.errorPopUpModel.description = error
     );
+  }
+
+  onSelect(files: FileList | null) {
+    if (files && this.isImage(files.item(0))) {
+      this.fileMeme = files.item(0);
+      this.isResizing = true;
+    } else {
+      this.fileMeme = null;
+      this.resizedMeme = null;
+      this.isResizing = false;
+    }
+  }
+
+  setResizedImage(resizedImage: Blob | null): void {
+    this.isResizing = false;
+    this.resizedMeme = resizedImage;
+
+    if (!resizedImage) {
+      this.fileMeme = null;
+    }
+  }
+
+  asInputElement(target: EventTarget | null): HTMLInputElement {
+    return target as HTMLInputElement;
+  }
+
+  private isImage(file: File | null): boolean {
+    return !!file && this.acceptedImageTypes.includes(file['type'])
   }
 
   private initUserFrom(): void {
