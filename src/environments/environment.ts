@@ -15,5 +15,6 @@ export const environment = {
   maxEmailLength: 254,
   minPasswordLength: 6,
   maxPasswordLength: 50,
-  newRequestDateKey: "dogeNewRequestDateKey"
+  newRequestDateKey: "dogeNewRequestDateKey",
+  imageUrlPrefix: "https://suchdoge-storage-dev.s3.amazonaws.com/"
 };

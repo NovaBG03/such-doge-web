@@ -2,7 +2,7 @@ export interface MemeMyResponseDto {
   id: number;
   title: string;
   description?: string;
-  imageBytes: string;
+  imageKey: string;
   publisherUsername: string;
   publishedOn: string;
   approved: boolean

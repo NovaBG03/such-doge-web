@@ -140,7 +140,7 @@ export class MemeService {
       id: dto.id,
       title: dto.title,
       description: dto.description,
-      imageUrl: this.createImageUrl(dto.imageBytes),
+      imageUrl: this.createImageUrl(dto.imageKey),
       publisherUsername: dto.publisherUsername,
       publishedOn: new Date(dto.publishedOn),
     };
@@ -152,7 +152,7 @@ export class MemeService {
       id: dto.id,
       title: dto.title,
       description: dto.description,
-      imageUrl: this.createImageUrl(dto.imageBytes),
+      imageUrl: this.createImageUrl(dto.imageKey),
       publisherUsername: dto.publisherUsername,
       publishedOn: new Date(dto.publishedOn),
       isApproved: dto.approved
@@ -161,7 +161,7 @@ export class MemeService {
   }
 
   private createImageUrl(imageBytes: string) {
-    const objectUrl = 'data:image/png;base64,' + imageBytes;
+    const objectUrl = environment.imageUrlPrefix + imageBytes;
     return this.sanitizer.bypassSecurityTrustUrl(objectUrl);
   }
 }
