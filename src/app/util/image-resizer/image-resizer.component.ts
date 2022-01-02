@@ -8,6 +8,7 @@ import {base64ToFile, ImageCroppedEvent, LoadedImage} from "ngx-image-cropper";
 })
 export class ImageResizerComponent implements OnInit, OnDestroy {
   @Input() image!: File;
+  @Input() aspectRatio = 25 / 18;
   @Output() imageResized = new EventEmitter<Blob | null>();
 
   isLoading = true;

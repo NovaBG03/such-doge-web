@@ -1,6 +1,8 @@
 <div class="card">
   <div class="card-header">
-    <img src="https://www.blexar.com/avatar.png" alt="user-image" class="user-image no-select">
+    <img [src]="userService.getProfilePicUrl(meme.publisherUsername)"
+         [alt]="meme.publisherUsername + '-picture'"
+         class="user-image no-select">
     <div class="header-content">
       <div class="name">{{ meme.title }}</div>
       <div class="description">{{ meme.publisherUsername }}</div>

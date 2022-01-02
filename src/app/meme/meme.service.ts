@@ -160,8 +160,8 @@ export class MemeService {
     return meme;
   }
 
-  private createImageUrl(imageBytes: string) {
-    const objectUrl = environment.imageUrlPrefix + imageBytes;
+  private createImageUrl(imageKey: string) {
+    const objectUrl = `${environment.imageUrlPrefix}/meme/${imageKey}`;
     return this.sanitizer.bypassSecurityTrustUrl(objectUrl);
   }
 }

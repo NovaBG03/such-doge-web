@@ -26,20 +26,21 @@
   object-fit: cover;
 }
 
+.profile [class^='btn'], div[class*='btn'] {
+  width: 100%;
+  margin: 0.625em 0 0;
+}
+
 .btn-upload {
+  --btn-color: var(--color-info);
   display: flex !important;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  margin-top: 0.625em !important;
-  border: 0.1875em solid var(--color-info);
 }
 
 .btn-upload:hover,
 .btn-upload:focus {
   color: var(--color-text);
-  background-color: var(--color-info);
-  outline: none;
 }
 
 .btn-outline {

@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Meme} from "../../model/meme.model";
 import {MemeService} from "../../meme.service";
 import {PopUpModel} from "../../../util/pop-up/pop-up-model";
+import {UserService} from "../../../profile/user.service";
 
 @Component({
   selector: 'app-meme-card',
@@ -18,7 +19,7 @@ export class MemeCardComponent implements OnInit {
   successPopUpModel!: PopUpModel;
   isReady = false;
 
-  constructor(private memeService: MemeService) {
+  constructor(private memeService: MemeService, public userService: UserService) {
   }
 
   ngOnInit(): void {

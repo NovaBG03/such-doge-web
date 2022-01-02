@@ -74,7 +74,7 @@
         <a class="link-text">About</a>
       </li>
       <li class="link link-hidden header-drop-down-control" [ngClass]="{active: isDropDownOpen}"
-          (click)="toggleDropDown()" *ngIf="user | async">
+          (click)="toggleDropDown()" *ngIf="user">
         <svg class="icon header-drop-down-control" width="28" height="28" viewBox="0 0 28 28" fill="none"
              xmlns="http://www.w3.org/2000/svg">
           <path class="icon-fill header-drop-down-control" fill-rule="evenodd" clip-rule="evenodd"
@@ -85,7 +85,7 @@
       </li>
     </ul>
   </nav>
-  <ng-template [ngIf]="user | async">
+  <ng-template [ngIf]="user">
     <div class="user-info">
       <div class="balance-box">
         <button class="btn-add">+</button>
@@ -97,7 +97,10 @@
           <div class="balance-value">2443</div>
         </div>
       </div>
-      <img routerLink="profile" src="https://www.blexar.com/avatar.png" alt="profile-picture" class="profile-picture">
+      <img routerLink="profile"
+           [src]="userService.getProfilePicUrl(user.username)"
+           [alt]="user.username + '-picture'"
+           class="profile-picture">
       <svg [ngClass]="{active: isDropDownOpen}"
            (click)="toggleDropDown()"
            class="arrow-down-icon header-drop-down-control"
@@ -109,7 +112,7 @@
       <app-header-drop-down *ngIf="isDropDownOpen" (close)="closeDropDown()"></app-header-drop-down>
     </div>
   </ng-template>
-  <div class="authentication" *ngIf="!(user | async)">
+  <div class="authentication" *ngIf="!user">
     <div class="link" routerLink="/login">
       <a class="btn-link">Login</a>
     </div>

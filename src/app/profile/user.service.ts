@@ -9,6 +9,7 @@ import {ChangePasswordDto} from "./model/password.model";
 
 @Injectable({providedIn: 'root'})
 export class UserService {
+  private postFix = '';
 
   constructor(private http: HttpClient) {
   }
@@ -65,7 +66,26 @@ export class UserService {
       );
   }
 
-  private userInfoDtoToUserInfo(dto: UserInfoDto) {
+  updateProfileImage(image: Blob): Observable<any> {
+    const url = `${environment.suchDogeApi}/me/image`
+    const formData = new FormData();
+    formData.append('image', image);
+
+    return this.http.post(url, formData, {observe: 'response'})
+      .pipe(
+        catchError(err => {
+          let message = 'Something went wrong!';
+          switch (err.error.message) {
+            case 'USER_NOT_CONFIRMED':
+              message = 'Please, confirm your email before updating profile image';
+              break;
+          }
+          return throwError(message);
+        })
+      );
+  }
+
+  private userInfoDtoToUserInfo(dto: UserInfoDto): UserInfo {
     return new UserInfo(
       dto.username,
       dto.email,
@@ -73,5 +93,13 @@ export class UserService {
       new Date(dto.enabledAt),
       dto.authorities.map(x => x.authority as Authority)
     )
+  }
+
+  getProfilePicUrl(username: string): string {
+    return `${environment.imageUrlPrefix}/user/${username}.png` + this.postFix;
+  }
+
+  resetProfileImageCache(): void {
+    this.postFix = '?' + new Date().getTime();
   }
 }

@@ -21,12 +21,20 @@ export class ProfileComponent implements OnInit {
   passwordsForm!: FormGroup;
 
   isResizing = false;
-  fileMeme: File | null = null;
-  resizedMeme: Blob | null = null;
+  image: File | null = null;
+  resizedImage: Blob | null = null;
+  resizedImageUrl: string | null = null;
 
   errorPopUpModel!: PopUpModel;
   successPopUpModel!: PopUpModel;
   isReady = false;
+
+  get profileImage(): any {
+    if (this.resizedImageUrl) {
+      return this.resizedImageUrl;
+    }
+    return this.userService.getProfilePicUrl(this.userInfo.username);
+  }
 
   get isUserInfoChanged(): boolean {
     return this.isUsernameChanged
@@ -130,23 +138,49 @@ export class ProfileComponent implements OnInit {
     );
   }
 
+  saveImage(): void {
+    if (!this.resizedImage) {
+      return;
+    }
+    this.userService.updateProfileImage(this.resizedImage)
+      .subscribe(
+        () => {
+          this.userService.resetProfileImageCache();
+          this.setResizedImage(null);
+          this.successPopUpModel.message = 'Your profile picture has been <span class="success-colored-text">updated</span>';
+          this.isReady = true;
+        },
+        err => {
+          this.setResizedImage(null);
+          this.errorPopUpModel.description = err;
+        });
+  }
+
   onSelect(files: FileList | null) {
     if (files && this.isImage(files.item(0))) {
-      this.fileMeme = files.item(0);
+      this.image = files.item(0);
       this.isResizing = true;
     } else {
-      this.fileMeme = null;
-      this.resizedMeme = null;
+      this.image = null;
+      this.resizedImage = null;
+      this.resizedImageUrl = null;
       this.isResizing = false;
     }
   }
 
   setResizedImage(resizedImage: Blob | null): void {
     this.isResizing = false;
-    this.resizedMeme = resizedImage;
+    this.resizedImage = resizedImage;
 
-    if (!resizedImage) {
-      this.fileMeme = null;
+    if (this.resizedImage) {
+      const reader = new FileReader();
+      reader.readAsDataURL(this.resizedImage);
+      reader.onloadend = () => this.resizedImageUrl = reader.result as string;
+    }
+
+    if (!this.resizedImage) {
+      this.image = null;
+      this.resizedImageUrl = null;
     }
   }
 
