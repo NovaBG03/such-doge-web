@@ -1,5 +1,5 @@
 import {EventEmitter} from "@angular/core";
-import {NotificationModel} from "../notification.model";
+import {NotificationModel} from "../model/notification.model";
 
 export interface NotificationComponent {
   notification: NotificationModel;

@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {NotificationComponent} from "../notification.component";
-import {NotificationModel} from "../../notification.model";
+import {NotificationModel} from "../../model/notification.model";
 import {NotificationService} from "../../notification.service";
 import {AuthService} from "../../../auth/auth.service";
 import {environment} from "../../../../environments/environment";

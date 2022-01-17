@@ -1,5 +1,5 @@
-import {EmailNotificationComponent} from "./notifications/email-notification/email-notification.component";
-import {InfoNotificationComponent} from "./notifications/info-notification/info-notification.component";
+import {EmailNotificationComponent} from "../notifications/email-notification/email-notification.component";
+import {InfoNotificationComponent} from "../notifications/info-notification/info-notification.component";
 
 export interface NotificationModel {
   component: NotificationComponentType;

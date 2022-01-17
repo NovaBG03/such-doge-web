@@ -8,8 +8,9 @@ import {Router} from "@angular/router";
 import {AuthTokens} from "./model/jwt.model";
 import {NotificationService} from "../notification-panel/notification.service";
 import {EmailNotificationComponent} from "../notification-panel/notifications/email-notification/email-notification.component";
-import {NotificationCategory} from "../notification-panel/notification.model";
+import {NotificationCategory} from "../notification-panel/model/notification.model";
 import {InfoNotificationComponent} from "../notification-panel/notifications/info-notification/info-notification.component";
+import {StompService} from "../notification-panel/stomp.service";
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
@@ -19,6 +20,7 @@ export class AuthService {
 
   constructor(private http: HttpClient,
               private router: Router,
+              private stompService: StompService,
               private notificationService: NotificationService) {
   }
 
@@ -154,6 +156,7 @@ export class AuthService {
       this.logOutTimeout = null;
     }
 
+    this.stompService.closeConnections();
     this.notificationService.clearAllNotifications();
     this.notificationService.pushNotification({
           component: InfoNotificationComponent,

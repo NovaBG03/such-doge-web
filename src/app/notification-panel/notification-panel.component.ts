@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {NotificationCategory, NotificationModel} from "./notification.model";
+import {NotificationCategory, NotificationModel} from "./model/notification.model";
 import {NotificationService} from "./notification.service";
 import {Subscription} from "rxjs";
 

@@ -1,5 +1,5 @@
 import {ComponentFactoryResolver, ComponentRef, Directive, Input, OnDestroy, ViewContainerRef} from '@angular/core';
-import {NotificationModel} from "./notification.model";
+import {NotificationModel} from "./model/notification.model";
 import {NotificationComponent} from "./notifications/notification.component";
 import {NotificationService} from "./notification.service";
 import {Subscription} from "rxjs";

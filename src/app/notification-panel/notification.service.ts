@@ -1,7 +1,9 @@
-import {NotificationCategory, NotificationModel} from "./notification.model";
+import {NotificationCategory, NotificationModel} from "./model/notification.model";
 import {Injectable} from "@angular/core";
 import {Observable, Subject} from "rxjs";
 import {EmailNotificationComponent} from "./notifications/email-notification/email-notification.component";
+import {InfoNotificationComponent} from "./notifications/info-notification/info-notification.component";
+import {NotificationDto} from "./model/notification.dto.model";
 
 @Injectable({providedIn: 'root'})
 export class NotificationService {
@@ -108,5 +110,18 @@ export class NotificationService {
       }
     }
     return true;
+  }
+
+  updateNotifications(): void {
+    // get notifications from the server and add them to the list
+  }
+
+  public static toNotification(notificationDto: NotificationDto): NotificationModel {
+    return {
+      component: InfoNotificationComponent,
+      category: NotificationCategory[notificationDto.category as keyof typeof NotificationCategory],
+      title: notificationDto.title,
+      message: notificationDto.message
+    };
   }
 }

@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {NotificationModel, NotificationCategory} from "../../notification.model";
+import {NotificationModel, NotificationCategory} from "../../model/notification.model";
 import {NotificationComponent} from "../notification.component";
 import {NotificationService} from "../../notification.service";
 

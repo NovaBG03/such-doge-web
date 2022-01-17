@@ -1,5 +1,6 @@
 export const environment = {
   production: false,
+  domain: "localhost:8080",
   suchDogeApi: "http://localhost:8080",
   authPrefix: "Bearer ",
   authHeader: "Authorization",
