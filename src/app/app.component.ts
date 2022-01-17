@@ -23,23 +23,17 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.notificationService.updateNotifications();
 
     this.authService.user
-      .pipe(
-        filter(user => !!user),
-      ).subscribe(user => {
-      console.log(user);
-      // this.stompService.subscribe<NotificationDto>('/user/queue/notification',
-      //   {'Authorization': user?.token},
-      //   (notificationDto) => {
-      //     console.log(notificationDto);
-      //     if (notificationDto) {
-      //       const notification = NotificationService.toNotification(notificationDto);
-      //       this.notificationService.pushNotification(notification);
-      //     }
-      //   });
-      this.stompService.subscribe<string>('/user/queue/notification',
-        {'Authorization': user?.token},
-        (message) => console.log(message));
-    })
+      .pipe(filter(user => !!user))
+      .subscribe(user => {
+        this.stompService.subscribe<NotificationDto>('/user/queue/notification',
+          {'Authorization': user?.token},
+          (notificationDto) => {
+            if (notificationDto) {
+              const notification = NotificationService.toNotification(notificationDto);
+              this.notificationService.pushNotification(notification);
+            }
+          });
+      })
   }
 
   ngAfterViewInit(): void {

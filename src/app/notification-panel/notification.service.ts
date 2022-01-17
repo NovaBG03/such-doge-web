@@ -116,12 +116,16 @@ export class NotificationService {
     // get notifications from the server and add them to the list
   }
 
-  public static toNotification(notificationDto: NotificationDto): NotificationModel {
+  public static toNotification(dto: NotificationDto): NotificationModel {
+    const categoryKey =
+      (dto.category.charAt(0).toUpperCase() + dto.category.slice(1)) as keyof typeof NotificationCategory;
+
     return {
+      id: dto.id,
       component: InfoNotificationComponent,
-      category: NotificationCategory[notificationDto.category as keyof typeof NotificationCategory],
-      title: notificationDto.title,
-      message: notificationDto.message
+      category: NotificationCategory[categoryKey],
+      title: dto.title,
+      message: dto.message
     };
   }
 }

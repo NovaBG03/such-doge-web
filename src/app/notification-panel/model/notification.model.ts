@@ -2,6 +2,7 @@ import {EmailNotificationComponent} from "../notifications/email-notification/em
 import {InfoNotificationComponent} from "../notifications/info-notification/info-notification.component";
 
 export interface NotificationModel {
+  id?: number;
   component: NotificationComponentType;
   category: NotificationCategory;
   title: string;
