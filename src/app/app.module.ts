@@ -32,6 +32,8 @@ import {
   EmailNotificationComponent
 } from './notification-panel/notifications/email-notification/email-notification.component';
 import {NotificationPlaceholderDirective} from './notification-panel/notification-placeholder.directive';
+import {InjectableRxStompConfig, RxStompService, rxStompServiceFactory} from "@stomp/ng2-stompjs";
+import {RxStompConfig} from "./rx-stomp-config";
 
 @NgModule({
   declarations: [
@@ -71,7 +73,16 @@ import {NotificationPlaceholderDirective} from './notification-panel/notificatio
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
-    }
+    },
+    {
+      provide: InjectableRxStompConfig,
+      useValue: RxStompConfig,
+    },
+    {
+      provide: RxStompService,
+      useFactory: rxStompServiceFactory,
+      deps: [InjectableRxStompConfig],
+    },
   ],
   bootstrap: [AppComponent]
 })

@@ -1,30 +1,38 @@
 import {NotificationCategory, NotificationModel} from "./model/notification.model";
-import {Injectable} from "@angular/core";
-import {Observable, Subject} from "rxjs";
+import {Injectable, OnDestroy} from "@angular/core";
+import {Observable, Subject, Subscription} from "rxjs";
 import {EmailNotificationComponent} from "./notifications/email-notification/email-notification.component";
 import {InfoNotificationComponent} from "./notifications/info-notification/info-notification.component";
 import {NotificationDto} from "./model/notification.dto.model";
+import {Message} from "@stomp/stompjs";
+import {RxStompService} from "@stomp/ng2-stompjs";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({providedIn: 'root'})
-export class NotificationService {
+export class NotificationService implements OnDestroy {
   private notifications: NotificationModel[] = []
-
   private notificationSubject = new Subject<void>();
+
+  private stompListenerSub!: Subscription;
 
   get notificationsCount(): number {
     return this.notifications.length;
   };
 
-  constructor() {
+  constructor(private stompService: RxStompService, private http: HttpClient) {
   }
 
-  public notificationsChanged(): Observable<void> {
+  notificationsChanged(): Observable<void> {
     return this.notificationSubject.asObservable();
   }
 
-  public getNotifications(count?: number): NotificationModel[] {
+  getNotifications(count?: number): NotificationModel[] {
     if (!count) {
       count = this.notifications.length;
+    }
+
+    if (count <= 0) {
+      count = 1;
     }
 
     let startingIndex = this.notifications.length - count;
@@ -40,7 +48,7 @@ export class NotificationService {
     return notificationsClone;
   }
 
-  public pushNotification(...notifications: NotificationModel[]): void {
+  pushNotification(...notifications: NotificationModel[]): void {
     let isChanged = false;
     notifications.forEach(notification => {
       if (notification.component === EmailNotificationComponent
@@ -56,18 +64,18 @@ export class NotificationService {
     }
   }
 
-  public clearAllNotifications(): void {
+  clearAllNotifications(): void {
     this.notifications = [];
     this.notificationSubject.next();
   }
 
-  public closeAllNotifications(): void {
+  closeAllNotifications(): void {
     this.notifications = this.notifications.filter(notification =>
       notification.component === EmailNotificationComponent);
     this.notificationSubject.next();
   }
 
-  public getCategoryIcon(category: NotificationCategory): string {
+  getCategoryIcon(category: NotificationCategory): string {
     switch (category) {
       case NotificationCategory.Danger:
         return '📌';
@@ -80,22 +88,61 @@ export class NotificationService {
     }
   }
 
-  public removeNotification(notification: NotificationModel): void {
+  removeNotification(notification: NotificationModel): void {
     const index = this.notifications.findIndex(n => NotificationService.shallowEqual(n, notification));
     this.removeNotificationAt(index);
   }
 
-  public removeEmailConfirmation(): void {
+  removeEmailConfirmation(): void {
     const emailNotificationIndex = this.notifications.findIndex(n => n.component === EmailNotificationComponent);
     this.removeNotificationAt(emailNotificationIndex);
   }
 
-  private removeNotificationAt(index: number): void {
+  removeNotificationAt(index: number): void {
     if (index < 0 || index > this.notifications.length) {
       return;
     }
     this.notifications.splice(index, 1);
     this.notificationSubject.next();
+  }
+
+  stopListening(): void {
+    this.stompListenerSub?.unsubscribe();
+  }
+
+  listenForNotifications(): void {
+    this.fetchNotifications();
+    this.stompListenerSub = this.stompService
+      .watch('/user/queue/notification')
+      .subscribe((msg: Message) => {
+        const notificationDto = JSON.parse(msg.body) as NotificationDto;
+        if (notificationDto) {
+          const notification = NotificationService.toNotification(notificationDto);
+          this.pushNotification(notification);
+        }
+      });
+  }
+
+  private fetchNotifications(): void {
+    // get notifications from the server and push them to the list
+    // this.pushNotification();
+  }
+
+  ngOnDestroy() {
+    this.stompListenerSub.unsubscribe();
+  }
+
+  public static toNotification(dto: NotificationDto): NotificationModel {
+    const categoryKey =
+      (dto.category.charAt(0).toUpperCase() + dto.category.slice(1)) as keyof typeof NotificationCategory;
+
+    return {
+      id: dto.id,
+      component: InfoNotificationComponent,
+      category: NotificationCategory[categoryKey],
+      title: dto.title,
+      message: dto.message
+    };
   }
 
   private static shallowEqual(object1: any, object2: any) {
@@ -110,22 +157,5 @@ export class NotificationService {
       }
     }
     return true;
-  }
-
-  updateNotifications(): void {
-    // get notifications from the server and add them to the list
-  }
-
-  public static toNotification(dto: NotificationDto): NotificationModel {
-    const categoryKey =
-      (dto.category.charAt(0).toUpperCase() + dto.category.slice(1)) as keyof typeof NotificationCategory;
-
-    return {
-      id: dto.id,
-      component: InfoNotificationComponent,
-      category: NotificationCategory[categoryKey],
-      title: dto.title,
-      message: dto.message
-    };
   }
 }

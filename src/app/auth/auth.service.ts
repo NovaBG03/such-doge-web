@@ -10,7 +10,7 @@ import {NotificationService} from "../notification-panel/notification.service";
 import {EmailNotificationComponent} from "../notification-panel/notifications/email-notification/email-notification.component";
 import {NotificationCategory} from "../notification-panel/model/notification.model";
 import {InfoNotificationComponent} from "../notification-panel/notifications/info-notification/info-notification.component";
-import {StompService} from "../notification-panel/stomp.service";
+import {RxStompService} from "@stomp/ng2-stompjs";
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
@@ -20,7 +20,7 @@ export class AuthService {
 
   constructor(private http: HttpClient,
               private router: Router,
-              private stompService: StompService,
+              private stompService: RxStompService,
               private notificationService: NotificationService) {
   }
 
@@ -156,8 +156,10 @@ export class AuthService {
       this.logOutTimeout = null;
     }
 
-    this.stompService.closeConnections();
+    this.notificationService.stopListening();
     this.notificationService.clearAllNotifications();
+
+    this.stompService.deactivate();
     this.notificationService.pushNotification({
           component: InfoNotificationComponent,
           category: NotificationCategory.Info,
@@ -203,11 +205,14 @@ export class AuthService {
       return refreshToken;
     }
 
-    this.user.next(user);
     localStorage.setItem(environment.authTokenKey, authToken)
     localStorage.setItem(environment.refreshTokenKey, refreshToken)
     this.autoLogout(user);
+    this.user.next(user);
+
     this.checkAccountStatus(user);
+    this.stompService.activate();
+    this.notificationService.listenForNotifications();
 
     return user;
   }

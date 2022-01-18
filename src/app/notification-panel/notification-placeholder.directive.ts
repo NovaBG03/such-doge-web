@@ -11,12 +11,10 @@ export class NotificationPlaceholderDirective implements OnDestroy {
   private closedSub!: Subscription;
 
   @Input() set notification(notificationModel: NotificationModel) {
-    const notificationFactory = this.componentFactoryResolver
-      .resolveComponentFactory(notificationModel.component);
-
     this.viewContainerRef.clear();
+
     const componentRef: ComponentRef<NotificationComponent> =
-      this.viewContainerRef.createComponent(notificationFactory);
+      this.viewContainerRef.createComponent(notificationModel.component);
 
     componentRef.instance.notification = notificationModel;
 
