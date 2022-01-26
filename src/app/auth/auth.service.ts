@@ -121,7 +121,7 @@ export class AuthService {
 
     return this.http.post(url, body, {observe: "response"})
       .pipe(
-        tap(() => this.notificationService.clearAllNotifications()),
+        tap(() => this.notificationService.clearLoadedNotifications()),
         map(resp => {
           const {authToken, refreshToken} = AuthService.getTokens(resp);
           return this.authenticate(authToken, refreshToken);
@@ -157,7 +157,7 @@ export class AuthService {
     }
 
     this.notificationService.stopListening();
-    this.notificationService.clearAllNotifications();
+    this.notificationService.clearLoadedNotifications();
 
     this.stompService.deactivate();
     this.notificationService.pushNotification({

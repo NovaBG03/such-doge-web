@@ -3,10 +3,12 @@ import {Injectable, OnDestroy} from "@angular/core";
 import {Observable, Subject, Subscription} from "rxjs";
 import {EmailNotificationComponent} from "./notifications/email-notification/email-notification.component";
 import {InfoNotificationComponent} from "./notifications/info-notification/info-notification.component";
-import {NotificationDto} from "./model/notification.dto.model";
+import {NotificationDto, NotificationDtoList} from "./model/notification.dto.model";
 import {Message} from "@stomp/stompjs";
 import {RxStompService} from "@stomp/ng2-stompjs";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {environment} from "../../environments/environment";
+import {filter, map, tap} from "rxjs/operators";
 
 @Injectable({providedIn: 'root'})
 export class NotificationService implements OnDestroy {
@@ -64,12 +66,20 @@ export class NotificationService implements OnDestroy {
     }
   }
 
-  clearAllNotifications(): void {
+  clearLoadedNotifications(): void {
     this.notifications = [];
     this.notificationSubject.next();
   }
 
   closeAllNotifications(): void {
+    // @ts-ignore
+    const notificationIds: number[] = this.notifications
+      .filter(notification => !!notification.id)
+      .map(notification => notification.id);
+    if (notificationIds && notificationIds.length) {
+      this.deleteNotificationsFromDb(...notificationIds);
+    }
+
     this.notifications = this.notifications.filter(notification =>
       notification.component === EmailNotificationComponent);
     this.notificationSubject.next();
@@ -112,20 +122,43 @@ export class NotificationService implements OnDestroy {
 
   listenForNotifications(): void {
     this.fetchNotifications();
+    this.stompListenerSub?.unsubscribe();
     this.stompListenerSub = this.stompService
       .watch('/user/queue/notification')
-      .subscribe((msg: Message) => {
-        const notificationDto = JSON.parse(msg.body) as NotificationDto;
-        if (notificationDto) {
-          const notification = NotificationService.toNotification(notificationDto);
-          this.pushNotification(notification);
-        }
+      .pipe(
+        map((msg: Message) => JSON.parse(msg.body) as NotificationDto),
+        filter(dto => !!dto)
+      )
+      .subscribe(notificationDto => {
+        const notification = NotificationService.toNotification(notificationDto);
+        this.pushNotification(notification);
       });
   }
 
+  deleteNotificationsFromDb(...ids: number[]) {
+    const url = `${environment.suchDogeApi}/notification`
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      body: {
+        notificationIds: ids,
+      },
+    };
+
+    this.http.delete(url, options).subscribe()
+  }
+
   private fetchNotifications(): void {
-    // get notifications from the server and push them to the list
-    // this.pushNotification();
+    const url = `${environment.suchDogeApi}/notification`
+    this.http.get<NotificationDtoList>(url)
+      .pipe(
+        map(dtoList => dtoList.notifications.map(dto =>
+          NotificationService.toNotification(dto)))
+      )
+      .subscribe(notifications => {
+        this.pushNotification(...notifications);
+      });
   }
 
   ngOnDestroy() {
