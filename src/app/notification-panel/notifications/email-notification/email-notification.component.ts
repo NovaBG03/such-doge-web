@@ -27,7 +27,6 @@ export class EmailNotificationComponent implements NotificationComponent, OnInit
     if (dateStr) {
       const newRequestDate = new Date(dateStr);
       const secondsLeft = (newRequestDate.getTime() - new Date().getTime()) / 1000;
-      console.log(secondsLeft);
       if (secondsLeft > 0) {
         this.setDelay(secondsLeft);
       }

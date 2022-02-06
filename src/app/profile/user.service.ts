@@ -1,9 +1,9 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable, throwError} from "rxjs";
-import {UserInfo, UserInfoDto, UserInfoUpdateDto} from "./model/userInfo.model";
+import {UserInfo, UserInfoDto, UserInfoPatchResponseDto, UserInfoUpdateDto} from "./model/userInfo.model";
 import {environment} from "../../environments/environment";
-import {catchError, map} from "rxjs/operators";
+import {catchError, map, tap} from "rxjs/operators";
 import {Authority} from "../auth/model/authority.model";
 import {ChangePasswordDto} from "./model/password.model";
 
@@ -22,22 +22,19 @@ export class UserService {
       );
   }
 
-  updateUserInfo(userInfo: UserInfoUpdateDto): Observable<UserInfo> {
+  updateUserInfo(userInfo: UserInfoUpdateDto): Observable<{ userInfo: UserInfo, errors: string[] }> {
     const url = `${environment.suchDogeApi}/me`;
-    return this.http.patch<UserInfoDto>(url, userInfo)
+    return this.http.patch<UserInfoPatchResponseDto>(url, userInfo)
       .pipe(
-        map(userInfoDto => this.userInfoDtoToUserInfo(userInfoDto)),
-        catchError(err => {
-          let message = 'Something went wrong!';
-          switch (err.error.message) {
-            case 'DOGE_USER_EMAIL_EXISTS':
-              message = `There is already user with email ${userInfo.email}`;
-              break;
-            case 'DOGE_USER_EMAIL_INVALID':
-              message = `Invalid email ${userInfo.email}`;
-              break;
+        map(userInfoResponseDto => {
+          return {
+            userInfo: this.userInfoDtoToUserInfo(userInfoResponseDto.userInfo),
+            errors: userInfoResponseDto.errMessages.map(err =>
+              this.mapUpdateProfileErrorMessage(err, userInfo))
           }
-
+        }),
+        catchError(err => {
+          const message = this.mapUpdateProfileErrorMessage(err.error.message, userInfo);
           return throwError(message);
         })
       );
@@ -83,6 +80,19 @@ export class UserService {
           return throwError(message);
         })
       );
+  }
+
+  private mapUpdateProfileErrorMessage(error: String, userInfo: UserInfoUpdateDto): string {
+    let message = 'Something went wrong!';
+    switch (error) {
+      case 'DOGE_USER_EMAIL_EXISTS':
+        message = `There is already user with email ${userInfo.email}`;
+        break;
+      case 'DOGE_USER_EMAIL_INVALID':
+        message = `Invalid email ${userInfo.email}`;
+        break;
+    }
+    return message;
   }
 
   private userInfoDtoToUserInfo(dto: UserInfoDto): UserInfo {

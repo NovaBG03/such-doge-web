@@ -108,8 +108,12 @@ export class ProfileComponent implements OnInit {
         }
       })
     ).subscribe(
-      userInfo => {
-        this.userInfo = userInfo;
+      response => {
+        this.userInfo = response.userInfo;
+        if (response.errors && response.errors.length > 0) {
+          this.errorPopUpModel.description = response.errors[0];
+          return;
+        }
         this.resetUserInfoForm();
         this.successPopUpModel.message = 'Your profile info has been <span class="success-colored-text">updated successfully</span>';
         this.isReady = true;

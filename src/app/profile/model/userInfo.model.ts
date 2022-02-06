@@ -17,6 +17,11 @@ export interface UserInfoDto {
   authorities: { authority: string }[]
 }
 
+export interface UserInfoPatchResponseDto {
+  userInfo: UserInfoDto,
+  errMessages: string[]
+}
+
 export interface UserInfoUpdateDto {
   email?: string,
   publicKey?: string,
