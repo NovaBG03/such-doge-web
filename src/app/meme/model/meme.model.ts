@@ -9,3 +9,8 @@ export interface Meme {
   publishedOn: Date;
   isApproved?: boolean
 }
+
+export interface MemePage {
+  memes: Meme[];
+  totalCount: number;
+}

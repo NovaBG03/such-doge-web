@@ -5,6 +5,7 @@ import {Subscription} from "rxjs";
 import {MemeService} from "../meme.service";
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {concatMap, tap} from "rxjs/operators";
+import {AuthService} from "../../auth/auth.service";
 
 @Component({
   selector: 'app-meme-my',
@@ -25,6 +26,7 @@ export class MemeMyComponent implements OnInit, OnDestroy {
   private loadMemesSub!: Subscription;
 
   constructor(private memeService: MemeService,
+              private authService: AuthService,
               private route: ActivatedRoute,
               private router: Router) {
   }
@@ -42,7 +44,6 @@ export class MemeMyComponent implements OnInit, OnDestroy {
           } else if (this.isValidBoolean(params.approved)) {
             this.isApproved = JSON.parse(params.approved);
           } else {
-            console.log("invalid approved")
             this.navigateToDefaultPage();
           }
 
@@ -51,7 +52,6 @@ export class MemeMyComponent implements OnInit, OnDestroy {
           } else if (this.isValidBoolean(params.pending)) {
             this.isPending = JSON.parse(params.pending);
           } else {
-            console.log("invalid pending")
             this.navigateToDefaultPage();
           }
 
@@ -60,7 +60,6 @@ export class MemeMyComponent implements OnInit, OnDestroy {
           } else if (+params.size >= 1) {
             this.size = +params.size;
           } else {
-            console.log("invalid size")
             this.navigateToDefaultPage();
           }
 
@@ -69,7 +68,6 @@ export class MemeMyComponent implements OnInit, OnDestroy {
           } else if (+params.page >= 1) {
             this.currentPage = +params.page;
           } else {
-            console.log("invalid page")
             this.navigateToDefaultPage();
           }
         }),
@@ -79,20 +77,23 @@ export class MemeMyComponent implements OnInit, OnDestroy {
           this.pendingCheckboxValue = different && this.isPending;
         }),
         concatMap(() => {
-          return this.memeService.getMyMemesCount(this.isApproved, this.isPending)
-            .pipe(
-              tap(count => this.memesCount = count)
-            )
-        }),
-        concatMap(() => {
-          return this.memeService.getMyMemesPage(
-            this.currentPage - 1,
-            this.size,
-            this.isApproved,
-            this.isPending)
+          // todo make component url to use better type filtering param
+          // approved=true/false pending=true/false ---> type=all/approved/pending
+          let type = "approved";
+          if (this.isApproved && this.isPending) {
+            type = 'all';
+          } else if (this.isPending) {
+            type = "pending";
+          }
+
+          return this.memeService.getMemes(this.currentPage - 1, this.size, {
+            publisher: this.authService.user.getValue()?.username,
+            type: type
+          });
         })
-      ).subscribe(memes => {
-        this.memes = memes;
+      ).subscribe(response => {
+        this.memesCount = response.totalCount;
+        this.memes = response.memes;
         this.isLoading = false;
       });
   }

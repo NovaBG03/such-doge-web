@@ -56,17 +56,10 @@ export class MemePendingComponent implements OnInit, OnDestroy {
             this.navigateToDefaultPage();
           }
         }),
-        concatMap(() => {
-          return this.memeService.getPendingMemesCount()
-            .pipe(
-              tap(count => this.memesCount = count)
-            )
-        }),
-        concatMap(() => {
-          return this.memeService.getPendingMemesPage(this.currentPage - 1, this.size)
-        })
-      ).subscribe(memes => {
-        this.memes = memes;
+        concatMap(() => this.memeService.getMemes(this.currentPage - 1, this.size, {type: 'pending'}))
+      ).subscribe(response => {
+        this.memesCount = response.totalCount;
+        this.memes = response.memes;
         this.isLoading = false;
       });
   }

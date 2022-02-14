@@ -51,17 +51,10 @@ export class MemeListComponent implements OnInit, OnDestroy {
             this.navigateToDefaultPage();
           }
         }),
-        concatMap(() => {
-          return this.memeService.getMemesCount()
-            .pipe(
-              tap(count => this.memesCount = count)
-            )
-        }),
-        concatMap(() => {
-          return this.memeService.getMemesPage(this.currentPage - 1, this.size)
-        })
-      ).subscribe(memes => {
-        this.memes = memes;
+        concatMap(() => this.memeService.getMemes(this.currentPage - 1, this.size))
+      ).subscribe(response => {
+        this.memesCount = response.totalCount;
+        this.memes = response.memes;
         this.isLoading = false;
       });
   }

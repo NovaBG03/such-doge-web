@@ -5,8 +5,10 @@ export interface MemeResponseDto {
   imageKey: string;
   publisherUsername: string;
   publishedOn: string;
+  approved?: boolean
 }
 
-export interface MemeListResponseDto {
+export interface MemePageResponseDto {
   memes: MemeResponseDto[];
+  totalCount: number;
 }
