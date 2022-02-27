@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {Observable, Subject} from "rxjs";
+import {BehaviorSubject, Observable, Subject} from "rxjs";
 import {Balance} from "./wallet.model";
 import {BalanceDto} from "./wallet.dto";
 import {environment} from "../../environments/environment";
@@ -10,7 +10,7 @@ import {AuthService} from "../auth/auth.service";
 @Injectable({providedIn: 'root'})
 export class WalletService {
   private timeoutMinutes = 1;
-  private balanceSubject = new Subject<Balance | null>();
+  private balanceSubject = new BehaviorSubject<Balance | null>(null);
   private balanceCheckTimeOut: any;
 
   constructor(private http: HttpClient, authService: AuthService) {

@@ -36,6 +36,7 @@ import {InjectableRxStompConfig, RxStompService, rxStompServiceFactory} from "@s
 import {RxStompConfig} from "./rx-stomp-config";
 import { WalletBalanceComponent } from './header/wallet-balance/wallet-balance.component';
 import { BalanceComponent } from './wallet/balance/balance.component';
+import { DepositComponent } from './wallet/balance/deposit/deposit.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { BalanceComponent } from './wallet/balance/balance.component';
     EmailNotificationComponent,
     NotificationPlaceholderDirective,
     WalletBalanceComponent,
-    BalanceComponent
+    BalanceComponent,
+    DepositComponent
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {WalletService} from "../wallet.service";
 import {Subscription} from "rxjs";
 import {Balance} from "../wallet.model";
@@ -12,7 +12,12 @@ import {environment} from "../../../environments/environment";
 export class BalanceComponent implements OnInit, OnDestroy {
   balance: Balance | null = null;
   isTooltipOpen = false;
+  isDepositOpen = false;
   private balanceSub!: Subscription;
+
+  get addressInfoLink(): string {
+    return `${environment.chainSoUrlPrefix}/${this.balance?.network}/${this.balance?.address}`;
+  }
 
   constructor(private walletService: WalletService) {
   }
@@ -21,11 +26,6 @@ export class BalanceComponent implements OnInit, OnDestroy {
     this.balanceSub = this.walletService.getBalance()
       .subscribe(balance => this.balance = balance);
   }
-
-  get addressInfoLink(): string {
-    return `${environment.chainSoUrlPrefix}/${this.balance?.network}/${this.balance?.address}`;
-  }
-
 
   ngOnDestroy(): void {
     this.balanceSub?.unsubscribe();

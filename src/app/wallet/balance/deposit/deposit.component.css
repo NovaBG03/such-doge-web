@@ -1,0 +1,12 @@
+.doge-card>.message {
+  margin: 0 0 0.875em;
+}
+
+.doge-card>.banner {
+  width: 18.75rem;
+}
+
+.doge-card>.description {
+  margin-top: 0.25em;
+  user-select: text;
+}

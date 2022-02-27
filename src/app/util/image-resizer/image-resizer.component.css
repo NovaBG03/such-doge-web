@@ -50,12 +50,3 @@
     padding: 20px 30px;
   }
 }
-
-/* Landscape phones and down */
-@media (max-width: 480px) {
-  .doge-card {
-    width: 95%;
-    height: auto;
-    padding: 25px 10px 20px;
-  }
-}

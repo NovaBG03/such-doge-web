@@ -1,7 +1,7 @@
 <div class="balance-box"
      (mouseenter)="isTooltipOpen = true"
      (mouseleave)="isTooltipOpen = false">
-  <button class="btn-add">+</button>
+  <button class="btn-add" (click)="isDepositOpen = true">+</button>
   <div class="balance" *ngIf="balance; else loading">
     <svg class="currency-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 226.8 226.8">
       <path class="icon-fill"
@@ -30,3 +30,5 @@
     </p>
   </div>
 </div>
+
+<app-deposit *ngIf="isDepositOpen" (close)="isDepositOpen = false"></app-deposit>

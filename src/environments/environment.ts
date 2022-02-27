@@ -18,5 +18,6 @@ export const environment = {
   maxPasswordLength: 50,
   newRequestDateKey: "dogeNewRequestDateKey",
   imageUrlPrefix: "https://suchdoge-storage-dev.s3.amazonaws.com",
-  chainSoUrlPrefix: "https://chain.so/address"
+  chainSoUrlPrefix: "https://chain.so/address",
+  qrGeneratorUrlPrefix: "https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl="
 };

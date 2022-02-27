@@ -1,0 +1,12 @@
+<div class="dark-bg"></div>
+<div class="doge-card fixed">
+  <ng-container *ngIf="balance; else loading">
+    <div class="message">Deposit <span class="secondary-colored-text">{{ balance.network }}</span> to your wallet</div>
+    <img class="banner" [src]="addressQrCode" [alt]="balance.address">
+    <div class="description">{{ balance.address }}</div>
+    <button class="btn-solid" (click)="onClose()">Done</button>
+  </ng-container>
+  <ng-template #loading>
+    <app-spinner></app-spinner>
+  </ng-template>
+</div>

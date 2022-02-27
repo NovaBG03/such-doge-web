@@ -51,14 +51,14 @@
   position: absolute;
   top: 2.5rem;
   right: 0;
-  background: var(--color-info);
+  background: var(--color-info-transparent);
   padding: 0.5em 1em;
   border: 0.125em solid var(--color-background);
   border-radius: 1rem;
   user-select: text;
   opacity: 0.98;
   box-shadow: var(--box-shadow-card);
-  z-index: 99;
+  z-index: 19;
 }
 
 .balance-info {
