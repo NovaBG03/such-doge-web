@@ -1,0 +1,80 @@
+.btn-add {
+  width: 30px;
+  height: 30px;
+  display: inline;
+  background-color: var(--color-secondary);
+  color: var(--color-white);
+  border: 0;
+  border-radius: 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.balance-box {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  width: 140px;
+  height: 40px;
+  background-color: var(--color-info);
+  border-radius: 15px;
+  padding-left: 5px;
+}
+
+.balance {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  padding: 0 2px;
+  overflow: hidden;
+  transform: translateX(-0.2rem);
+}
+
+.balance-value {
+  display: inline;
+  font-weight: var(--weight-medium);;
+}
+
+.currency-icon {
+  margin-right: 5px;
+  width: 1.2em;
+}
+
+.currency-icon .icon-fill {
+  fill: var(--color-text);
+}
+
+.balance-tooltip {
+  position: absolute;
+  top: 2.5rem;
+  right: 0;
+  background: var(--color-info);
+  padding: 0.5em 1em;
+  border: 0.125em solid var(--color-background);
+  border-radius: 1rem;
+  user-select: text;
+  opacity: 0.98;
+  box-shadow: var(--box-shadow-card);
+  z-index: 99;
+}
+
+.balance-info {
+  margin: 0;
+}
+
+.balance-info+.balance-info {
+  margin: 0.5em 0 0 0;
+}
+
+.balance-info-label {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.balance-info-link {
+  text-decoration: none;
+  border-bottom: 0.125em solid var(--color-text-unselected);
+}

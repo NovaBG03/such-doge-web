@@ -34,6 +34,8 @@ import {
 import {NotificationPlaceholderDirective} from './notification-panel/notification-placeholder.directive';
 import {InjectableRxStompConfig, RxStompService, rxStompServiceFactory} from "@stomp/ng2-stompjs";
 import {RxStompConfig} from "./rx-stomp-config";
+import { WalletBalanceComponent } from './header/wallet-balance/wallet-balance.component';
+import { BalanceComponent } from './wallet/balance/balance.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +60,9 @@ import {RxStompConfig} from "./rx-stomp-config";
     NotificationPanelComponent,
     InfoNotificationComponent,
     EmailNotificationComponent,
-    NotificationPlaceholderDirective
+    NotificationPlaceholderDirective,
+    WalletBalanceComponent,
+    BalanceComponent
   ],
   imports: [
     BrowserModule,

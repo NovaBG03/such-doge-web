@@ -1,0 +1,32 @@
+<div class="balance-box"
+     (mouseenter)="isTooltipOpen = true"
+     (mouseleave)="isTooltipOpen = false">
+  <button class="btn-add">+</button>
+  <div class="balance" *ngIf="balance; else loading">
+    <svg class="currency-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 226.8 226.8">
+      <path class="icon-fill"
+            d="M116.3 74.9h-16.2v32h25.5v13.4h-25.5v32h17c4.4 0 36 .5 35.9-37.3 0-37.7-30.6-40.1-36.7-40.1z"/>
+      <path class="icon-fill"
+            d="M113.6 0a113.6 113.6 0 1 0 0 227.2 113.6 113.6 0 0 0 0-227.2zm4.5 175H76.9v-54.7H62.4v-13.4H77V52.2h35.3c8.4 0 63.7-1.8 63.7 62.4 0 65.2-57.8 60.4-57.8 60.4z"/>
+    </svg>
+    <div class="balance-value">{{ balance.availableBalance }}</div>
+  </div>
+  <ng-template #loading>
+    <div class="balance">loading...</div>
+  </ng-template>
+  <div class="balance-tooltip" *ngIf="balance && isTooltipOpen">
+    <p class="balance-info">
+      <span class="balance-info-label">Address: </span>
+      <a class="balance-info-link" [href]="addressInfoLink" target="_blank">{{ balance.address }}</a>
+    </p>
+    <p class="balance-info">
+      <span class="balance-info-label">Balance:</span> {{ balance.availableBalance }}
+    </p>
+    <p class="balance-info">
+      <span class="balance-info-label">Pending balance:</span> {{ balance.pendingReceivedBalance }}
+    </p>
+    <p class="balance-info">
+      <span class="balance-info-label">Network:</span> {{ balance.network }}
+    </p>
+  </div>
+</div>

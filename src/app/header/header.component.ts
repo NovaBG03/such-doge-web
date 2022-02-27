@@ -1,9 +1,10 @@
 import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from "../auth/auth.service";
-import {Observable, Subscription} from "rxjs";
+import {Subscription} from "rxjs";
 import {DogeUser} from "../auth/model/user.model";
-import {Event} from "@angular/router";
 import {UserService} from "../profile/user.service";
+import {WalletService} from "../wallet/wallet.service";
+import {Balance} from "../wallet/wallet.model";
 
 @Component({
   selector: 'app-header',
@@ -13,16 +14,19 @@ import {UserService} from "../profile/user.service";
 export class HeaderComponent implements OnInit, OnDestroy {
   user!: DogeUser | null;
   isDropDownOpen = false;
+  balance: Balance | null = null;
   private userSub!: Subscription;
   private innerWidth!: number;
 
-  constructor(private authService: AuthService, public userService: UserService) {
-    this.userSub = authService.user
-      .subscribe(user => this.user = user);
+  constructor(private authService: AuthService,
+              public userService: UserService) {
   }
 
   ngOnInit(): void {
     this.innerWidth = window.innerWidth;
+
+    this.userSub = this.authService.user
+      .subscribe(user => this.user = user);
   }
 
   @HostListener('window:resize', ['$event'])

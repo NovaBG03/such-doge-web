@@ -38,6 +38,8 @@ export class AuthService {
             case 'DOGE_USER_EMAIL_EXISTS':
               message = `There is already user with email ${email}`;
               break;
+            case 'DOGE_USER_USERNAME_INVALID':
+              message = `Not a valid username: ${username}`;
           }
 
           return throwError(message);
