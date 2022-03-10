@@ -4,7 +4,7 @@ import {Subscription} from "rxjs";
 import {DogeUser} from "../auth/model/user.model";
 import {UserService} from "../profile/user.service";
 import {WalletService} from "../wallet/wallet.service";
-import {Balance} from "../wallet/wallet.model";
+import {Balance} from "../wallet/model/wallet.model";
 
 @Component({
   selector: 'app-header',

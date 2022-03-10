@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {WalletService} from "../wallet.service";
 import {Subscription} from "rxjs";
-import {Balance} from "../wallet.model";
+import {Balance} from "../model/wallet.model";
 import {environment} from "../../../environments/environment";
 
 @Component({

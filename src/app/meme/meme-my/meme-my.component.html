@@ -1,6 +1,6 @@
 <div class="heading">
   <h1 class="title">My Memes</h1>
-  <div class="meme-filters no-select">
+  <div class="no-select">
     <label class="big-checkbox" [ngClass]="{active: approvedCheckbox.checked}" for="approved">Approved only
       <input type="checkbox" id="approved" [ngModel]="approvedCheckboxValue" (change)="approvedOnlyToggle($event)" #approvedCheckbox>
     </label>

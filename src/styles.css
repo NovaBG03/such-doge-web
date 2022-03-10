@@ -218,6 +218,7 @@ body {
 
 .small-label {
   font-size: 14px;
+  margin: 0 0 0.625rem 0;
 }
 
 .doge-form .input {
@@ -365,6 +366,41 @@ form .hint {
   --btn-color: var(--color-text-unselected);
 }
 
+.button-group {
+   display: flex;
+   margin-top: 20px;
+   gap: 10px;
+   justify-content: flex-end;
+ }
+
+/* Custom check box */
+.big-checkbox {
+  display: inline-block;
+  margin: 0 10px;
+  padding: 10px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: var(--weight-medium);
+  box-shadow: var(--box-shadow-card);
+  background: var(--color-info);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.big-checkbox:not(.active):hover {
+  background: var(--color-text-unselected);
+}
+
+.big-checkbox.active {
+  background: var(--color-secondary);
+  color: var(--color-white);
+}
+
+.big-checkbox>input[type=checkbox] {
+  display: none;
+}
+
 
 /* Text colors */
 
@@ -480,5 +516,10 @@ form .hint {
     clip-path: inset(0, 0, 99.9%, 99, 9%);
     overflow: hidden;
     border: 0;
+  }
+
+  .big-checkbox {
+    margin: 0 7px;
+    padding: 10px 13px;
   }
 }

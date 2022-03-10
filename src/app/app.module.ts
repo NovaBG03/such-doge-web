@@ -37,6 +37,7 @@ import {RxStompConfig} from "./rx-stomp-config";
 import { WalletBalanceComponent } from './header/wallet-balance/wallet-balance.component';
 import { BalanceComponent } from './wallet/balance/balance.component';
 import { DepositComponent } from './wallet/balance/deposit/deposit.component';
+import { DonationComponent } from './wallet/donation/donation.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { DepositComponent } from './wallet/balance/deposit/deposit.component';
     NotificationPlaceholderDirective,
     WalletBalanceComponent,
     BalanceComponent,
-    DepositComponent
+    DepositComponent,
+    DonationComponent
   ],
   imports: [
     BrowserModule,

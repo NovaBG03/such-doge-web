@@ -12,7 +12,7 @@
   <img [src]="meme.imageUrl" [alt]="meme.description" class="meme no-select">
   <div class="meme-navigation">
     <ng-template [ngIf]="meme.isApproved == undefined || meme.isApproved" [ngIfElse]="notApprovedNavigation">
-      <button class="btn-outline">Donate</button>
+      <button class="btn-outline" (click)="startDonation()">Donate</button>
     </ng-template>
     <ng-template #notApprovedNavigation>
       <ng-template [ngIf]="isModeratorMode">
@@ -25,6 +25,10 @@
     </ng-template>
   </div>
 </div>
+
+<app-donation *ngIf="isDonationOpen"
+              [meme]="meme"
+              (close)="this.isDonationOpen = false"></app-donation>
 
 <app-pop-up *ngIf="errorPopUpModel.description"
             [model]="errorPopUpModel"

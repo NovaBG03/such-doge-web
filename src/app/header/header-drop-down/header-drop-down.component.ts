@@ -40,7 +40,6 @@ export class HeaderDropDownComponent implements OnInit, OnDestroy {
   }
 
   toggleDarkMode(): void {
-    this.isDarkMode = !this.isDarkMode;
     this.themeService.toggleColorTheme();
   }
 

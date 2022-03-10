@@ -1,8 +1,8 @@
 import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {BehaviorSubject, Observable, Subject} from "rxjs";
-import {Balance} from "./wallet.model";
-import {BalanceDto} from "./wallet.dto";
+import {Balance, Transaction, TransactionFee, TransactionRequirements} from "./model/wallet.model";
+import {BalanceDto, TransactionFeeDto, TransactionRequirementsDto} from "./model/wallet.dto";
 import {environment} from "../../environments/environment";
 import {map} from "rxjs/operators";
 import {AuthService} from "../auth/auth.service";
@@ -14,7 +14,7 @@ export class WalletService {
   private balanceCheckTimeOut: any;
 
   constructor(private http: HttpClient, authService: AuthService) {
-    authService.user.subscribe(user =>{
+    authService.user.subscribe(user => {
       if (user) {
         this.updateBalance();
         return;
@@ -41,6 +41,23 @@ export class WalletService {
       });
   }
 
+  getTransactionRequirements(): Observable<TransactionRequirements> {
+    const url = `${environment.suchDogeApi}/wallet/transaction/requirements`;
+    return this.http.get<TransactionRequirementsDto>(url)
+      .pipe(
+        map(dto => WalletService.transactionRequirementsDtoToTransactionRequirements(dto))
+      );
+  }
+
+  calculateTransactionFee(receiverUsername: string, transaction: Transaction): Observable<TransactionFee> {
+    const params = new HttpParams().append('receiverUsername', receiverUsername);
+    const url = `${environment.suchDogeApi}/wallet/transaction/fee`;
+    return this.http.post <TransactionFeeDto>(url, transaction, {params})
+      .pipe(
+        map(dto => WalletService.transactionFeeDtoToTransactionFee(dto))
+      );
+  }
+
   private scheduleBalanceCheck(minutes: number) {
     clearTimeout(this.balanceCheckTimeOut);
     this.balanceCheckTimeOut = setTimeout(() => {
@@ -57,6 +74,26 @@ export class WalletService {
       address: dto.address,
       availableBalance: dto.availableBalance,
       pendingReceivedBalance: dto.pendingReceivedBalance,
+      network: dto.network
+    };
+  }
+
+  private static transactionRequirementsDtoToTransactionRequirements(dto: TransactionRequirementsDto): TransactionRequirements {
+    return {
+      maxTransactionAmount: dto.maxTransactionAmount,
+      minTransactionAmount: dto.minTransactionAmount,
+      transactionFeePercent: dto.transactionFeePercent,
+      network: dto.network
+    };
+  }
+
+  private static transactionFeeDtoToTransactionFee(dto: TransactionFeeDto): TransactionFee {
+    return {
+      additionalFee: dto.additionalFee,
+      networkFee: dto.networkFee,
+      transactionSize: dto.transactionSize,
+      minCustomNetworkFee: dto.minCustomNetworkFee,
+      maxCustomNetworkFee: dto.maxCustomNetworkFee,
       network: dto.network
     };
   }

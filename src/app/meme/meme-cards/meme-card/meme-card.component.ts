@@ -18,6 +18,7 @@ export class MemeCardComponent implements OnInit {
   errorPopUpModel!: PopUpModel;
   successPopUpModel!: PopUpModel;
   isReady = false;
+  isDonationOpen = false;
 
   constructor(private memeService: MemeService, public userService: UserService) {
   }
@@ -38,6 +39,10 @@ export class MemeCardComponent implements OnInit {
   memeUpdatedSuccessfully(): void {
     this.isReady = false;
     this.memeUpdated.emit();
+  }
+
+  startDonation(): void {
+    this.isDonationOpen = true;
   }
 
   private initErrorPopUp(): void {

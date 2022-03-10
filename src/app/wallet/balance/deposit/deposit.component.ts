@@ -1,6 +1,6 @@
 import {Component, EventEmitter, OnDestroy, OnInit, Output, Renderer2} from '@angular/core';
 import {WalletService} from "../../wallet.service";
-import {Balance} from "../../wallet.model";
+import {Balance} from "../../model/wallet.model";
 import {Subscription} from "rxjs";
 import {environment} from "../../../../environments/environment";
 
