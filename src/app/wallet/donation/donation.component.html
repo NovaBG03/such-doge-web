@@ -1,10 +1,11 @@
 <div class="dark-bg"></div>
 <div class="doge-card fixed">
   <ng-container *ngIf="meme && !isLoading; else loading">
-    <ng-container *ngIf="!summarizedTransaction; else confirmationForm">
+    <ng-container *ngIf="!summarizedTransaction; else confirmation">
       <div class="message">
         Donate <span class="secondary-colored-text">{{ requirements.network }}</span> to {{ meme.publisherUsername }}
       </div>
+      <div class="danger-colored-text error-message">{{ errMessage }}</div>
       <form class="doge-form"
             (ngSubmit)="previewDonation()"
             [formGroup]="donationForm">
@@ -39,15 +40,15 @@
           <p>Transaction size: {{ fee.transactionSize }}</p>
           <p>Network fee: {{ fee.networkFee }}</p>
           <p>Additional fee: {{ fee.additionalFee }}</p>
-          <p>Amount to charge: {{ fee.additionalFee + fee.networkFee + amountControl.value }}</p>
+          <p>Amount to be charged: {{ fee.additionalFee + fee.networkFee + amountControl.value }}</p>
         </div>
         <div class="button-group">
           <button type="button" class="btn-solid btn-danger" (click)="onClose()">Cancel</button>
-          <button type="submit" class="btn-solid">Preview</button>
+          <button type="submit" class="btn-solid" [disabled]="donationForm.invalid || errMessage || !fee">Preview</button>
         </div>
       </form>
     </ng-container>
-    <ng-template #confirmationForm>
+    <ng-template #confirmation>
       <div class="message">
         Preview <span class="secondary-colored-text">{{ requirements.network }}</span> donation
       </div>
@@ -56,12 +57,12 @@
           <p>Donation: {{ summarizedTransaction.amountToSend }}</p>
           <p>Network fee: {{ summarizedTransaction.networkFee }}</p>
           <p>Additional fee: {{ summarizedTransaction.additionalFee }}</p>
-          <p>Amount to
-            charge: {{ summarizedTransaction.amountToSend + summarizedTransaction.additionalFee + summarizedTransaction.networkFee }}</p>
+          <p>Amount to be
+            charged: {{ summarizedTransaction.amountToSend + summarizedTransaction.additionalFee + summarizedTransaction.networkFee }}</p>
           <p>Receiver: {{ meme.publisherUsername }}</p>
         </div>
         <div class="button-group">
-          <button type="button" class="btn-solid btn-danger" (click)="cancelDonationPreview()">Cancel</button>
+          <button type="button" class="btn-solid btn-danger" (click)="cancelDonationPreview()">Back</button>
           <button type="submit" class="btn-solid" (click)="confirmDonation()">Confirm</button>
         </div>
       </div>

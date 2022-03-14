@@ -23,8 +23,8 @@ export class DepositComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.renderer.addClass(document.body, 'no-scroll');
-    this.balanceSub = this.walletService.getBalance()
-      .subscribe(balance => this.balance = balance)
+    this.balanceSub = this.walletService.listenBalance()
+        .subscribe(balance => this.balance = balance)
   }
 
   onClose(): void {

@@ -22,3 +22,7 @@
   min-width: auto;
   width: 100%;
 }
+
+.error-message {
+  margin-bottom: 0.25rem;
+}

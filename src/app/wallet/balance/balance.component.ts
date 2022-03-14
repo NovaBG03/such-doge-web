@@ -23,8 +23,8 @@ export class BalanceComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.balanceSub = this.walletService.getBalance()
-      .subscribe(balance => this.balance = balance);
+    this.balanceSub = this.walletService.listenBalance()
+        .subscribe(balance => this.balance = balance);
   }
 
   ngOnDestroy(): void {

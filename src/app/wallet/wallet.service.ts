@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject, Observable, throwError} from "rxjs";
 import {
   Balance, SubmittedTransaction,
   SummarizedTransaction,
@@ -16,7 +16,7 @@ import {
   TransactionRequirementsDto
 } from "./model/wallet.dto";
 import {environment} from "../../environments/environment";
-import {map, tap} from "rxjs/operators";
+import {catchError, map, tap} from "rxjs/operators";
 import {AuthService} from "../auth/auth.service";
 
 @Injectable({providedIn: 'root'})
@@ -37,7 +37,11 @@ export class WalletService {
     });
   }
 
-  getBalance(): Observable<Balance | null> {
+  getBalance(): Balance | null {
+    return this.balanceSubject.getValue();
+  }
+
+  listenBalance(): Observable<Balance | null> {
     return this.balanceSubject.asObservable();
   }
 
@@ -66,7 +70,18 @@ export class WalletService {
     const url = `${environment.suchDogeApi}/wallet/transaction/estimatedFee`;
     return this.http.post<TransactionFeeDto>(url, transaction, {params})
       .pipe(
-        map(dto => WalletService.transactionFeeDtoToTransactionFee(dto))
+        map(dto => WalletService.transactionFeeDtoToTransactionFee(dto)),
+        catchError(err => {
+          let errMessage = "Something went wrong!";
+          switch (err.error.message) {
+            case "CAN_NOT_CALCULATE_NETWORK_FEE":
+              errMessage = "Can't calculate network fee";
+          }
+          if (err.error.message.startsWith("MAX_TRANSACTION_AMOUNT_IS_")) {
+            errMessage = `Transaction amount is too large`;
+          }
+          return throwError(errMessage);
+        })
       );
   }
 
@@ -75,7 +90,18 @@ export class WalletService {
     const url = `${environment.suchDogeApi}/wallet/transaction/summarized`;
     return this.http.post<SummarizedTransactionDto>(url, transaction, {params})
       .pipe(
-        map(dto => WalletService.summarizedTransactionDtoToSummarizedTransaction(dto))
+        map(dto => WalletService.summarizedTransactionDtoToSummarizedTransaction(dto)),
+        catchError(err => {
+          let errMessage = "Something went wrong!";
+          switch (err.error.message) {
+            case "CAN_NOT_TRANSFER_ASSETS_TO_THE_SAME_ADDRESS":
+              errMessage = "Can't transfer assets to the same address";
+          }
+          if (err.error.message.startsWith("MAX_TRANSACTION_AMOUNT_IS_")) {
+            errMessage = `Transaction amount is too large`;
+          }
+          return throwError(errMessage);
+        })
       );
   }
 

@@ -9,12 +9,9 @@ import {
   TransactionFee,
   TransactionRequirements
 } from "../model/wallet.model";
-import {filter, switchMap, take, tap} from "rxjs/operators";
-import {Observable, Subscription} from "rxjs";
+import {catchError, filter, switchMap, take, tap} from "rxjs/operators";
+import {Observable, of, Subscription} from "rxjs";
 import {NotificationService} from "../../notification-panel/notification.service";
-import {
-  InfoNotificationComponent
-} from "../../notification-panel/notifications/info-notification/info-notification.component";
 import {NotificationCategory} from "../../notification-panel/model/notification.model";
 import {
   AutoClosedNotificationComponent
@@ -33,6 +30,7 @@ export class DonationComponent implements OnInit, OnDestroy {
   requirements!: TransactionRequirements;
   fee: TransactionFee | null = null;
   summarizedTransaction: SummarizedTransaction | null = null;
+  errMessage = '';
   isLoading = true;
 
   private feeSub!: Subscription;
@@ -79,11 +77,16 @@ export class DonationComponent implements OnInit, OnDestroy {
       amount: this.donationForm.value.amount,
       priority: this.donationForm.value.priority
     };
-    console.log(transaction);
     this.walletService.summarizeDonation(this.meme.id, transaction)
-      .subscribe(summarizedTransaction => {
-        this.summarizedTransaction = summarizedTransaction;
-        this.isLoading = false;
+      .subscribe({
+        next: summarizedTransaction => {
+          this.summarizedTransaction = summarizedTransaction;
+          this.isLoading = false;
+        },
+        error: err => {
+          this.isLoading = false;
+          this.errMessage = err;
+        }
       });
   }
 
@@ -141,16 +144,36 @@ export class DonationComponent implements OnInit, OnDestroy {
     this.feeSub = this.donationForm.valueChanges.pipe(
       tap(() => this.fee = null),
       filter(() => !this.amountControl.errors && !this.amountControl.errors),
-      switchMap(() => this.calculateFee())
+      switchMap(() => this.calculateFee()),
+      filter(value => !!value)
     ).subscribe();
   }
 
-  private calculateFee(): Observable<TransactionFee> {
+  private calculateFee(): Observable<TransactionFee | null> {
     return this.walletService.estimateTransactionFee(this.meme.publisherUsername, {
       amount: this.amountControl.value,
       priority: this.priorityControl.value
     }).pipe(
-      tap(transactionFee => this.fee = transactionFee)
+      catchError(err => {
+        this.errMessage = err;
+        return of(null);
+      }),
+      tap(fee => {
+        this.fee = fee;
+        if (fee) {
+          this.checkBalanceIsEnough(fee.networkFee + fee.additionalFee)
+        }
+      }),
     );
+  }
+
+  private checkBalanceIsEnough(fee: number): void {
+    const walletBalance = this.walletService.getBalance()?.availableBalance;
+    const balanceNeeded = fee + this.amountControl.value;
+    if (!walletBalance || walletBalance < balanceNeeded) {
+      this.errMessage = "Transaction amount is too large";
+    } else {
+      this.errMessage = '';
+    }
   }
 }

@@ -354,6 +354,16 @@ form .hint {
   border: 3px solid var(--color-main);
 }
 
+.btn-solid:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.btn-solid:disabled:hover,
+.btn-solid:disabled:focus {
+  border: 3px solid var(--btn-color);
+}
+
 .btn-success {
   --btn-color: var(--color-success);
 }
