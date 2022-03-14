@@ -26,6 +26,17 @@ export interface Transaction {
   priority: string;
 }
 
+export interface SummarizedTransaction {
+  amountToSend: number;
+  additionalFee: number;
+  networkFee: number;
+}
+
+export interface SubmittedTransaction {
+  transactionId: string,
+  network: string
+}
+
 export enum Priority {
   LOW = "LOW",
   MEDIUM = "MEDIUM",

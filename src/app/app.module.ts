@@ -38,6 +38,7 @@ import { WalletBalanceComponent } from './header/wallet-balance/wallet-balance.c
 import { BalanceComponent } from './wallet/balance/balance.component';
 import { DepositComponent } from './wallet/balance/deposit/deposit.component';
 import { DonationComponent } from './wallet/donation/donation.component';
+import { AutoClosedNotificationComponent } from './notification-panel/notifications/auto-closed-notification/auto-closed-notification.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { DonationComponent } from './wallet/donation/donation.component';
     WalletBalanceComponent,
     BalanceComponent,
     DepositComponent,
-    DonationComponent
+    DonationComponent,
+    AutoClosedNotificationComponent,
   ],
   imports: [
     BrowserModule,

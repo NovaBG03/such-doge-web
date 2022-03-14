@@ -1,10 +1,22 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {BehaviorSubject, Observable, Subject} from "rxjs";
-import {Balance, Transaction, TransactionFee, TransactionRequirements} from "./model/wallet.model";
-import {BalanceDto, TransactionFeeDto, TransactionRequirementsDto} from "./model/wallet.dto";
+import {BehaviorSubject, Observable} from "rxjs";
+import {
+  Balance, SubmittedTransaction,
+  SummarizedTransaction,
+  Transaction,
+  TransactionFee,
+  TransactionRequirements
+} from "./model/wallet.model";
+import {
+  BalanceDto,
+  SubmittedTransactionDto,
+  SummarizedTransactionDto,
+  TransactionFeeDto,
+  TransactionRequirementsDto
+} from "./model/wallet.dto";
 import {environment} from "../../environments/environment";
-import {map} from "rxjs/operators";
+import {map, tap} from "rxjs/operators";
 import {AuthService} from "../auth/auth.service";
 
 @Injectable({providedIn: 'root'})
@@ -49,12 +61,31 @@ export class WalletService {
       );
   }
 
-  calculateTransactionFee(receiverUsername: string, transaction: Transaction): Observable<TransactionFee> {
+  estimateTransactionFee(receiverUsername: string, transaction: Transaction): Observable<TransactionFee> {
     const params = new HttpParams().append('receiverUsername', receiverUsername);
-    const url = `${environment.suchDogeApi}/wallet/transaction/fee`;
-    return this.http.post <TransactionFeeDto>(url, transaction, {params})
+    const url = `${environment.suchDogeApi}/wallet/transaction/estimatedFee`;
+    return this.http.post<TransactionFeeDto>(url, transaction, {params})
       .pipe(
         map(dto => WalletService.transactionFeeDtoToTransactionFee(dto))
+      );
+  }
+
+  summarizeDonation(memeId: number, transaction: Transaction): Observable<SummarizedTransaction> {
+    const params = new HttpParams().append('memeId', memeId);
+    const url = `${environment.suchDogeApi}/wallet/transaction/summarized`;
+    return this.http.post<SummarizedTransactionDto>(url, transaction, {params})
+      .pipe(
+        map(dto => WalletService.summarizedTransactionDtoToSummarizedTransaction(dto))
+      );
+  }
+
+  donate(memeId: number, transaction: Transaction): Observable<SubmittedTransaction> {
+    const params = new HttpParams().append('memeId', memeId);
+    const url = `${environment.suchDogeApi}/wallet/transaction/donation`;
+    return this.http.post<SubmittedTransactionDto>(url, transaction, {params})
+      .pipe(
+        tap(() => this.updateBalance()),
+        map(dto => WalletService.submittedTransactionDtoToSubmittedTransaction(dto))
       );
   }
 
@@ -96,5 +127,20 @@ export class WalletService {
       maxCustomNetworkFee: dto.maxCustomNetworkFee,
       network: dto.network
     };
+  }
+
+  private static summarizedTransactionDtoToSummarizedTransaction(dto: SummarizedTransactionDto): SummarizedTransaction {
+    return {
+      amountToSend: dto.amountToSend,
+      additionalFee: dto.additionalFee,
+      networkFee: dto.networkFee
+    };
+  }
+
+  private static submittedTransactionDtoToSubmittedTransaction(dto: SubmittedTransactionDto): SubmittedTransaction {
+    return {
+      transactionId: dto.transactionId,
+      network: dto.network
+    }
   }
 }

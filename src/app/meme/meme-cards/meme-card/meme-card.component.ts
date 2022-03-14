@@ -45,6 +45,10 @@ export class MemeCardComponent implements OnInit {
     this.isDonationOpen = true;
   }
 
+  donationFinished(): void {
+    this.isDonationOpen = false;
+  }
+
   private initErrorPopUp(): void {
     this.errorPopUpModel = {
       bannerPath: 'assets/svgs/error-cross.svg',

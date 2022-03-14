@@ -1,46 +1,71 @@
 <div class="dark-bg"></div>
 <div class="doge-card fixed">
   <ng-container *ngIf="meme && !isLoading; else loading">
-    <div class="message">Donate <span class="secondary-colored-text">{{ meme.publisherUsername }}</span></div>
-    <form class="doge-form" (ngSubmit)="previewDonation()" [formGroup]="donationForm">
-      <div class="form-container">
-        <div class="form-group">
-          <label for="amount" class="small-label">Amount</label>
-          <input type="number" step="0.1" min="0" class="input" id="amount" [placeholder]="requirements.network" formControlName="amount">
-          <ng-template [ngIf]="amountControl.invalid && amountControl.errors">
-            <span *ngIf="amountControl.errors.required" class="hint">* Amount is required.</span>
-            <span *ngIf="amountControl.errors.min as error"
-                  class="hint">* Amount must be at least {{ error.min }} {{ requirements.network }}.</span>
-            <span *ngIf="amountControl.errors.max as error"
-                  class="hint">* Amount can not be more than {{ error.max }} {{ requirements.network }}</span>
-          </ng-template>
-        </div>
-        <div class="form-group">
-          <p class="small-label">Transaction fee</p>
-          <div class="fee-control no-select">
-            <label *ngFor="let priority of priorities"
-                   class="big-checkbox"
-                   [ngClass]="{active: isPriorityActive(priority)}"
-                   (click)="setPriority(priority)"
-                   [for]="priority">
-              {{ priority }}
-              <input type="checkbox" [id]="priority">
-            </label>
+    <ng-container *ngIf="!summarizedTransaction; else confirmationForm">
+      <div class="message">
+        Donate <span class="secondary-colored-text">{{ requirements.network }}</span> to {{ meme.publisherUsername }}
+      </div>
+      <form class="doge-form"
+            (ngSubmit)="previewDonation()"
+            [formGroup]="donationForm">
+        <div class="form-container">
+          <div class="form-group">
+            <label for="amount" class="small-label">Amount</label>
+            <input type="number" step="0.1" min="0" class="input" id="amount" [placeholder]="requirements.network"
+                   formControlName="amount">
+            <ng-template [ngIf]="amountControl.invalid && amountControl.errors">
+              <span *ngIf="amountControl.errors.required" class="hint">* Amount is required.</span>
+              <span *ngIf="amountControl.errors.min as error"
+                    class="hint">* Amount must be at least {{ error.min }} {{ requirements.network }}.</span>
+              <span *ngIf="amountControl.errors.max as error"
+                    class="hint">* Amount can not be more than {{ error.max }} {{ requirements.network }}</span>
+            </ng-template>
+          </div>
+          <div class="form-group">
+            <p class="small-label">Transaction fee</p>
+            <div class="fee-control no-select">
+              <label *ngFor="let priority of priorities"
+                     class="big-checkbox"
+                     [ngClass]="{active: isPriorityActive(priority)}"
+                     (click)="setPriority(priority)"
+                     [for]="priority">
+                {{ priority }}
+                <input type="checkbox" [id]="priority">
+              </label>
+            </div>
           </div>
         </div>
+        <div class="form-group" *ngIf="fee else loading">
+          <p>Transaction size: {{ fee.transactionSize }}</p>
+          <p>Network fee: {{ fee.networkFee }}</p>
+          <p>Additional fee: {{ fee.additionalFee }}</p>
+          <p>Amount to charge: {{ fee.additionalFee + fee.networkFee + amountControl.value }}</p>
+        </div>
+        <div class="button-group">
+          <button type="button" class="btn-solid btn-danger" (click)="onClose()">Cancel</button>
+          <button type="submit" class="btn-solid">Preview</button>
+        </div>
+      </form>
+    </ng-container>
+    <ng-template #confirmationForm>
+      <div class="message">
+        Preview <span class="secondary-colored-text">{{ requirements.network }}</span> donation
       </div>
-      <div class="form-group" *ngIf="fee else loading">
-        <p>Transaction size: {{ fee.transactionSize }}</p>
-        <p>Network fee: {{ fee.networkFee }}</p>
-        <p>Additional fee: {{ fee.additionalFee }} ({{ requirements.transactionFeePercent }}%)</p>
-        <p>Fee: {{ fee.additionalFee + fee.networkFee }}</p>
-        <p>All: {{ fee.additionalFee + fee.networkFee + amountControl.value }}</p>
+      <div class="doge-form" *ngIf="summarizedTransaction; else loading">
+        <div class="form-group">
+          <p>Donation: {{ summarizedTransaction.amountToSend }}</p>
+          <p>Network fee: {{ summarizedTransaction.networkFee }}</p>
+          <p>Additional fee: {{ summarizedTransaction.additionalFee }}</p>
+          <p>Amount to
+            charge: {{ summarizedTransaction.amountToSend + summarizedTransaction.additionalFee + summarizedTransaction.networkFee }}</p>
+          <p>Receiver: {{ meme.publisherUsername }}</p>
+        </div>
+        <div class="button-group">
+          <button type="button" class="btn-solid btn-danger" (click)="cancelDonationPreview()">Cancel</button>
+          <button type="submit" class="btn-solid" (click)="confirmDonation()">Confirm</button>
+        </div>
       </div>
-      <div class="button-group">
-        <button type="button" class="btn-solid btn-danger" (click)="onClose()">Cancel</button>
-        <button type="submit" class="btn-solid">Preview</button>
-      </div>
-    </form>
+    </ng-template>
   </ng-container>
   <ng-template #loading>
     <app-spinner></app-spinner>

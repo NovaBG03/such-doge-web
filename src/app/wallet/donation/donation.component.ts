@@ -2,9 +2,23 @@ import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2} fr
 import {WalletService} from "../wallet.service";
 import {Meme} from "../../meme/model/meme.model";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {Priority, TransactionFee, TransactionRequirements} from "../model/wallet.model";
-import {catchError, filter, switchMap, tap} from "rxjs/operators";
-import {Observable, of, throwError} from "rxjs";
+import {
+  Priority,
+  SummarizedTransaction,
+  Transaction,
+  TransactionFee,
+  TransactionRequirements
+} from "../model/wallet.model";
+import {filter, switchMap, take, tap} from "rxjs/operators";
+import {Observable, Subscription} from "rxjs";
+import {NotificationService} from "../../notification-panel/notification.service";
+import {
+  InfoNotificationComponent
+} from "../../notification-panel/notifications/info-notification/info-notification.component";
+import {NotificationCategory} from "../../notification-panel/model/notification.model";
+import {
+  AutoClosedNotificationComponent
+} from "../../notification-panel/notifications/auto-closed-notification/auto-closed-notification.component";
 
 @Component({
   selector: 'app-donation',
@@ -15,10 +29,13 @@ export class DonationComponent implements OnInit, OnDestroy {
   @Input() meme!: Meme;
   @Output() close = new EventEmitter<void>();
 
-  requirements!: TransactionRequirements;
-  fee!: TransactionFee;
   donationForm!: FormGroup;
+  requirements!: TransactionRequirements;
+  fee: TransactionFee | null = null;
+  summarizedTransaction: SummarizedTransaction | null = null;
   isLoading = true;
+
+  private feeSub!: Subscription;
 
   get priorities(): string[] {
     return Object.keys(Priority);
@@ -32,18 +49,20 @@ export class DonationComponent implements OnInit, OnDestroy {
     return <FormControl>this.donationForm.get('priority');
   }
 
-  constructor(private walletService: WalletService, private renderer: Renderer2) {
+  constructor(private walletService: WalletService,
+              private notificationService: NotificationService,
+              private renderer: Renderer2) {
+  }
+
+  ngOnInit(): void {
+    this.renderer.addClass(document.body, 'no-scroll');
     this.walletService.getTransactionRequirements()
       .subscribe(requirements => {
         this.requirements = requirements;
         this.initDonationForm();
         this.manageFee();
         this.isLoading = false;
-      })
-  }
-
-  ngOnInit(): void {
-    this.renderer.addClass(document.body, 'no-scroll');
+      });
   }
 
   setPriority(priority: string): void {
@@ -54,8 +73,41 @@ export class DonationComponent implements OnInit, OnDestroy {
     return this.priorityControl.value === priority;
   }
 
-  previewDonation() {
-    console.log(this.donationForm.value);
+  previewDonation(): void {
+    this.isLoading = true;
+    const transaction: Transaction = {
+      amount: this.donationForm.value.amount,
+      priority: this.donationForm.value.priority
+    };
+    console.log(transaction);
+    this.walletService.summarizeDonation(this.meme.id, transaction)
+      .subscribe(summarizedTransaction => {
+        this.summarizedTransaction = summarizedTransaction;
+        this.isLoading = false;
+      });
+  }
+
+  cancelDonationPreview(): void {
+    this.summarizedTransaction = null;
+  }
+
+  confirmDonation(): void {
+    this.isLoading = true;
+    const transaction: Transaction = {
+      amount: this.donationForm.value.amount,
+      priority: this.donationForm.value.priority
+    };
+    this.walletService.donate(this.meme.id, transaction)
+      .subscribe(submittedTransaction => {
+        this.notificationService.pushNotification({
+          component: AutoClosedNotificationComponent,
+          category: NotificationCategory.Success,
+          title: "Successful donation",
+          message: `Successfully donated ${this.amountControl.value} ${submittedTransaction.network} to ${this.meme.publisherUsername}.`
+        })
+        this.close.emit();
+        this.isLoading = false;
+      })
   }
 
   onClose(): void {
@@ -64,6 +116,7 @@ export class DonationComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.renderer.removeClass(document.body, 'no-scroll');
+    this.feeSub?.unsubscribe();
   }
 
   private initDonationForm() {
@@ -77,28 +130,27 @@ export class DonationComponent implements OnInit, OnDestroy {
       ]),
       priority: new FormControl(Priority.LOW, Validators.required),
     });
-
-
   }
 
   private manageFee() {
-    this.calculateFee().subscribe();
+    this.calculateFee()
+      .pipe(take(1))
+      .subscribe();
 
-    this.donationForm.valueChanges.pipe(
+    this.feeSub?.unsubscribe();
+    this.feeSub = this.donationForm.valueChanges.pipe(
+      tap(() => this.fee = null),
       filter(() => !this.amountControl.errors && !this.amountControl.errors),
       switchMap(() => this.calculateFee())
     ).subscribe();
   }
 
   private calculateFee(): Observable<TransactionFee> {
-    return this.walletService.calculateTransactionFee(this.meme.publisherUsername, {
+    return this.walletService.estimateTransactionFee(this.meme.publisherUsername, {
       amount: this.amountControl.value,
       priority: this.priorityControl.value
     }).pipe(
-      tap(transactionFee => {
-        this.fee = transactionFee;
-        console.log(this.fee);
-      })
+      tap(transactionFee => this.fee = transactionFee)
     );
   }
 }

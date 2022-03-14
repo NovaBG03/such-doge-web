@@ -28,7 +28,7 @@
 
 <app-donation *ngIf="isDonationOpen"
               [meme]="meme"
-              (close)="this.isDonationOpen = false"></app-donation>
+              (close)="donationFinished()"></app-donation>
 
 <app-pop-up *ngIf="errorPopUpModel.description"
             [model]="errorPopUpModel"

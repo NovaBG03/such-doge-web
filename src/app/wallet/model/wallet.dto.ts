@@ -20,3 +20,14 @@ export interface TransactionFeeDto {
   transactionSize: number;
   network: string;
 }
+
+export interface SubmittedTransactionDto {
+  transactionId: string,
+  network: string
+}
+
+export interface SummarizedTransactionDto {
+  amountToSend: number;
+  additionalFee: number;
+  networkFee: number;
+}
