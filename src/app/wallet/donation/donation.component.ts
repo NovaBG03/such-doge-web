@@ -14,8 +14,8 @@ import {Observable, of, Subscription} from "rxjs";
 import {NotificationService} from "../../notification-panel/notification.service";
 import {NotificationCategory} from "../../notification-panel/model/notification.model";
 import {
-  AutoClosedNotificationComponent
-} from "../../notification-panel/notifications/auto-closed-notification/auto-closed-notification.component";
+  InfoNotificationComponent
+} from "../../notification-panel/notifications/info-notification/info-notification.component";
 
 @Component({
   selector: 'app-donation',
@@ -103,7 +103,7 @@ export class DonationComponent implements OnInit, OnDestroy {
     this.walletService.donate(this.meme.id, transaction)
       .subscribe(submittedTransaction => {
         this.notificationService.pushNotification({
-          component: AutoClosedNotificationComponent,
+          component: InfoNotificationComponent,
           category: NotificationCategory.Success,
           title: "Successful donation",
           message: `Successfully donated ${this.amountControl.value} ${submittedTransaction.network} to ${this.meme.publisherUsername}.`

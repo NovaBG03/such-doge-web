@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {NotificationComponent} from "../notification.component";
 import {NotificationModel} from "../../model/notification.model";
 import {NotificationService} from "../../notification.service";
@@ -8,24 +8,32 @@ import {NotificationService} from "../../notification.service";
   templateUrl: './auto-closed-notification.component.html',
   styleUrls: ['./auto-closed-notification.component.css']
 })
-export class AutoClosedNotificationComponent implements NotificationComponent, OnInit {
+export class AutoClosedNotificationComponent implements NotificationComponent, OnInit, OnDestroy {
   @Input() notification!: NotificationModel;
   @Output() closed: EventEmitter<void> = new EventEmitter<void>();
 
-  secondsLeft = 10;
+  secondsLeft = 20;
+  private interval: any;
 
-  constructor(public notificationService: NotificationService) { }
+  constructor(public notificationService: NotificationService) {
+  }
 
   ngOnInit(): void {
-    setInterval(() => {
+    this.interval = setInterval(() => {
       this.secondsLeft--;
+      console.log(this.secondsLeft);
       if (this.secondsLeft <= 0) {
-        this.close()
+        this.close();
       }
     }, 1000);
   }
 
   close(): void {
+    clearInterval(this.interval);
     this.closed.emit();
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.interval);
   }
 }
