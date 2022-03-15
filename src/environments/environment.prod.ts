@@ -1,15 +1,23 @@
 export const environment = {
   production: true,
-  suchDogeApi: 'https://suchdoge-api.herokuapp.com',
+  domain: "suchdoge.xyz",
+  suchDogeApi: "https://api.suchdoge.xyz",
   authPrefix: "Bearer ",
   authHeader: "Authorization",
-  authTokenKey: 'dogeAuthToken',
-  preferredThemeKey: 'dogePreferredTheme',
+  authTokenKey: "dogeAuthToken",
+  refreshPrefix: "Bearer ",
+  refreshHeader: "Authorization-Refresh",
+  refreshTokenKey: "dogeAuthRefreshToken",
+  preferredThemeKey: "dogePreferredTheme",
   defaultMemePageSize: 8,
   minUsernameLength: 3,
   maxUsernameLength: 36,
   minEmailLength: 3,
   maxEmailLength: 254,
   minPasswordLength: 6,
-  maxPasswordLength: 50
+  maxPasswordLength: 50,
+  newRequestDateKey: "dogeNewRequestDateKey",
+  imageUrlPrefix: "https://suchdoge-storage-dev.s3.amazonaws.com",
+  chainSoUrlPrefix: "https://chain.so/address",
+  qrGeneratorUrlPrefix: "https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl="
 };
