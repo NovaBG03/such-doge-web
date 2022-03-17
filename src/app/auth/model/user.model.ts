@@ -20,7 +20,6 @@ export class DogeUser {
     this.authorities = jwt.authorities.map(x => x.authority as Authority);
     this.issuedAt = new Date(jwt.iat * 1000);
     this.expiration = new Date(jwt.exp * 1000);
-    console.log(this.authorities);
   }
 
   get isModeratorOrAdmin(): boolean {

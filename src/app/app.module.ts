@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
@@ -39,6 +39,7 @@ import { BalanceComponent } from './wallet/balance/balance.component';
 import { DepositComponent } from './wallet/balance/deposit/deposit.component';
 import { DonationComponent } from './wallet/donation/donation.component';
 import { AutoClosedNotificationComponent } from './notification-panel/notifications/auto-closed-notification/auto-closed-notification.component';
+import {environment} from "../environments/environment";
 
 @NgModule({
   declarations: [
@@ -93,8 +94,19 @@ import { AutoClosedNotificationComponent } from './notification-panel/notificati
       useFactory: rxStompServiceFactory,
       deps: [InjectableRxStompConfig],
     },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: () => validateDomain,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
+}
+
+function validateDomain() {
+  if (environment.production && location.hostname !== environment.domain) {
+    window.location.href = location.protocol + "//" + environment.domain + location.pathname;
+  }
 }

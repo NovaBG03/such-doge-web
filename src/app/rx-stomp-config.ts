@@ -2,7 +2,7 @@ import {InjectableRxStompConfig, RxStompService} from '@stomp/ng2-stompjs';
 import {environment} from "../environments/environment";
 
 export const RxStompConfig: InjectableRxStompConfig = {
-  brokerURL: `ws://${environment.domain}/doge-websocket`,
+  brokerURL: `${location.protocol !== 'https:' ? 'ws' : 'wss'}://${environment.suchDogeApiDomain}/doge-websocket`,
   connectHeaders: {},
   heartbeatIncoming: 0,
   heartbeatOutgoing: 20000,

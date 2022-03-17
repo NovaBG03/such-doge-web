@@ -1,6 +1,7 @@
 export const environment = {
   production: true,
   domain: "suchdoge.xyz",
+  suchDogeApiDomain: "api.suchdoge.xyz",
   suchDogeApi: "https://api.suchdoge.xyz",
   authPrefix: "Bearer ",
   authHeader: "Authorization",
