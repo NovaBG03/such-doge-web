@@ -12,14 +12,19 @@
   <img [src]="meme.imageUrl" [alt]="meme.description" class="meme no-select">
   <div class="meme-navigation">
     <ng-template [ngIf]="meme.isApproved == undefined || meme.isApproved" [ngIfElse]="notApprovedNavigation">
-      <button class="btn-outline" (click)="startDonation()">Donate</button>
+      <ng-container *ngIf="authService.user | async as user">
+        <button *ngIf="user.username === meme.publisherUsername; else donateBtn" class="btn-outline" disabled>Statistics</button>
+        <ng-template #donateBtn>
+          <button class="btn-outline" (click)="startDonation()">Donate</button>
+        </ng-template>
+      </ng-container>
     </ng-template>
     <ng-template #notApprovedNavigation>
-      <ng-template [ngIf]="isModeratorMode">
+      <ng-template [ngIf]="isModeratorMode" [ngIfElse]="pendingNavigation">
         <button class="btn-outline btn-success" (click)="approve()">Approve</button>
         <button class="btn-outline btn-danger">Deny</button>
       </ng-template>
-      <ng-template [ngIf]="!isModeratorMode">
+      <ng-template #pendingNavigation>
         <button class="btn-outline btn-grey" disabled>Pending Approval</button>
       </ng-template>
     </ng-template>

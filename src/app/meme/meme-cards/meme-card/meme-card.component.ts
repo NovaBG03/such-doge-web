@@ -3,6 +3,7 @@ import {Meme} from "../../model/meme.model";
 import {MemeService} from "../../meme.service";
 import {PopUpModel} from "../../../util/pop-up/pop-up-model";
 import {UserService} from "../../../profile/user.service";
+import {AuthService} from "../../../auth/auth.service";
 
 @Component({
   selector: 'app-meme-card',
@@ -20,7 +21,9 @@ export class MemeCardComponent implements OnInit {
   isReady = false;
   isDonationOpen = false;
 
-  constructor(private memeService: MemeService, public userService: UserService) {
+  constructor(public userService: UserService,
+              public authService: AuthService,
+              private memeService: MemeService) {
   }
 
   ngOnInit(): void {
