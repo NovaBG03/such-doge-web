@@ -31,6 +31,7 @@ export class DonationComponent implements OnInit, OnDestroy {
   fee: TransactionFee | null = null;
   summarizedTransaction: SummarizedTransaction | null = null;
   errMessage = '';
+  isMoreInfoOpen = false;
   isLoading = true;
 
   private feeSub!: Subscription;

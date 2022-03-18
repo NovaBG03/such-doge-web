@@ -36,15 +36,22 @@
             </div>
           </div>
         </div>
-        <div class="form-group" *ngIf="fee else loading">
-          <p>Transaction size: {{ fee.transactionSize }}</p>
-          <p>Network fee: {{ fee.networkFee }}</p>
-          <p>Additional fee: {{ fee.additionalFee }}</p>
-          <p>Amount to be charged: {{ fee.additionalFee + fee.networkFee + amountControl.value }}</p>
+        <div class="form-group closable" *ngIf="fee else loading">
+          <label (click)="isMoreInfoOpen = !isMoreInfoOpen"
+                 [ngClass]="{active: isMoreInfoOpen}"
+                 class="big-checkbox"
+                 for="closable-info">{{ isMoreInfoOpen ? "⮟" : "➤" }} Amount to be
+            charged: {{ fee.additionalFee + fee.networkFee + amountControl.value }}</label>
+          <div id="closable-info" class="transaction-summary" *ngIf="isMoreInfoOpen">
+            <p class="transaction-info">Additional fee: {{ fee.additionalFee }}</p>
+            <p class="transaction-info">Network fee: {{ fee.networkFee }}</p>
+            <p class="transaction-info">Transaction size: {{ fee.transactionSize }}</p>
+          </div>
         </div>
         <div class="button-group">
           <button type="button" class="btn-solid btn-danger" (click)="onClose()">Cancel</button>
-          <button type="submit" class="btn-solid" [disabled]="donationForm.invalid || errMessage || !fee">Preview</button>
+          <button type="submit" class="btn-solid" [disabled]="donationForm.invalid || errMessage || !fee">Preview
+          </button>
         </div>
       </form>
     </ng-container>
@@ -53,13 +60,13 @@
         Preview <span class="secondary-colored-text">{{ requirements.network }}</span> donation
       </div>
       <div class="doge-form" *ngIf="summarizedTransaction; else loading">
-        <div class="form-group">
-          <p>Donation: {{ summarizedTransaction.amountToSend }}</p>
-          <p>Network fee: {{ summarizedTransaction.networkFee }}</p>
-          <p>Additional fee: {{ summarizedTransaction.additionalFee }}</p>
-          <p>Amount to be
+        <div class="form-group transaction-summary">
+          <p class="transaction-info">Receiver: {{ meme.publisherUsername }}</p>
+          <p class="transaction-info">Donation: {{ summarizedTransaction.amountToSend }}</p>
+          <p class="transaction-info">Amount to be
             charged: {{ summarizedTransaction.amountToSend + summarizedTransaction.additionalFee + summarizedTransaction.networkFee }}</p>
-          <p>Receiver: {{ meme.publisherUsername }}</p>
+          <p class="transaction-info">Network fee: {{ summarizedTransaction.networkFee }}</p>
+          <p class="transaction-info">Additional fee: {{ summarizedTransaction.additionalFee }}</p>
         </div>
         <div class="button-group">
           <button type="button" class="btn-solid btn-danger" (click)="cancelDonationPreview()">Back</button>

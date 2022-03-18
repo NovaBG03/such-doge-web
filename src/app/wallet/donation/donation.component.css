@@ -26,3 +26,28 @@
 .error-message {
   margin-bottom: 0.25rem;
 }
+
+.closable {
+  width: 90%;
+  margin: auto;
+}
+
+.closable>.transaction-summary {
+  position: relative;
+  top: -1rem;
+  z-index: -1;
+  padding-top: 1.125rem;
+}
+
+.transaction-summary {
+  font-size: 1.125rem;
+  width: 95%;
+  margin: auto;
+  padding: 0.5em;
+  background: var(--color-info);
+  border-radius: 0.5rem;
+}
+
+.transaction-info {
+  margin: 0.5em 0;
+}

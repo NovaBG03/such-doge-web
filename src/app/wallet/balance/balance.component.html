@@ -9,7 +9,7 @@
       <path class="icon-fill"
             d="M113.6 0a113.6 113.6 0 1 0 0 227.2 113.6 113.6 0 0 0 0-227.2zm4.5 175H76.9v-54.7H62.4v-13.4H77V52.2h35.3c8.4 0 63.7-1.8 63.7 62.4 0 65.2-57.8 60.4-57.8 60.4z"/>
     </svg>
-    <div class="balance-value">{{ balance.availableBalance }}</div>
+    <div class="balance-value">{{ balance.availableBalance | number: '0.0-4' }}</div>
   </div>
   <ng-template #loading>
     <div class="balance">loading...</div>

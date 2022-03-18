@@ -255,7 +255,7 @@ form .hint {
   min-width: 30%;
   text-align: center;
   background: var(--color-main);
-  padding: 50px 50px 40px;
+  padding: 40px 50px 30px;
   border-radius: 10px;
   box-shadow: var(--box-shadow-card);
 }
@@ -396,6 +396,7 @@ form .hint {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+  border: none;
 }
 
 .big-checkbox:not(.active):hover {
@@ -449,7 +450,7 @@ form .hint {
 .meme-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-  grid-gap: 1em;
+  grid-gap: 1.5rem 2rem;
   margin-top: 10px;
 }
 

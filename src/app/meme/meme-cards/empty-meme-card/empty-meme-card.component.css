@@ -1,5 +1,6 @@
 .header-content {
   cursor: default;
+  width: 60%;
 }
 
 .empty-user-image {
@@ -11,7 +12,7 @@
 }
 
 .empty-name {
-  width: 95px;
+  width: 100%;
   height: 18px;
   border-radius: 15px;
   background: var(--color-info);
@@ -19,7 +20,7 @@
 }
 
 .empty-description {
-  width: 95px;
+  width: 70%;
   height: 14px;
   border-radius: 15px;
   background: var(--color-info);
@@ -34,10 +35,9 @@
 .empty-meme {
   position: relative;
   margin: 20px 0;
-  width: 250px;
-  height: 180px;
+  aspect-ratio: 25 / 18;
   background-color: var(--color-info);
-  border-radius: 15px;
+  border-radius: 1rem;
 }
 
 .empty-meme .empty-image {

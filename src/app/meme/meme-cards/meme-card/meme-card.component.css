@@ -2,11 +2,8 @@
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-
-  width: 290px;
-  border-radius: 15px;
-  padding: 20px;
-  margin: auto;
+  border-radius: 1rem;
+  padding: 1.25rem;
   background-color: var(--color-main);
   box-shadow: var(--box-shadow-card);
 }
@@ -20,7 +17,7 @@
 
 .user-image {
   object-fit: cover;
-  height: 50px;
+  height: 3.125rem;
   aspect-ratio: 1 / 1;
   border-radius: 100%;
   cursor: pointer;
@@ -28,52 +25,50 @@
 
 .header-content {
   cursor: pointer;
-  margin-left: 10px;
+  margin-left: 0.625rem;
 }
 
 .header-content .name {
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: var(--weight-medium);;
-  max-width: 160px;
+  max-width: 10rem;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
 }
 
 .header-content .description {
-  font-size: 14px;
+  font-size: 0.875rem;
   color: var(--color-text-unselected);
-  max-width: 160px;
+  max-width: 10rem;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
 }
 
 .card-header .options {
+  font-size: 22px;
+  width: 14px;
   margin: 0 0 auto auto;
   transform: rotate(90deg);
-  font-size: 22px;
   color: var(--color-text-unselected);
   cursor: pointer;
-  width: 14px;
 }
 
 .meme {
   object-fit: cover;
   margin: 20px 0;
-  width: 250px;
-  height: 180px;
-  border-radius: 15px;
-  border: 1px solid var(--color-text-unselected);
+  aspect-ratio: 25 / 18;
+  border-radius: 0.75rem;
+  border: 0.125rem solid var(--color-text-unselected);
   cursor: pointer;
 }
 
 .meme-navigation {
   display: flex;
-  display: flex;
   justify-content: center;
   flex-wrap: nowrap;
   flex-direction: row;
   align-items: center;
-  gap: 6px;
+  gap: 0.6rem;
 }
