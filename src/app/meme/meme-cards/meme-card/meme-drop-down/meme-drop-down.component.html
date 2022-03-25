@@ -1,0 +1,40 @@
+<div class="meme-drop-down-control">
+  <button class="options-btn no-select" (click)="toggleDropDown()">...</button>
+  <div class="drop-down" *ngIf="isOpen">
+    <ul>
+      <li (click)="closeDropDown()">
+        <svg class="icon" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path class="icon-path" fill-rule="evenodd" clip-rule="evenodd"
+                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zm3 13l-1 1H6l-1-1a7 7 0 0114 0z"
+                fill="#282B31"/>
+          <mask id="a" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="5" y="3" width="14" height="18">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zm3 13l-1 1H6l-1-1a7 7 0 0114 0z" fill="#fff"/>
+          </mask>
+          <g mask="url(#a)">
+            <path class="icon-fill" d="M0 0h24v24H0z"/>
+          </g>
+        </svg>
+        <a>Report</a>
+      </li>
+      <ng-container>
+        <div class="separator"></div>
+        <li (click)="delete()" *ngIf="authUser && (authUser.username === meme.publisherUsername || authUser.isModeratorOrAdmin)">
+          <svg class="icon" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path class="icon-path" fill-rule="evenodd" clip-rule="evenodd"
+                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zm3 13l-1 1H6l-1-1a7 7 0 0114 0z"
+                  fill="#282B31"/>
+            <mask id="a" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="5" y="3" width="14" height="18">
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zm3 13l-1 1H6l-1-1a7 7 0 0114 0z" fill="#fff"/>
+            </mask>
+            <g mask="url(#a)">
+              <path class="icon-fill" d="M0 0h24v24H0z"/>
+            </g>
+          </svg>
+          <a>Delete</a>
+        </li>
+      </ng-container>
+    </ul>
+  </div>
+</div>

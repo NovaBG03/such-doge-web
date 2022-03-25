@@ -72,7 +72,7 @@ export class MemeService {
   }
 
   rejectMeme(memeId: number): Observable<any> {
-    const url = `${environment.suchDogeApi}/meme/reject/${memeId}`
+    const url = `${environment.suchDogeApi}/meme/reject/${memeId}`;
     return this.http.delete(url, {observe: 'response'})
       .pipe(
         catchError(err => {
@@ -92,8 +92,30 @@ export class MemeService {
       );
   }
 
+
+  deleteMeme(memeId: number): Observable<any> {
+    const url = `${environment.suchDogeApi}/meme/${memeId}`;
+    return this.http.delete(url, {observe: 'response'})
+      .pipe(
+        catchError(err => {
+          let message = 'Something went wrong!';
+
+          switch (err.error.message) {
+            case 'CAN_NOT_DELETE_FOREIGN_MEME':
+              message = 'You don\'t have permission to delete this meme';
+              break;
+            case 'USER_NOT_CONFIRMED':
+              message = 'Please, confirm your email before deleting memes';
+              break;
+          }
+
+          return throwError(message);
+        })
+      );
+  }
+
   private memeResponseDtoToMeme(dto: MemeResponseDto): Meme {
-    const meme: Meme = {
+    return {
       id: dto.id,
       title: dto.title,
       description: dto.description,
@@ -102,7 +124,6 @@ export class MemeService {
       publishedOn: new Date(dto.publishedOn),
       isApproved: dto.approved
     };
-    return meme;
   }
 
   private createImageUrl(imageKey: string) {

@@ -40,6 +40,7 @@ import { DepositComponent } from './wallet/balance/deposit/deposit.component';
 import { DonationComponent } from './wallet/donation/donation.component';
 import { AutoClosedNotificationComponent } from './notification-panel/notifications/auto-closed-notification/auto-closed-notification.component';
 import {environment} from "../environments/environment";
+import { MemeDropDownComponent } from './meme/meme-cards/meme-card/meme-drop-down/meme-drop-down.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import {environment} from "../environments/environment";
     DepositComponent,
     DonationComponent,
     AutoClosedNotificationComponent,
+    MemeDropDownComponent,
   ],
   imports: [
     BrowserModule,

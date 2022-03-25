@@ -10,7 +10,9 @@
     </ng-template>
 
     <ng-template [ngIf]="!isLoading">
-      <app-meme-card *ngFor="let meme of memes" [meme]="meme"></app-meme-card>
+      <app-meme-card *ngFor="let meme of memes"
+                     [meme]="meme"
+                     (memeUpdated)="loadMemes()"></app-meme-card>
       <div class="not-found-center" *ngIf="!memes || !memes.length">No memes yet</div>
     </ng-template>
   </div>

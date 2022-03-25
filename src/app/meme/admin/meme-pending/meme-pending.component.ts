@@ -30,6 +30,7 @@ export class MemePendingComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loadMemes();
   }
+  
   loadMemes() {
     this.isLoading = true;
     this.loadMemesSub?.unsubscribe();

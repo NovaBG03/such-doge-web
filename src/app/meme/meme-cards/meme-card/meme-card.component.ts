@@ -57,6 +57,21 @@ export class MemeCardComponent implements OnInit {
       });
   }
 
+
+  delete(): void {
+    this.memeService.deleteMeme(this.meme.id)
+      .subscribe({
+        next: () => this.successPopUpModel = {
+          bannerPath: 'assets/svgs/success-tick.svg',
+          message: 'Meme deleted',
+          description: `\'${this.meme.title}\' is deleted`,
+          buttonText: 'Continue',
+          buttonStyle: 'success'
+        },
+        error: err => this.errorPopUpModel.description = err
+      });
+  }
+
   memeUpdatedSuccessfully(): void {
     this.successPopUpModel = null;
     this.memeUpdated.emit();

@@ -28,6 +28,12 @@ export class MemeListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.loadMemes();
+  }
+
+  loadMemes(): void {
+    this.isLoading = true;
+    this.loadMemesSub?.unsubscribe();
     this.loadMemesSub = this.route.queryParams
       .pipe(
         tap(() => {

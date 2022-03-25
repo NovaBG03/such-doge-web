@@ -42,9 +42,9 @@
 
   /* Drop Shadows */
   --box-shadow-card: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
-                     rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+  rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
   --box-shadow-notification: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
-                             rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
 
 .light-theme {
@@ -169,17 +169,17 @@ body {
   --notification-color: var(--color-success);
 }
 
-.notification>.title {
+.notification > .title {
   display: inline-block;
   color: var(--notification-color);
 }
 
-.notification>.message {
+.notification > .message {
   margin-top: 0.5em;
   padding-left: 0.3em;
 }
 
-.notification>.options {
+.notification > .options {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -292,9 +292,67 @@ form .hint {
   margin-bottom: 20px;
 }
 
+/* Drop Down*/
+.drop-down {
+  background: var(--color-main);
+  border-radius: 1rem;
+  border: 0.125rem solid var(--color-info);
+  box-shadow: 0 6.25rem 5rem rgba(0, 0, 0, 0.07),
+  0 2.5625rem 2rem rgba(0, 0, 0, 0.05),
+  0 1.375rem 1.125rem rgba(0, 0, 0, 0.04),
+  0 0.75rem 0.625rem rgba(0, 0, 0, 0.03),
+  0 0.375rem 0.3125rem rgba(0, 0, 0, 0.03),
+  0 0.125rem 0.125rem rgba(0, 0, 0, 0.02);
+}
+
+.drop-down ul {
+  margin: 0;
+  padding: 0 0.625em;
+  list-style-type: none;
+  text-indent: 0;
+}
+
+.drop-down li {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  margin: 8px 0;
+  padding: 0.75em 0.625em;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.drop-down li:hover {
+  background: var(--color-info);
+  border-radius: 0.625rem;
+}
+
+.drop-down li > a {
+  font-size: 1em;
+  margin-left: 0.625em;
+}
+
+.drop-down .icon {
+  width: 1.5em;
+  height: 1.5em;
+}
+
+.drop-down .icon .icon-fill {
+  fill: var(--color-text);
+}
+
+.drop-down .separator {
+  width: 100%;
+  font-size: 1em;
+  height: 0.1em;
+  background: var(--color-info);
+  margin: auto;
+}
 
 /* Buttons */
-[class^='btn'], [class*='btn']{
+[class^='btn'], [class*='btn'] {
   font-family: var(--font-family-secondary);
 }
 
@@ -377,11 +435,11 @@ form .hint {
 }
 
 .button-group {
-   display: flex;
-   margin-top: 20px;
-   gap: 10px;
-   justify-content: flex-end;
- }
+  display: flex;
+  margin-top: 20px;
+  gap: 10px;
+  justify-content: flex-end;
+}
 
 /* Custom check box */
 .big-checkbox {
@@ -408,23 +466,25 @@ form .hint {
   color: var(--color-white);
 }
 
-.big-checkbox>input[type=checkbox] {
+.big-checkbox > input[type=checkbox] {
   display: none;
 }
 
 
 /* Text colors */
-
 .success-colored-text {
   color: var(--color-success);
+  fill: var(--color-success);
 }
 
 .danger-colored-text {
   color: var(--color-danger);
+  fill: var(--color-danger);
 }
 
 .secondary-colored-text {
   color: var(--color-secondary);
+  fill: var(--color-secondary);
 }
 
 

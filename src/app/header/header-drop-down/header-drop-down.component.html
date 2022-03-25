@@ -1,4 +1,4 @@
-<div class="header-drop-down">
+<div class="drop-down">
   <ul>
     <li routerLink="/profile" (click)="closeDropDown()">
       <svg class="icon" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -67,14 +67,14 @@
       <a>Dark mode</a>
       <div class="toggle-box" [ngClass]="{active: isDarkMode}"></div>
     </li>
-    <div class="separator "></div>
+    <div class="separator"></div>
     <li class="danger" (click)="logout()">
       <svg class="icon" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path class="icon-fill" fill-rule="evenodd" clip-rule="evenodd"
+        <path class="danger-colored-text" fill-rule="evenodd" clip-rule="evenodd"
               d="M8 5 7 6H6v12h1l1 1-1 1H5l-1-1V5l1-1h2l1 1Zm10 2 3 4v2l-3 4a1 1 0 1 1-2-2l2-2h-8a1 1 0 1 1 0-2h8l-2-2a1 1 0 1 1 2-2Z"
               fill="black"/>
       </svg>
-      <a>Log out</a>
+      <a class="danger-colored-text">Log out</a>
     </li>
   </ul>
 </div>
