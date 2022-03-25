@@ -58,10 +58,20 @@
 .meme {
   object-fit: cover;
   margin: 20px 0;
-  aspect-ratio: 25 / 18;
+  /*aspect-ratio: 25 / 18;*/
   border-radius: 0.75rem;
   border: 0.125rem solid var(--color-text-unselected);
   cursor: pointer;
+}
+
+.highlighted.meme {
+  position: absolute;
+  margin: 0;
+  aspect-ratio: auto;
+  border: none;
+  border-radius: unset;
+  max-width: min(600px, 90%);
+  z-index: 10
 }
 
 .meme-navigation {
@@ -71,4 +81,12 @@
   flex-direction: row;
   align-items: center;
   gap: 0.6rem;
+}
+
+.big-meme {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 30;
 }

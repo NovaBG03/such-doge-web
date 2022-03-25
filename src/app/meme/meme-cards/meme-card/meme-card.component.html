@@ -13,7 +13,9 @@
   <div class="meme-navigation">
     <ng-template [ngIf]="meme.isApproved == undefined || meme.isApproved" [ngIfElse]="notApprovedNavigation">
       <ng-container *ngIf="authService.user | async as user">
-        <button *ngIf="user.username === meme.publisherUsername; else donateBtn" class="btn-outline" disabled>Statistics</button>
+        <button *ngIf="user.username === meme.publisherUsername; else donateBtn" class="btn-outline" disabled>
+          Statistics
+        </button>
         <ng-template #donateBtn>
           <button class="btn-outline" (click)="startDonation()">Donate</button>
         </ng-template>
@@ -22,7 +24,7 @@
     <ng-template #notApprovedNavigation>
       <ng-template [ngIf]="isModeratorMode" [ngIfElse]="pendingNavigation">
         <button class="btn-outline btn-success" (click)="approve()">Approve</button>
-        <button class="btn-outline btn-danger">Deny</button>
+        <button class="btn-outline btn-danger" (click)="reject()">Reject</button>
       </ng-template>
       <ng-template #pendingNavigation>
         <button class="btn-outline btn-grey" disabled>Pending Approval</button>
@@ -30,6 +32,14 @@
     </ng-template>
   </div>
 </div>
+
+<!--<ng-container *ngIf="isBigMemeOpen">-->
+<!--  <div class="dark-bg"></div>-->
+<!--  <div class="big-meme">-->
+<!--    <img [src]="meme.imageUrl" [alt]="meme.description">-->
+<!--  </div>-->
+<!--</ng-container>-->
+
 
 <app-donation *ngIf="isDonationOpen"
               [meme]="meme"
@@ -39,6 +49,6 @@
             [model]="errorPopUpModel"
             (buttonPressed)="errorPopUpModel.description = ''"></app-pop-up>
 
-<app-pop-up *ngIf="isReady"
+<app-pop-up *ngIf="successPopUpModel"
             [model]="successPopUpModel"
             (buttonPressed)="memeUpdatedSuccessfully()"></app-pop-up>

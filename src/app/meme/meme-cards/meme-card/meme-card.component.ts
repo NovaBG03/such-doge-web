@@ -17,8 +17,7 @@ export class MemeCardComponent implements OnInit {
   @Output() memeUpdated = new EventEmitter<void>();
 
   errorPopUpModel!: PopUpModel;
-  successPopUpModel!: PopUpModel;
-  isReady = false;
+  successPopUpModel: PopUpModel | null = null;
   isDonationOpen = false;
 
   constructor(public userService: UserService,
@@ -28,19 +27,38 @@ export class MemeCardComponent implements OnInit {
 
   ngOnInit(): void {
     this.initErrorPopUp();
-    this.initSuccessPopUp();
   }
 
   approve(): void {
     this.memeService.approveMeme(this.meme.id)
-      .subscribe(
-        () => this.isReady = true,
-        err => this.errorPopUpModel.description = err
-      );
+      .subscribe({
+        next: () => this.successPopUpModel = {
+          bannerPath: 'assets/svgs/success-tick.svg',
+          message: 'Meme approved successfully',
+          description: `\'${this.meme.title}\' published by ${this.meme.publisherUsername}`,
+          buttonText: 'Continue',
+          buttonStyle: 'success'
+        },
+        error: err => this.errorPopUpModel.description = err
+      });
+  }
+
+  reject(): void {
+    this.memeService.rejectMeme(this.meme.id)
+      .subscribe({
+        next: () => this.successPopUpModel = {
+          bannerPath: 'assets/svgs/success-tick.svg',
+          message: 'Meme rejected',
+          description: `\'${this.meme.title}\' is rejected and notification is sent to ${this.meme.publisherUsername}`,
+          buttonText: 'Continue',
+          buttonStyle: 'success'
+        },
+        error: err => this.errorPopUpModel.description = err
+      });
   }
 
   memeUpdatedSuccessfully(): void {
-    this.isReady = false;
+    this.successPopUpModel = null;
     this.memeUpdated.emit();
   }
 
@@ -59,16 +77,6 @@ export class MemeCardComponent implements OnInit {
       description: '',
       buttonText: 'Continue',
       buttonStyle: 'danger'
-    }
-  }
-
-  private initSuccessPopUp() {
-    this.successPopUpModel = {
-      bannerPath: 'assets/svgs/success-tick.svg',
-      message: 'Meme approved successfully',
-      description: `\'${this.meme.title}\' published by ${this.meme.publisherUsername}`,
-      buttonText: 'Continue',
-      buttonStyle: 'success'
     }
   }
 }

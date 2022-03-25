@@ -71,6 +71,27 @@ export class MemeService {
       );
   }
 
+  rejectMeme(memeId: number): Observable<any> {
+    const url = `${environment.suchDogeApi}/meme/reject/${memeId}`
+    return this.http.delete(url, {observe: 'response'})
+      .pipe(
+        catchError(err => {
+          let message = 'Something went wrong!';
+
+          switch (err.error.message) {
+            case 'MEME_ALREADY_APPROVED':
+              message = 'Meme is already approved';
+              break;
+            case 'USER_NOT_CONFIRMED':
+              message = 'Please, confirm your email before approving memes';
+              break;
+          }
+
+          return throwError(message);
+        })
+      );
+  }
+
   private memeResponseDtoToMeme(dto: MemeResponseDto): Meme {
     const meme: Meme = {
       id: dto.id,
