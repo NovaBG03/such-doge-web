@@ -2,23 +2,4 @@
   <h1 class="title">Pending Memes</h1>
 </div>
 
-<div class="page-content">
-  <div class="meme-grid">
-    <ng-template [ngIf]="isLoading">
-      <app-empty-meme *ngFor="let el of getArray(size)"></app-empty-meme>
-    </ng-template>
-
-    <ng-template [ngIf]="!isLoading">
-      <app-meme-card *ngFor="let meme of memes"
-                     [meme]="meme"
-                     [isModeratorMode]="true"
-                     (memeUpdated)="loadMemes()"></app-meme-card>
-      <div class="not-found-center" *ngIf="!memes || !memes.length">No memes yet</div>
-    </ng-template>
-  </div>
-</div>
-
-<app-pagination *ngIf="!isLoading && memesCount"
-                [size]="size" [currentPage]="currentPage" [elementsCount]="memesCount"
-                (nextPage)="moveToPage($event)"
-                (invalidPage)="moveToPage(1)"></app-pagination>
+<app-meme-list filterType="pending" [isModeratorMode]="true"></app-meme-list>

@@ -10,12 +10,13 @@ import {MemeMyComponent} from "./meme/meme-my/meme-my.component";
 import {AuthGuard} from "./auth/guards/auth.guard";
 import {MemePendingComponent} from "./meme/admin/meme-pending/meme-pending.component";
 import * as authGuardStrategy from "./auth/guards/auth.guard.strategy";
+import {HomeComponent} from "./home/home.component";
 
 
 
 const routes: Routes = [
   {path: '', redirectTo: 'all', pathMatch: 'full'},
-  {path: 'all', component: MemeListComponent},
+  {path: 'all', component: HomeComponent},
   {path: 'top', component: MemeListComponent},
   {path: 'about', component: AboutComponent},
   {

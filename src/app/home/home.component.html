@@ -1,0 +1,6 @@
+<div class="heading">
+  <h1 class="title">Meme list</h1>
+  <button *ngIf="authService.user | async" class="btn-create" routerLink="/upload">+ Upload meme</button>
+</div>
+
+<app-meme-list></app-meme-list>

@@ -1,16 +1,6 @@
 /* Landscape phone to portrait tablet */
 @media (max-width: 768px) {
   .heading {
-    flex-direction: column;
-    height: auto;
-    gap: 20px;
-    margin-bottom: 25px;
-  }
-}
-
-/* Landscape phones and down */
-@media (max-width: 480px) {
-  .heading {
-    padding: 0 10px 5px
+    justify-content: center;
   }
 }

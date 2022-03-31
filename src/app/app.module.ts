@@ -34,13 +34,13 @@ import {
 import {NotificationPlaceholderDirective} from './notification-panel/notification-placeholder.directive';
 import {InjectableRxStompConfig, RxStompService, rxStompServiceFactory} from "@stomp/ng2-stompjs";
 import {RxStompConfig} from "./rx-stomp-config";
-import { WalletBalanceComponent } from './header/wallet-balance/wallet-balance.component';
 import { BalanceComponent } from './wallet/balance/balance.component';
 import { DepositComponent } from './wallet/balance/deposit/deposit.component';
 import { DonationComponent } from './wallet/donation/donation.component';
 import { AutoClosedNotificationComponent } from './notification-panel/notifications/auto-closed-notification/auto-closed-notification.component';
 import {environment} from "../environments/environment";
 import { MemeDropDownComponent } from './meme/meme-cards/meme-card/meme-drop-down/meme-drop-down.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -66,12 +66,12 @@ import { MemeDropDownComponent } from './meme/meme-cards/meme-card/meme-drop-dow
     InfoNotificationComponent,
     EmailNotificationComponent,
     NotificationPlaceholderDirective,
-    WalletBalanceComponent,
     BalanceComponent,
     DepositComponent,
     DonationComponent,
     AutoClosedNotificationComponent,
     MemeDropDownComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,21 +1,26 @@
-<div class="heading">
-  <h1 class="title">Meme list</h1>
-  <button *ngIf="authService.user | async" class="btn-create" routerLink="/upload">+ Upload meme</button>
+<div class="filter-controls no-select" *ngIf="showFilterTypeControls">
+  <label class="big-checkbox" [ngClass]="{active: approvedCheckbox.checked}" for="approved">Approved only
+    <input type="checkbox" id="approved" [ngModel]="approvedCheckboxValue" (change)="approvedOnlyToggle($event)"
+           #approvedCheckbox>
+  </label>
+  <label class="big-checkbox" [ngClass]="{active: pendingCheckbox.checked}" for="pending">Pending only
+    <input type="checkbox" id="pending" [ngModel]="pendingCheckboxValue" (change)="pendingOnlyToggle($event)"
+           #pendingCheckbox>
+  </label>
 </div>
 
-<div class="page-content">
-  <div class="meme-grid">
-    <ng-template [ngIf]="isLoading">
-      <app-empty-meme *ngFor="let el of getArray(size)"></app-empty-meme>
-    </ng-template>
+<div class="meme-grid">
+  <ng-template [ngIf]="isLoading">
+    <app-empty-meme *ngFor="let el of getArray(size)"></app-empty-meme>
+  </ng-template>
 
-    <ng-template [ngIf]="!isLoading">
-      <app-meme-card *ngFor="let meme of memes"
-                     [meme]="meme"
-                     (memeUpdated)="loadMemes()"></app-meme-card>
-      <div class="not-found-center" *ngIf="!memes || !memes.length">No memes yet</div>
-    </ng-template>
-  </div>
+  <ng-template [ngIf]="!isLoading">
+    <app-meme-card *ngFor="let meme of memes"
+                   [meme]="meme"
+                   [isModeratorMode]="isModeratorMode"
+                   (memeUpdated)="loadMemes()"></app-meme-card>
+    <div class="not-found-center" *ngIf="!memes || !memes.length">No memes yet</div>
+  </ng-template>
 </div>
 
 <app-pagination *ngIf="!isLoading && memesCount"

@@ -1,15 +1,3 @@
-.btn-create {
-  padding: 0 11px;
-  height: 50px;
-  float: right;
-  background-color: var(--color-info);
-  font-size: 16px;
-  font-weight: var(--weight-medium);
-  border: 0;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
 .not-found-center {
   position: absolute;
   top: 50%;
@@ -17,4 +5,17 @@
   transform: translate(-50%, -70%);
   font-size: 24px;
   font-weight: var(--weight-medium);
+}
+
+.filter-controls {
+  display: flex;
+  justify-content: end;
+  margin-bottom: 1.25rem;
+}
+
+/* Landscape phone to portrait tablet */
+@media (max-width: 768px) {
+  .filter-controls {
+    justify-content: center;
+  }
 }

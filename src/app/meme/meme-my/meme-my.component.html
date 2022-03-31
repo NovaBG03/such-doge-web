@@ -1,29 +1,5 @@
 <div class="heading">
   <h1 class="title">My Memes</h1>
-  <div class="no-select">
-    <label class="big-checkbox" [ngClass]="{active: approvedCheckbox.checked}" for="approved">Approved only
-      <input type="checkbox" id="approved" [ngModel]="approvedCheckboxValue" (change)="approvedOnlyToggle($event)" #approvedCheckbox>
-    </label>
-    <label class="big-checkbox" [ngClass]="{active: pendingCheckbox.checked}" for="pending">Pending only
-      <input type="checkbox" id="pending" [ngModel]="pendingCheckboxValue" (change)="pendingOnlyToggle($event)" #pendingCheckbox>
-    </label>
-  </div>
 </div>
 
-<div class="page-content">
-  <div class="meme-grid">
-    <ng-template [ngIf]="isLoading">
-      <app-empty-meme *ngFor="let el of getArray(size)"></app-empty-meme>
-    </ng-template>
-
-    <ng-template [ngIf]="!isLoading">
-      <app-meme-card *ngFor="let meme of memes" [meme]="meme"></app-meme-card>
-      <div class="not-found-center" *ngIf="!memes || !memes.length">No memes yet</div>
-    </ng-template>
-  </div>
-</div>
-
-<app-pagination *ngIf="!isLoading && memesCount"
-                [size]="size" [currentPage]="currentPage" [elementsCount]="memesCount"
-                (nextPage)="moveToPage($event)"
-                (invalidPage)="moveToPage(1)"></app-pagination>
+<app-meme-list [showFilterTypeControls]="true"></app-meme-list>
