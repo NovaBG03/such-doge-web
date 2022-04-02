@@ -87,7 +87,8 @@ export class DonationComponent implements OnInit, OnDestroy {
         error: err => {
           this.isLoading = false;
           this.errMessage = err;
-        }
+        },
+        complete: () => this.isLoading = false
       });
   }
 
@@ -102,15 +103,21 @@ export class DonationComponent implements OnInit, OnDestroy {
       priority: this.donationForm.value.priority
     };
     this.walletService.donate(this.meme.id, transaction)
-      .subscribe(submittedTransaction => {
-        this.notificationService.pushNotification({
-          component: InfoNotificationComponent,
-          category: NotificationCategory.Success,
-          title: "Successful donation",
-          message: `Successfully donated ${this.amountControl.value} ${submittedTransaction.network} to ${this.meme.publisherUsername}.`
-        })
-        this.close.emit();
-        this.isLoading = false;
+      .subscribe({
+        next: submittedTransaction => {
+          this.notificationService.pushNotification({
+            component: InfoNotificationComponent,
+            category: NotificationCategory.Success,
+            title: "Successful donation",
+            message: `Successfully donated ${this.amountControl.value} ${submittedTransaction.network} to ${this.meme.publisherUsername}.`
+          })
+          this.close.emit();
+          this.isLoading = false;
+        },
+        error: err => {
+          this.isLoading = false;
+          this.errMessage = err;
+        },
       })
   }
 

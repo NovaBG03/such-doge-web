@@ -76,6 +76,7 @@ export class WalletService {
           switch (err.error.message) {
             case "CAN_NOT_CALCULATE_NETWORK_FEE":
               errMessage = "Can't calculate network fee";
+              break;
           }
           if (err.error.message.startsWith("MAX_TRANSACTION_AMOUNT_IS_")) {
             errMessage = `Transaction amount is too large`;
@@ -96,6 +97,10 @@ export class WalletService {
           switch (err.error.message) {
             case "CAN_NOT_TRANSFER_ASSETS_TO_THE_SAME_ADDRESS":
               errMessage = "Can't transfer assets to the same address";
+              break;
+            case "USER_NOT_CONFIRMED":
+              errMessage = "Please confirm your email first.";
+              break;
           }
           if (err.error.message.startsWith("MAX_TRANSACTION_AMOUNT_IS_")) {
             errMessage = `Transaction amount is too large`;
@@ -111,7 +116,22 @@ export class WalletService {
     return this.http.post<SubmittedTransactionDto>(url, transaction, {params})
       .pipe(
         tap(() => this.updateBalance()),
-        map(dto => WalletService.submittedTransactionDtoToSubmittedTransaction(dto))
+        map(dto => WalletService.submittedTransactionDtoToSubmittedTransaction(dto)),
+        catchError(err => {
+          let errMessage = "Something went wrong!";
+          switch (err.error.message) {
+            case "CAN_NOT_TRANSFER_ASSETS_TO_THE_SAME_ADDRESS":
+              errMessage = "Can't transfer assets to the same address";
+              break;
+            case "USER_NOT_CONFIRMED":
+              errMessage = "Please confirm your email first.";
+              break;
+          }
+          if (err.error.message.startsWith("MAX_TRANSACTION_AMOUNT_IS_")) {
+            errMessage = `Transaction amount is too large`;
+          }
+          return throwError(errMessage);
+        })
       );
   }
 
