@@ -1,40 +1,27 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthService} from "../auth/auth.service";
 import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
-import {UserService} from "./user.service";
-import {UserInfo} from "./model/userInfo.model";
-import {environment} from "../../environments/environment";
-import * as CustomValidators from "../util/validation/custom-validator.functions";
-import {PopUpModel} from "../util/pop-up/pop-up-model";
 import {tap} from "rxjs/operators";
+import {environment} from "../../../../environments/environment";
+import * as CustomValidators from "../../../util/validation/custom-validator.functions";
+import {AuthService} from "../../../auth/auth.service";
+import {UserService} from "../../user.service";
+import {PopUpModel} from "../../../util/pop-up/pop-up-model";
+import {UserInfo} from "../../model/user.model";
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+  selector: 'app-profile-settings',
+  templateUrl: './profile-settings.component.html',
+  styleUrls: ['./profile-settings.component.css']
 })
-export class ProfileComponent implements OnInit {
-  acceptedImageTypes = ['image/jpeg', 'image/png'];
+export class ProfileSettingsComponent implements OnInit {
   userInfo!: UserInfo;
 
   userInfoForm!: FormGroup;
   passwordsForm!: FormGroup;
 
-  isResizing = false;
-  image: File | null = null;
-  resizedImage: Blob | null = null;
-  resizedImageUrl: string | null = null;
-
   errorPopUpModel!: PopUpModel;
   successPopUpModel!: PopUpModel;
   isReady = false;
-
-  get profileImage(): any {
-    if (this.resizedImageUrl) {
-      return this.resizedImageUrl;
-    }
-    return this.userService.getProfilePicUrl(this.userInfo.username);
-  }
 
   get isUserInfoChanged(): boolean {
     return this.isUsernameChanged
@@ -84,7 +71,9 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.initSuccessPopUp();
     this.initErrorPopUp();
+
     this.initPasswordsFrom();
+
     this.userService.getUserInfo()
       .subscribe(userInfo => {
         this.userInfo = userInfo;
@@ -142,58 +131,12 @@ export class ProfileComponent implements OnInit {
     );
   }
 
-  saveImage(): void {
-    if (!this.resizedImage) {
-      return;
-    }
-    this.userService.updateProfileImage(this.resizedImage)
-      .subscribe(
-        () => {
-          this.userService.resetProfileImageCache();
-          this.setResizedImage(null);
-          this.successPopUpModel.message = 'Your profile picture has been <span class="success-colored-text">updated</span>';
-          this.isReady = true;
-        },
-        err => {
-          this.setResizedImage(null);
-          this.errorPopUpModel.description = err;
-        });
-  }
-
-  onSelect(files: FileList | null) {
-    if (files && this.isImage(files.item(0))) {
-      this.image = files.item(0);
-      this.isResizing = true;
-    } else {
-      this.image = null;
-      this.resizedImage = null;
-      this.resizedImageUrl = null;
-      this.isResizing = false;
-    }
-  }
-
-  setResizedImage(resizedImage: Blob | null): void {
-    this.isResizing = false;
-    this.resizedImage = resizedImage;
-
-    if (this.resizedImage) {
-      const reader = new FileReader();
-      reader.readAsDataURL(this.resizedImage);
-      reader.onloadend = () => this.resizedImageUrl = reader.result as string;
-    }
-
-    if (!this.resizedImage) {
-      this.image = null;
-      this.resizedImageUrl = null;
-    }
-  }
-
-  asInputElement(target: EventTarget | null): HTMLInputElement {
-    return target as HTMLInputElement;
-  }
-
-  private isImage(file: File | null): boolean {
-    return !!file && this.acceptedImageTypes.includes(file['type'])
+  private resetUserInfoForm() {
+    this.userInfoForm.reset({
+      username: this.userInfo.username,
+      email: this.userInfo.email,
+      publicKey: this.userInfo.publicKey
+    })
   }
 
   private initUserFrom(): void {
@@ -215,14 +158,6 @@ export class ProfileComponent implements OnInit {
         CustomValidators.notOnlyWhitespaceValidator()
       ])
     });
-  }
-
-  private resetUserInfoForm() {
-    this.userInfoForm.reset({
-      username: this.userInfo.username,
-      email: this.userInfo.email,
-      publicKey: this.userInfo.publicKey
-    })
   }
 
   private initPasswordsFrom() {

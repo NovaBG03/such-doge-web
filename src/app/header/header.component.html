@@ -88,7 +88,7 @@
   <ng-template [ngIf]="user">
     <div class="user-info">
       <app-balance></app-balance>
-      <img routerLink="profile"
+      <img [routerLink]="'profile/' + user.username"
            [src]="userService.getProfilePicUrl(user.username)"
            [alt]="user.username + '-picture'"
            class="profile-picture">

@@ -128,7 +128,7 @@ body {
 }
 
 .main-container {
-  padding: 15px 60px;
+  padding: 1rem 60px;
 }
 
 .heading {
@@ -137,14 +137,14 @@ body {
   align-content: center;
   justify-content: space-between;
   align-items: center;
-  height: 60px;
   width: 100%;
-  padding: 0 15px 5px 15px;
+  padding: 0 1rem 5px 1rem;
+  margin-bottom: 1rem;
 }
 
 .heading .title {
   float: left;
-  font-size: 26px;
+  font-size: clamp(1.625rem, 5vw, 2.75rem);
   margin: auto 0;
   font-weight: var(--weight-medium);
 }
@@ -339,7 +339,7 @@ form .hint {
   height: 1.5em;
 }
 
-.drop-down .icon .icon-fill {
+.drop-down .icon-fill {
   fill: var(--color-text);
 }
 

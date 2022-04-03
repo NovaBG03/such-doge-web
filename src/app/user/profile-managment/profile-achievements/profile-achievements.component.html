@@ -1,0 +1,24 @@
+<ng-container *ngIf="achievements">
+  <div class="small-label">Personal Statistics</div>
+  <div class="statistic-card">
+    <img src="../../../../assets/icons/like.png" alt="statistic-image">
+    <div class="card-content">
+      <div class="value">{{ achievements.memesUploaded }}</div>
+      <div class="description">Memes uploaded</div>
+    </div>
+  </div>
+  <div class="statistic-card">
+    <img src="../../../../assets/icons/like.png" alt="statistic-image">
+    <div class="card-content">
+      <div class="value">{{ achievements.donationsReceived }}</div>
+      <div class="description">DOGETEST received</div>
+    </div>
+  </div>
+  <div class="statistic-card">
+    <img src="../../../../assets/icons/like.png" alt="statistic-image">
+    <div class="card-content">
+      <div class="value">{{ achievements.donationsSent }}</div>
+      <div class="description">DOGETEST sent</div>
+    </div>
+  </div>
+</ng-container>

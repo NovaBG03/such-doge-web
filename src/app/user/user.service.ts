@@ -1,17 +1,35 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable, throwError} from "rxjs";
-import {UserInfo, UserInfoDto, UserInfoPatchResponseDto, UserInfoUpdateDto} from "./model/userInfo.model";
 import {environment} from "../../environments/environment";
-import {catchError, map, tap} from "rxjs/operators";
+import {catchError, map} from "rxjs/operators";
 import {Authority} from "../auth/model/authority.model";
-import {ChangePasswordDto} from "./model/password.model";
+import {UserAchievements, UserInfo} from "./model/user.model";
+import {
+  ChangePasswordDto,
+  UserAchievementsDto,
+  UserInfoDto,
+  UserInfoPatchResponseDto,
+  UserInfoUpdateDto
+} from "./model/user.dto";
 
 @Injectable({providedIn: 'root'})
 export class UserService {
   private postFix = '';
 
   constructor(private http: HttpClient) {
+  }
+
+  getUserAchievements(username: string | undefined): Observable<UserAchievements> {
+    if (!username) {
+      return throwError("Invalid username");
+    }
+
+    const url = `${environment.suchDogeApi}/achievements/${username}`;
+    return this.http.get<UserAchievementsDto>(url)
+      .pipe(
+        map(dto => UserService.userAchievementsDtoToUserAchievements(dto)),
+      );
   }
 
   getUserInfo(): Observable<UserInfo> {
@@ -30,11 +48,11 @@ export class UserService {
           return {
             userInfo: this.userInfoDtoToUserInfo(userInfoResponseDto.userInfo),
             errors: userInfoResponseDto.errMessages.map(err =>
-              this.mapUpdateProfileErrorMessage(err, userInfo))
+              UserService.mapUpdateProfileErrorMessage(err, userInfo))
           }
         }),
         catchError(err => {
-          const message = this.mapUpdateProfileErrorMessage(err.error.message, userInfo);
+          const message = UserService.mapUpdateProfileErrorMessage(err.error.message, userInfo);
           return throwError(message);
         })
       );
@@ -82,7 +100,7 @@ export class UserService {
       );
   }
 
-  private mapUpdateProfileErrorMessage(error: String, userInfo: UserInfoUpdateDto): string {
+  private static mapUpdateProfileErrorMessage(error: String, userInfo: UserInfoUpdateDto): string {
     let message = 'Something went wrong!';
     switch (error) {
       case 'DOGE_USER_EMAIL_EXISTS':
@@ -111,5 +129,14 @@ export class UserService {
 
   resetProfileImageCache(): void {
     this.postFix = '?' + new Date().getTime();
+  }
+
+  private static userAchievementsDtoToUserAchievements(dto: UserAchievementsDto): UserAchievements {
+    return {
+      username: dto.username,
+      memesUploaded: dto.memesUploaded,
+      donationsReceived: dto.donationsReceived,
+      donationsSent: dto.donationsSent
+    };
   }
 }

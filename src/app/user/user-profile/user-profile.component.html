@@ -1,0 +1,11 @@
+<div class="heading">
+  <h1 class="title">{{username}}</h1>
+</div>
+
+<div style="display: flex; gap: 2em; flex-wrap: wrap;">
+  <app-profile-image [username]="username"></app-profile-image>
+  <app-profile-achievements style="flex-grow: 1;" [username]="username"></app-profile-achievements>
+</div>
+
+<app-meme-list [publisher]="username"
+               [showFilterTypeControls]="(authService.user | async)?.username === username"></app-meme-list>

@@ -9,20 +9,9 @@ export class UserInfo {
   }
 }
 
-export interface UserInfoDto {
+export interface UserAchievements {
   username: string,
-  email: string,
-  publicKey: string,
-  enabledAt: string,
-  authorities: { authority: string }[]
-}
-
-export interface UserInfoPatchResponseDto {
-  userInfo: UserInfoDto,
-  errMessages: string[]
-}
-
-export interface UserInfoUpdateDto {
-  email?: string,
-  publicKey?: string,
+  memesUploaded: number,
+  donationsReceived: number,
+  donationsSent: number
 }

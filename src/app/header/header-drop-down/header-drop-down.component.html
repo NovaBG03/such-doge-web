@@ -1,6 +1,6 @@
 <div class="drop-down">
   <ul>
-    <li routerLink="/profile" (click)="closeDropDown()">
+    <li [routerLink]="'/profile/' + (user | async)?.username" (click)="closeDropDown()">
       <svg class="icon" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path class="icon-path" fill-rule="evenodd" clip-rule="evenodd"
               d="M16 7a4 4 0 11-8 0 4 4 0 018 0zm3 13l-1 1H6l-1-1a7 7 0 0114 0z"
@@ -15,7 +15,7 @@
       </svg>
       <a>My profile</a>
     </li>
-    <li routerLink="/my" (click)="closeDropDown()">
+    <li routerLink="/profile" (click)="closeDropDown()">
       <svg class="icon" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path class="icon-path" fill-rule="evenodd" clip-rule="evenodd"
               d="M5 3H9C10.103 3 11 3.897 11 5V9C11 10.103 10.103 11 9 11H5C3.897 11 3 10.103 3 9V5C3 3.897 3.897 3 5 3ZM15 3H19C20.103 3 21 3.897 21 5V9C21 10.103 20.103 11 19 11H15C13.897 11 13 10.103 13 9V5C13 3.897 13.897 3 15 3ZM9 13H5C3.897 13 3 13.897 3 15V19C3 20.103 3.897 21 5 21H9C10.103 21 11 20.103 11 19V15C11 13.897 10.103 13 9 13ZM15 13H19C20.103 13 21 13.897 21 15V19C21 20.103 20.103 21 19 21H15C13.897 21 13 20.103 13 19V15C13 13.897 13.897 13 15 13Z"
@@ -29,7 +29,7 @@
           <rect class="icon-fill" width="24" height="24"/>
         </g>
       </svg>
-      <a>My memes</a>
+      <a>Settings</a>
     </li>
     <li routerLink="/upload" (click)="closeDropDown()">
       <svg class="icon" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

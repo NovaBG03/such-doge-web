@@ -6,6 +6,6 @@
   <div class="options">
     <div class="option disabled" *ngIf="secondsLeft">Can request new after {{ secondsLeft * 1000 | date:'m:ss' }}</div>
     <button class="option" (click)="requestVerification()" *ngIf="!secondsLeft">Request new</button>
-    <button class="option" [routerLink]="['/profile']">Change email</button>
+    <button class="option" [routerLink]="['/user-profile-managment']">Change email</button>
   </div>
 </div>

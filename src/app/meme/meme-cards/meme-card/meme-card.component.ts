@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Meme} from "../../model/meme.model";
 import {MemeService} from "../../meme.service";
 import {PopUpModel} from "../../../util/pop-up/pop-up-model";
-import {UserService} from "../../../profile/user.service";
+import {UserService} from "../../../user/user.service";
 import {AuthService} from "../../../auth/auth.service";
 
 @Component({

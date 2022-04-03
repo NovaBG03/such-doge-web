@@ -7,7 +7,7 @@ import {HeaderComponent} from './header/header.component';
 import {FooterComponent} from './footer/footer.component';
 import {MemeListComponent} from './meme/meme-list/meme-list.component';
 import {AboutComponent} from './about/about.component';
-import {ProfileComponent} from './profile/profile.component';
+import {ProfileManagementComponent} from './user/profile-managment/profile-management.component';
 import {MemeCardComponent} from './meme/meme-cards/meme-card/meme-card.component';
 import {EmptyMemeCardComponent} from './meme/meme-cards/empty-meme-card/empty-meme-card.component';
 import {MemeFormComponent} from './meme/meme-form/meme-form.component';
@@ -21,7 +21,6 @@ import {PopUpComponent} from './util/pop-up/pop-up.component';
 import {AuthInterceptor} from "./auth/auth.interceptor";
 import {ImageCropperModule} from "ngx-image-cropper";
 import {ImageResizerComponent} from './util/image-resizer/image-resizer.component';
-import {MemeMyComponent} from './meme/meme-my/meme-my.component';
 import {PaginationComponent} from './util/pagination/pagination.component';
 import {MemePendingComponent} from './meme/admin/meme-pending/meme-pending.component';
 import {NotificationPanelComponent} from "./notification-panel/notification-panel.component";
@@ -34,13 +33,19 @@ import {
 import {NotificationPlaceholderDirective} from './notification-panel/notification-placeholder.directive';
 import {InjectableRxStompConfig, RxStompService, rxStompServiceFactory} from "@stomp/ng2-stompjs";
 import {RxStompConfig} from "./rx-stomp-config";
-import { BalanceComponent } from './wallet/balance/balance.component';
-import { DepositComponent } from './wallet/balance/deposit/deposit.component';
-import { DonationComponent } from './wallet/donation/donation.component';
-import { AutoClosedNotificationComponent } from './notification-panel/notifications/auto-closed-notification/auto-closed-notification.component';
+import {BalanceComponent} from './wallet/balance/balance.component';
+import {DepositComponent} from './wallet/balance/deposit/deposit.component';
+import {DonationComponent} from './wallet/donation/donation.component';
+import {
+  AutoClosedNotificationComponent
+} from './notification-panel/notifications/auto-closed-notification/auto-closed-notification.component';
 import {environment} from "../environments/environment";
-import { MemeDropDownComponent } from './meme/meme-cards/meme-card/meme-drop-down/meme-drop-down.component';
-import { HomeComponent } from './home/home.component';
+import {MemeDropDownComponent} from './meme/meme-cards/meme-card/meme-drop-down/meme-drop-down.component';
+import {HomeComponent} from './home/home.component';
+import {UserProfileComponent} from './user/user-profile/user-profile.component';
+import {ProfileImageComponent} from './user/profile-image/profile-image.component';
+import {ProfileSettingsComponent} from './user/profile-managment/profile-settings/profile-settings.component';
+import { ProfileAchievementsComponent } from './user/profile-managment/profile-achievements/profile-achievements.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +54,7 @@ import { HomeComponent } from './home/home.component';
     FooterComponent,
     MemeListComponent,
     AboutComponent,
-    ProfileComponent,
+    ProfileManagementComponent,
     MemeCardComponent,
     EmptyMemeCardComponent,
     MemeFormComponent,
@@ -59,7 +64,6 @@ import { HomeComponent } from './home/home.component';
     SpinnerComponent,
     PopUpComponent,
     ImageResizerComponent,
-    MemeMyComponent,
     PaginationComponent,
     MemePendingComponent,
     NotificationPanelComponent,
@@ -72,6 +76,10 @@ import { HomeComponent } from './home/home.component';
     AutoClosedNotificationComponent,
     MemeDropDownComponent,
     HomeComponent,
+    UserProfileComponent,
+    ProfileImageComponent,
+    ProfileSettingsComponent,
+    ProfileAchievementsComponent,
   ],
   imports: [
     BrowserModule,

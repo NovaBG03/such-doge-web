@@ -2,7 +2,7 @@ import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {MemeService} from "../meme.service";
 import {Meme} from "../model/meme.model";
 import {ActivatedRoute, Params, Router} from "@angular/router";
-import {concatMap, tap} from "rxjs/operators";
+import {switchMap, tap} from "rxjs/operators";
 import {environment} from "../../../environments/environment";
 import {Subscription} from "rxjs";
 import {AuthService} from "../../auth/auth.service";
@@ -14,6 +14,7 @@ import {AuthService} from "../../auth/auth.service";
 })
 export class MemeListComponent implements OnInit, OnDestroy {
   @Input() filterType!: string;
+  @Input() publisher!: string;
   @Input() isModeratorMode: boolean = false;
   @Input() showFilterTypeControls: boolean = false;
 
@@ -38,6 +39,7 @@ export class MemeListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    window.scroll(0, 0);
     this.loadMemes();
   }
 
@@ -48,12 +50,11 @@ export class MemeListComponent implements OnInit, OnDestroy {
       .pipe(
         tap(() => {
           this.isLoading = true;
-          window.scroll(0, 0);
         }),
         tap(params => {
           if (!params.approved) {
             this.isApproved = true;
-          } else if (this.isValidBoolean(params.approved)) {
+          } else if (MemeListComponent.isValidBoolean(params.approved)) {
             this.isApproved = JSON.parse(params.approved);
           } else {
             this.navigateToDefaultPage();
@@ -61,7 +62,7 @@ export class MemeListComponent implements OnInit, OnDestroy {
 
           if (!params.pending) {
             this.isPending = true;
-          } else if (this.isValidBoolean(params.pending)) {
+          } else if (MemeListComponent.isValidBoolean(params.pending)) {
             this.isPending = JSON.parse(params.pending);
           } else {
             this.navigateToDefaultPage();
@@ -88,7 +89,7 @@ export class MemeListComponent implements OnInit, OnDestroy {
           this.approvedCheckboxValue = different && this.isApproved;
           this.pendingCheckboxValue = different && this.isPending;
         }),
-        concatMap(() => {
+        switchMap(() => {
           let options: { type?: string, publisher?: string } = {};
           if (this.filterType) {
             options.type = this.filterType;
@@ -101,6 +102,10 @@ export class MemeListComponent implements OnInit, OnDestroy {
             }
             options.type = type;
             options.publisher = this.authService.user.getValue()?.username;
+          }
+
+          if (this.publisher) {
+            options.publisher = this.publisher;
           }
 
           return this.memeService.getMemes(this.currentPage - 1, this.size, options)
@@ -188,7 +193,7 @@ export class MemeListComponent implements OnInit, OnDestroy {
   }
 
 
-  private isValidBoolean(str: String) {
+  private static isValidBoolean(str: String) {
     return str.toLowerCase() === 'true' || str.toLowerCase() === 'false';
   }
 

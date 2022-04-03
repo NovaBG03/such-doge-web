@@ -41,6 +41,7 @@
 .header-content .description {
   font-size: 0.875rem;
   color: var(--color-text-unselected);
+  font-weight: bold;
   max-width: 10rem;
   text-overflow: ellipsis;
   overflow: hidden;

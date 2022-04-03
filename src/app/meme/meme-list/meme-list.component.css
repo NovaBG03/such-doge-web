@@ -1,10 +1,9 @@
 .not-found-center {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -70%);
   font-size: 24px;
   font-weight: var(--weight-medium);
+  grid-column: 1/-1;
+  text-align: center;
+  padding: 5em 0;
 }
 
 .filter-controls {

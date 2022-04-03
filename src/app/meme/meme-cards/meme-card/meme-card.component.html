@@ -1,13 +1,15 @@
 <div class="card">
   <div class="card-header">
-    <img [src]="userService.getProfilePicUrl(meme.publisherUsername)"
+    <img class="user-image no-select"
+         [src]="userService.getProfilePicUrl(meme.publisherUsername)"
          [alt]="meme.publisherUsername + '-picture'"
-         class="user-image no-select">
+         [routerLink]="'/profile/' + meme.publisherUsername">
     <div class="header-content">
+      <div class="description" [routerLink]="'/profile/' + meme.publisherUsername">{{ meme.publisherUsername }}</div>
       <div class="name">{{ meme.title }}</div>
-      <div class="description">{{ meme.publisherUsername }}</div>
     </div>
-    <app-meme-drop-down class="meme-drop-down"
+    <app-meme-drop-down *ngIf="authService.user | async"
+                        class="meme-drop-down"
                         [authUser]="authService.user | async"
                         [meme]="meme"
                         (deleteOption)="delete()"></app-meme-drop-down>
