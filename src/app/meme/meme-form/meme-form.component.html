@@ -53,11 +53,3 @@
                    [image]="fileMeme"
                    (imageResized)="setResizedImage($event)">
 </app-image-resizer>
-
-<app-pop-up *ngIf="errorPopUpModel.description"
-            [model]="errorPopUpModel"
-            (buttonPressed)="errorPopUpModel.description = ''"></app-pop-up>
-
-<app-pop-up *ngIf="isReady"
-            [model]="successPopUpModel"
-            (buttonPressed)="isReady = false"></app-pop-up>

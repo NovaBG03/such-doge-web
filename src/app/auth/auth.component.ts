@@ -4,9 +4,9 @@ import {map} from "rxjs/operators";
 import {Subscription} from "rxjs";
 import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "./auth.service";
-import {PopUpModel} from "../util/pop-up/pop-up-model";
 import {environment} from "../../environments/environment";
 import * as CustomValidators from "../util/validation/custom-validator.functions";
+import {AlertService} from "../util/alert/alert.service";
 
 @Component({
   selector: 'app-auth',
@@ -15,12 +15,10 @@ import * as CustomValidators from "../util/validation/custom-validator.functions
 })
 export class AuthComponent implements OnInit, OnDestroy {
   isRegister = true;
-  isRegisterReady = false;
   imageSrc = '';
   errorMessage = '';
   isLoading = false;
 
-  popUpModel!: PopUpModel;
   authForm!: FormGroup;
 
   get username(): AbstractControl {
@@ -47,7 +45,8 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private alertService: AlertService) {
   }
 
   ngOnInit(): void {
@@ -61,7 +60,6 @@ export class AuthComponent implements OnInit, OnDestroy {
           this.imageSrc = '/assets/images/kawai_doge.jpg';
         }
         this.initAuthForm();
-        this.initPopUp();
       });
   }
 
@@ -77,11 +75,6 @@ export class AuthComponent implements OnInit, OnDestroy {
     return '#2B2935';
   }
 
-  closePopUp(): void {
-    this.isRegisterReady = false;
-    this.router.navigate(['/login']);
-  }
-
   onAuthenticate(): void {
     this.isLoading = true;
     this.errorMessage = '';
@@ -95,23 +88,33 @@ export class AuthComponent implements OnInit, OnDestroy {
 
     if (this.isRegister) {
       this.authService.register(data.username, data.email, data.passwords.password)
-        .subscribe(user => {
-          this.isRegisterReady = true;
-          this.isLoading = false;
+        .subscribe({
+          next: () => {
+            this.alertService.showAlert({
+              bannerPath: 'assets/svgs/email.svg',
+              message: 'Registration was <span class="secondary-colored-text">successful</span>',
+              description: 'Please click the activation link we sent to your email',
+              buttonText: 'Continue'
+            });
+            this.router.navigate(['/login']);
+            this.isLoading = false;
           },
-          err => {
+          error: err => {
             this.errorMessage = err;
             this.isLoading = false;
-          });
+          }
+        });
       return;
     }
 
     this.authService.login(data.username, data.passwords.password)
-      .subscribe(user => this.router.navigate(['/']),
-        err => {
+      .subscribe({
+        next: () => this.router.navigate(['/']),
+        error: err => {
           this.errorMessage = err;
           this.isLoading = false;
-        });
+        }
+      });
   }
 
   private getControl(controlName: string): AbstractControl {
@@ -164,14 +167,5 @@ export class AuthComponent implements OnInit, OnDestroy {
           CustomValidators.hasAlphabeticCharacters()
         ]));
     }
-  }
-
-  private initPopUp(): void {
-    this.popUpModel = {
-      bannerPath: 'assets/svgs/email.svg',
-      message: 'Registration was <span class="secondary-colored-text">successful</span>',
-      description: 'Please click the activation link we sent to your email',
-      buttonText: 'Continue'
-    };
   }
 }

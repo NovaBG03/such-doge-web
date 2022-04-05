@@ -6,10 +6,14 @@ import {BehaviorSubject, Observable, of, throwError} from "rxjs";
 import {DogeUser} from "./model/user.model";
 import {Router} from "@angular/router";
 import {AuthTokens} from "./model/jwt.model";
-import {NotificationService} from "../notification-panel/notification.service";
-import {EmailNotificationComponent} from "../notification-panel/notifications/email-notification/email-notification.component";
-import {NotificationCategory} from "../notification-panel/model/notification.model";
-import {InfoNotificationComponent} from "../notification-panel/notifications/info-notification/info-notification.component";
+import {NotificationService} from "../util/notification/notification.service";
+import {
+  EmailNotificationComponent
+} from "../util/notification/notification-components/email-notification/email-notification.component";
+import {NotificationCategory} from "../util/notification/model/notification.model";
+import {
+  InfoNotificationComponent
+} from "../util/notification/notification-components/info-notification/info-notification.component";
 import {RxStompService} from "@stomp/ng2-stompjs";
 
 @Injectable({providedIn: 'root'})
@@ -31,6 +35,7 @@ export class AuthService {
       .pipe(
         catchError(err => {
           let message = 'Something went wrong!';
+          console.log(err.error.message);
           switch (err.error.message) {
             case 'DOGE_USER_USERNAME_EXISTS':
               message = `User ${username} already exists!`;
@@ -40,6 +45,10 @@ export class AuthService {
               break;
             case 'DOGE_USER_USERNAME_INVALID':
               message = `Not a valid username: ${username}`;
+              break;
+            case 'DOGE_USER_EMAIL_INVALID':
+              message = `Not a valid email: ${email}`;
+              break;
           }
 
           return throwError(message);
@@ -79,8 +88,7 @@ export class AuthService {
             this.refresh();
             message = 'Your account is already enabled';
           } else if (err.error.message.startsWith('CAN_NOT_SENT_NEW_TOKEN_SECONDS_LEFT_')) {
-            let secondsLeft = +err.error.message.substr('CAN_NOT_SENT_NEW_TOKEN_SECONDS_LEFT_'.length);
-            message = secondsLeft;
+            message = +err.error.message.substring('CAN_NOT_SENT_NEW_TOKEN_SECONDS_LEFT_'.length);
           }
           return throwError(message);
         })
@@ -163,11 +171,11 @@ export class AuthService {
 
     this.stompService.deactivate();
     this.notificationService.pushNotification({
-          component: InfoNotificationComponent,
-          category: NotificationCategory.Info,
-          title: 'You have been logged out',
-          message: 'Enjoy :)'
-        });
+      component: InfoNotificationComponent,
+      category: NotificationCategory.Info,
+      title: 'You have been logged out',
+      message: 'Enjoy :)'
+    });
     this.router.navigate(['/']);
   }
 
@@ -222,11 +230,11 @@ export class AuthService {
   private checkAccountStatus(user: DogeUser | null) {
     if (user?.isNotConfirmed) {
       this.notificationService.pushNotification({
-            component: EmailNotificationComponent,
-            category: NotificationCategory.Danger,
-            title: 'Email is not confirmed',
-            message: 'Please confirm your email to access all of the site\'s functionality!'
-          });
+        component: EmailNotificationComponent,
+        category: NotificationCategory.Danger,
+        title: 'Email is not confirmed',
+        message: 'Please confirm your email to access all of the site\'s functionality!'
+      });
     } else {
       this.notificationService.removeEmailConfirmation();
     }

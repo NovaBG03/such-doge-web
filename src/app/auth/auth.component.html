@@ -1,6 +1,6 @@
 <div class="auth-container">
   <div class="illustration-panel" [ngStyle]="{background: getIllustrationBackground()}">
-    <img class="illustration no-select" [src]="imageSrc"/>
+    <img class="illustration no-select" [src]="imageSrc" alt="login image"/>
   </div>
   <div class="login-panel">
     <p class="tip">{{ isRegister ? 'Already have an account?' : 'New here?' }}
@@ -82,6 +82,3 @@
     <app-spinner id="spinner" *ngIf="isLoading"></app-spinner>
   </div>
 </div>
-<app-pop-up *ngIf="isRegister && isRegisterReady"
-            [model]="popUpModel"
-            (buttonPressed)="closePopUp()"></app-pop-up>

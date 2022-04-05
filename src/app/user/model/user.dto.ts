@@ -4,7 +4,6 @@ export interface ChangePasswordDto {
   confirmPassword: string;
 }
 
-
 export interface UserInfoDto {
   username: string,
   email: string,
@@ -25,7 +24,10 @@ export interface UserInfoUpdateDto {
 
 export interface UserAchievementsDto {
   username: string,
-  memesUploaded: number,
-  donationsReceived: number,
-  donationsSent: number
+  achievements: AchievementDto[]
+}
+
+export interface AchievementDto {
+  name: string,
+  value: string
 }

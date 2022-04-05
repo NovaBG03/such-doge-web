@@ -11,11 +11,11 @@ import {
 } from "../model/wallet.model";
 import {catchError, filter, switchMap, take, tap} from "rxjs/operators";
 import {Observable, of, Subscription} from "rxjs";
-import {NotificationService} from "../../notification-panel/notification.service";
-import {NotificationCategory} from "../../notification-panel/model/notification.model";
+import {NotificationService} from "../../util/notification/notification.service";
+import {NotificationCategory} from "../../util/notification/model/notification.model";
 import {
   InfoNotificationComponent
-} from "../../notification-panel/notifications/info-notification/info-notification.component";
+} from "../../util/notification/notification-components/info-notification/info-notification.component";
 
 @Component({
   selector: 'app-donation',

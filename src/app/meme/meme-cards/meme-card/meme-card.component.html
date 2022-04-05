@@ -38,22 +38,6 @@
   </div>
 </div>
 
-<!--<ng-container *ngIf="isBigMemeOpen">-->
-<!--  <div class="dark-bg"></div>-->
-<!--  <div class="big-meme">-->
-<!--    <img [src]="meme.imageUrl" [alt]="meme.description">-->
-<!--  </div>-->
-<!--</ng-container>-->
-
-
 <app-donation *ngIf="isDonationOpen"
               [meme]="meme"
               (close)="donationFinished()"></app-donation>
-
-<app-pop-up *ngIf="errorPopUpModel.description"
-            [model]="errorPopUpModel"
-            (buttonPressed)="errorPopUpModel.description = ''"></app-pop-up>
-
-<app-pop-up *ngIf="successPopUpModel"
-            [model]="successPopUpModel"
-            (buttonPressed)="memeUpdatedSuccessfully()"></app-pop-up>

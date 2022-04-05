@@ -11,7 +11,10 @@ export class UserInfo {
 
 export interface UserAchievements {
   username: string,
-  memesUploaded: number,
-  donationsReceived: number,
-  donationsSent: number
+  achievements: Achievement[]
+}
+
+export interface Achievement {
+  name: string,
+  value: string
 }

@@ -3,7 +3,6 @@ import {AuthService} from "../auth/auth.service";
 import {Subscription} from "rxjs";
 import {DogeUser} from "../auth/model/user.model";
 import {UserService} from "../user/user.service";
-import {WalletService} from "../wallet/wallet.service";
 import {Balance} from "../wallet/model/wallet.model";
 
 @Component({

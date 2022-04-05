@@ -4,8 +4,9 @@ import {Observable, throwError} from "rxjs";
 import {environment} from "../../environments/environment";
 import {catchError, map} from "rxjs/operators";
 import {Authority} from "../auth/model/authority.model";
-import {UserAchievements, UserInfo} from "./model/user.model";
+import {Achievement, UserAchievements, UserInfo} from "./model/user.model";
 import {
+  AchievementDto,
   ChangePasswordDto,
   UserAchievementsDto,
   UserInfoDto,
@@ -134,9 +135,14 @@ export class UserService {
   private static userAchievementsDtoToUserAchievements(dto: UserAchievementsDto): UserAchievements {
     return {
       username: dto.username,
-      memesUploaded: dto.memesUploaded,
-      donationsReceived: dto.donationsReceived,
-      donationsSent: dto.donationsSent
+      achievements: dto.achievements.map(a => UserService.achievementDtoToAchievement(a))
+    };
+  }
+
+  private static achievementDtoToAchievement(dto: AchievementDto): Achievement {
+    return {
+      name: dto.name,
+      value: dto.value
     };
   }
 }

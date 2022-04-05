@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2} from '@angular/core';
-import {base64ToFile, ImageCroppedEvent, LoadedImage} from "ngx-image-cropper";
+import {base64ToFile, ImageCroppedEvent} from "ngx-image-cropper";
 
 @Component({
   selector: 'app-image-resizer',
@@ -14,7 +14,8 @@ export class ImageResizerComponent implements OnInit, OnDestroy {
   isLoading = true;
   croppedImageBase64: string = '';
 
-  constructor(private renderer: Renderer2) { }
+  constructor(private renderer: Renderer2) {
+  }
 
   ngOnInit(): void {
     this.renderer.addClass(document.body, 'no-scroll');
