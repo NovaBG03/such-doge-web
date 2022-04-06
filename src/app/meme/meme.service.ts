@@ -3,8 +3,8 @@ import {HttpClient} from "@angular/common/http";
 import {Observable, throwError} from "rxjs";
 import {environment} from "../../environments/environment";
 import {catchError, map} from "rxjs/operators";
-import {MemePageResponseDto, MemeResponseDto} from "./model/memeResponse.dto";
-import {Meme, MemePage} from "./model/meme.model";
+import {MemePageResponseDto, MemeDto} from "./model/meme.dto";
+import {Meme, MemeFilter, MemePage} from "./model/meme.model";
 import {DomSanitizer} from "@angular/platform-browser";
 
 @Injectable({providedIn: 'root'})
@@ -12,10 +12,9 @@ export class MemeService {
   constructor(private http: HttpClient, private sanitizer: DomSanitizer) {
   }
 
-  getMemes(page: number, size: number, options?: { type?: string, publisher?: string }): Observable<MemePage> {
+  getMemes(page: number, size: number, options?: MemeFilter): Observable<MemePage> {
     const url = `${environment.suchDogeApi}/meme`;
     const params = {page, size, ...options};
-
     return this.http.get<MemePageResponseDto>(url, {params})
       .pipe(
         map(memePageResponseDto => {
@@ -114,7 +113,7 @@ export class MemeService {
       );
   }
 
-  private memeResponseDtoToMeme(dto: MemeResponseDto): Meme {
+  private memeResponseDtoToMeme(dto: MemeDto): Meme {
     return {
       id: dto.id,
       title: dto.title,

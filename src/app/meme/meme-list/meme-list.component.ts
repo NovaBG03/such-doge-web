@@ -1,6 +1,6 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnDestroy, OnInit} from '@angular/core';
 import {MemeService} from "../meme.service";
-import {Meme} from "../model/meme.model";
+import {Meme, MemeFilter, MemePublishType} from "../model/meme.model";
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {switchMap, tap} from "rxjs/operators";
 import {environment} from "../../../environments/environment";
@@ -13,7 +13,7 @@ import {AuthService} from "../../auth/auth.service";
   styleUrls: ['./meme-list.component.css']
 })
 export class MemeListComponent implements OnInit, OnDestroy {
-  @Input() filterType!: string;
+  @Input() publishType!: MemePublishType;
   @Input() publisher!: string;
   @Input() isModeratorMode: boolean = false;
   @Input() showFilterTypeControls: boolean = false;
@@ -35,12 +35,13 @@ export class MemeListComponent implements OnInit, OnDestroy {
   constructor(public authService: AuthService,
               private memeService: MemeService,
               private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private elementRef: ElementRef<HTMLElement>) {
   }
 
   ngOnInit(): void {
-    window.scroll(0, 0);
     this.loadMemes();
+    window.scroll(0, 0);
   }
 
   loadMemes(): void {
@@ -49,6 +50,10 @@ export class MemeListComponent implements OnInit, OnDestroy {
     this.loadMemesSub = this.route.queryParams
       .pipe(
         tap(() => {
+          const offsetTop = this.elementRef.nativeElement.offsetTop;
+          if (offsetTop) {
+            window.scroll(0, offsetTop - 100);
+          }
           this.isLoading = true;
         }),
         tap(params => {
@@ -90,17 +95,17 @@ export class MemeListComponent implements OnInit, OnDestroy {
           this.pendingCheckboxValue = different && this.isPending;
         }),
         switchMap(() => {
-          let options: { type?: string, publisher?: string } = {};
-          if (this.filterType) {
-            options.type = this.filterType;
+          let options: MemeFilter = {};
+          if (this.publishType) {
+            options.publishFilter = this.publishType;
           } else if (this.showFilterTypeControls) {
-            let type = "approved";
+            let memePublishType = MemePublishType.APPROVED;
             if (this.isApproved && this.isPending) {
-              type = 'all';
+              memePublishType = MemePublishType.ALL;
             } else if (this.isPending) {
-              type = "pending";
+              memePublishType = MemePublishType.PENDING;
             }
-            options.type = type;
+            options.publishFilter = memePublishType;
             options.publisher = this.authService.user.getValue()?.username;
           }
 

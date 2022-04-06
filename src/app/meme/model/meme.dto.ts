@@ -1,4 +1,4 @@
-export interface MemeResponseDto {
+export interface MemeDto {
   id: number;
   title: string;
   description?: string;
@@ -9,6 +9,6 @@ export interface MemeResponseDto {
 }
 
 export interface MemePageResponseDto {
-  memes: MemeResponseDto[];
+  memes: MemeDto[];
   totalCount: number;
 }
