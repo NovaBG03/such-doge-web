@@ -47,6 +47,8 @@ import {ProfileImageCardComponent} from './user/profile-image-card/profile-image
 import {SettingsFormComponent} from './user/settings/settings-form/settings-form.component';
 import { ProfileAchievementsComponent } from './user/profile/achievements/profile-achievements.component';
 import { AlertPanelComponent } from './util/alert/alert-panel/alert-panel.component';
+import { MemeOrderFilterComponent } from './meme/meme-list/meme-order-filter/meme-order-filter.component';
+import { TopComponent } from './top/top.component';
 
 @NgModule({
   declarations: [
@@ -82,6 +84,8 @@ import { AlertPanelComponent } from './util/alert/alert-panel/alert-panel.compon
     SettingsFormComponent,
     ProfileAchievementsComponent,
     AlertPanelComponent,
+    MemeOrderFilterComponent,
+    TopComponent,
   ],
   imports: [
     BrowserModule,

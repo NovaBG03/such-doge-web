@@ -8,4 +8,5 @@
 </div>
 
 <app-meme-list [publisher]="username"
-               [showFilterTypeControls]="(authService.user | async)?.username === username"></app-meme-list>
+               [showFilterTypeControls]="(authService.user | async)?.username === username"
+               [orderOptions]="orderOptions"></app-meme-list>

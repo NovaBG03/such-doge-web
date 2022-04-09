@@ -11,12 +11,13 @@ import {MemePendingComponent} from "./meme/admin/meme-pending/meme-pending.compo
 import * as authGuardStrategy from "./auth/guards/auth.guard.strategy";
 import {HomeComponent} from "./home/home.component";
 import {ProfileComponent} from "./user/profile/profile.component";
+import {TopComponent} from "./top/top.component";
 
 
 const routes: Routes = [
   {path: '', redirectTo: 'all', pathMatch: 'full'},
   {path: 'all', component: HomeComponent},
-  {path: 'top', component: MemeListComponent},
+  {path: 'top', component: TopComponent},
   {path: 'about', component: AboutComponent},
   {
     path: 'settings', component: SettingsComponent, canActivate: [AuthGuard],

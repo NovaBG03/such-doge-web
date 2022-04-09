@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {MemePublishType} from "../../model/meme.model";
+import {MemePublishFilter} from "../../model/meme.model";
 
 @Component({
   selector: 'app-meme-pending',
@@ -7,7 +7,7 @@ import {MemePublishType} from "../../model/meme.model";
   styleUrls: ['./meme-pending.component.css']
 })
 export class MemePendingComponent implements OnInit {
-  publishType = MemePublishType.PENDING;
+  publishType = MemePublishFilter.PENDING;
   constructor() {
   }
 

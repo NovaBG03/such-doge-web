@@ -8,7 +8,7 @@
 
 .filter-controls {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   margin-bottom: 1.25rem;
 }
 
@@ -16,5 +16,14 @@
 @media (max-width: 768px) {
   .filter-controls {
     justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .filter-controls {
+    margin-bottom: 1.25rem;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 0.5rem;
   }
 }

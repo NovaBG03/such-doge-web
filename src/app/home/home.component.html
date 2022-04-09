@@ -3,4 +3,4 @@
   <button *ngIf="authService.user | async" class="btn-create" routerLink="/upload">+ Upload meme</button>
 </div>
 
-<app-meme-list></app-meme-list>
+<app-meme-list [orderOptions]="orderOptions"></app-meme-list>

@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {map} from "rxjs/operators";
 import {AuthService} from "../../auth/auth.service";
 import {Subscription} from "rxjs";
+import {MemeOrderFilter, OrderOptions} from "../../meme/model/meme.model";
 
 @Component({
   selector: 'app-profile',
@@ -11,6 +12,12 @@ import {Subscription} from "rxjs";
 })
 export class ProfileComponent implements OnInit {
   username!: string;
+  orderOptions: OrderOptions = {
+    selectedFilter: MemeOrderFilter.NEWEST,
+    isTimeOrderAllowed: true,
+    isTippedOrderAllowed: true,
+    isTopFilterAllowed: false
+  };
 
   private isReady = false;
   private usernameSub!: Subscription;

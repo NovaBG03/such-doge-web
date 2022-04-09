@@ -1,18 +1,26 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {UserService} from "../../user.service";
 import {AuthService} from "../../../auth/auth.service";
 import {map, switchMap} from "rxjs/operators";
 import {UserAchievements} from "../../model/user.model";
 import {Router} from "@angular/router";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-achievements',
   templateUrl: './profile-achievements.component.html',
   styleUrls: ['./profile-achievements.component.css']
 })
-export class ProfileAchievementsComponent implements OnInit {
-  @Input('username') selectedUsername!: string;
+export class ProfileAchievementsComponent implements OnInit, OnDestroy {
+  @Input('username') set setUsername(username: string) {
+    this.selectedUsername = username;
+    this.loadAchievements();
+  }
+
+  selectedUsername!: string;
   userAchievements!: UserAchievements;
+
+  private achievementsSub!: Subscription;
 
   constructor(private userService: UserService,
               public authService: AuthService,
@@ -20,7 +28,12 @@ export class ProfileAchievementsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authService.user.pipe(
+    this.loadAchievements();
+  }
+
+  private loadAchievements() {
+    this.achievementsSub?.unsubscribe();
+    this.achievementsSub = this.authService.user.pipe(
       map(authUser => {
         if (this.selectedUsername) {
           return this.selectedUsername;
@@ -34,4 +47,7 @@ export class ProfileAchievementsComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    this.achievementsSub?.unsubscribe();
+  }
 }

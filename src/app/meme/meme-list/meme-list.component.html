@@ -1,12 +1,18 @@
-<div class="filter-controls no-select" *ngIf="showFilterTypeControls">
-  <label class="big-checkbox" [ngClass]="{active: approvedCheckbox.checked}" for="approved">Approved only
-    <input type="checkbox" id="approved" [ngModel]="approvedCheckboxValue" (change)="approvedOnlyToggle($event)"
-           #approvedCheckbox>
-  </label>
-  <label class="big-checkbox" [ngClass]="{active: pendingCheckbox.checked}" for="pending">Pending only
-    <input type="checkbox" id="pending" [ngModel]="pendingCheckboxValue" (change)="pendingOnlyToggle($event)"
-           #pendingCheckbox>
-  </label>
+<div class="filter-controls no-select">
+  <app-meme-order-filter
+    *ngIf="orderOptions.isTimeOrderAllowed || orderOptions.isTippedOrderAllowed || orderOptions.isTopFilterAllowed"
+    [orderOptions]="orderOptions"></app-meme-order-filter>
+
+  <div *ngIf="showFilterTypeControls">
+    <label class="big-checkbox" [ngClass]="{active: approvedCheckbox.checked}" for="approved">Approved only
+      <input type="checkbox" id="approved" [ngModel]="approvedCheckboxValue" (change)="approvedOnlyToggle($event)"
+             #approvedCheckbox>
+    </label>
+    <label class="big-checkbox" [ngClass]="{active: pendingCheckbox.checked}" for="pending">Pending only
+      <input type="checkbox" id="pending" [ngModel]="pendingCheckboxValue" (change)="pendingOnlyToggle($event)"
+             #pendingCheckbox>
+    </label>
+  </div>
 </div>
 
 <div class="meme-grid">

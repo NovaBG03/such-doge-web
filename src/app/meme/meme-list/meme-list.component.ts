@@ -1,8 +1,8 @@
 import {Component, ElementRef, Input, OnDestroy, OnInit} from '@angular/core';
 import {MemeService} from "../meme.service";
-import {Meme, MemeFilter, MemePublishType} from "../model/meme.model";
+import {Meme, MemeFilter, MemeOrderFilter, MemePublishFilter, OrderOptions} from "../model/meme.model";
 import {ActivatedRoute, Params, Router} from "@angular/router";
-import {switchMap, tap} from "rxjs/operators";
+import {map, switchMap, tap} from "rxjs/operators";
 import {environment} from "../../../environments/environment";
 import {Subscription} from "rxjs";
 import {AuthService} from "../../auth/auth.service";
@@ -13,12 +13,23 @@ import {AuthService} from "../../auth/auth.service";
   styleUrls: ['./meme-list.component.css']
 })
 export class MemeListComponent implements OnInit, OnDestroy {
-  @Input() publishType!: MemePublishType;
-  @Input() publisher!: string;
+  @Input('publisher') set setPublisher(publisher: string) {
+    this.publisher = publisher;
+    this.loadMemes();
+  }
+
+  @Input() orderOptions: OrderOptions = {
+    selectedFilter: MemeOrderFilter.NEWEST,
+    isTimeOrderAllowed: false,
+    isTippedOrderAllowed: false,
+    isTopFilterAllowed: false
+  }
+
+  @Input() publishType!: MemePublishFilter;
   @Input() isModeratorMode: boolean = false;
   @Input() showFilterTypeControls: boolean = false;
 
-
+  publisher!: string;
   memes: Meme[] = [];
   isLoading = true;
   memesCount = 0;
@@ -26,7 +37,7 @@ export class MemeListComponent implements OnInit, OnDestroy {
   size = environment.defaultMemePageSize;
 
   isApproved = true;
-  isPending = true;
+  isPending = false;
   approvedCheckboxValue = false;
   pendingCheckboxValue = false;
 
@@ -50,11 +61,11 @@ export class MemeListComponent implements OnInit, OnDestroy {
     this.loadMemesSub = this.route.queryParams
       .pipe(
         tap(() => {
+          this.isLoading = true;
           const offsetTop = this.elementRef.nativeElement.offsetTop;
           if (offsetTop) {
             window.scroll(0, offsetTop - 100);
           }
-          this.isLoading = true;
         }),
         tap(params => {
           if (!params.approved) {
@@ -71,6 +82,11 @@ export class MemeListComponent implements OnInit, OnDestroy {
             this.isPending = JSON.parse(params.pending);
           } else {
             this.navigateToDefaultPage();
+          }
+
+          const orderFilter: MemeOrderFilter = MemeOrderFilter[params.order?.toUpperCase() as keyof typeof MemeOrderFilter]
+          if (orderFilter) {
+            this.orderOptions.selectedFilter = orderFilter;
           }
 
           if (!params.size) {
@@ -94,31 +110,40 @@ export class MemeListComponent implements OnInit, OnDestroy {
           this.approvedCheckboxValue = different && this.isApproved;
           this.pendingCheckboxValue = different && this.isPending;
         }),
-        switchMap(() => {
-          let options: MemeFilter = {};
+        map(() => {
+          let memeFilter: MemeFilter = {};
           if (this.publishType) {
-            options.publishFilter = this.publishType;
+            memeFilter.publishFilter = this.publishType;
           } else if (this.showFilterTypeControls) {
-            let memePublishType = MemePublishType.APPROVED;
+            let memePublishType = MemePublishFilter.APPROVED;
             if (this.isApproved && this.isPending) {
-              memePublishType = MemePublishType.ALL;
+              memePublishType = MemePublishFilter.ALL;
             } else if (this.isPending) {
-              memePublishType = MemePublishType.PENDING;
+              memePublishType = MemePublishFilter.PENDING;
             }
-            options.publishFilter = memePublishType;
-            options.publisher = this.authService.user.getValue()?.username;
+            memeFilter.publishFilter = memePublishType;
+            memeFilter.publisher = this.authService.user.getValue()?.username;
           }
 
           if (this.publisher) {
-            options.publisher = this.publisher;
+            memeFilter.publisher = this.publisher;
           }
 
-          return this.memeService.getMemes(this.currentPage - 1, this.size, options)
-        })
-      ).subscribe(response => {
-        this.memesCount = response.totalCount;
-        this.memes = response.memes;
-        this.isLoading = false;
+          memeFilter.orderFilter = this.orderOptions.selectedFilter;
+
+          return memeFilter;
+        }),
+        switchMap(options => this.memeService.getMemes(this.currentPage - 1, this.size, options))
+      ).subscribe({
+        next: response => {
+          this.memesCount = response.totalCount;
+          this.memes = response.memes;
+          this.isLoading = false;
+        },
+        error: () => {
+          // todo fix not working
+          this.navigateToDefaultPage()
+        }
       });
   }
 
@@ -135,6 +160,11 @@ export class MemeListComponent implements OnInit, OnDestroy {
       page: 1
     };
 
+    if (this.orderOptions.selectedFilter != MemeOrderFilter.NEWEST
+      && this.orderOptions.selectedFilter != MemeOrderFilter.OLDEST) {
+      persistedQueryParams.order = MemeOrderFilter.NEWEST;
+    }
+
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: persistedQueryParams,
@@ -150,6 +180,12 @@ export class MemeListComponent implements OnInit, OnDestroy {
       pending: this.isApproved && !this.isPending,
       page: 1
     };
+
+    if (persistedQueryParams.pending
+      && this.orderOptions.selectedFilter != MemeOrderFilter.NEWEST
+      && this.orderOptions.selectedFilter != MemeOrderFilter.OLDEST) {
+      persistedQueryParams.order = MemeOrderFilter.NEWEST;
+    }
 
     this.router.navigate([], {
       relativeTo: this.route,
@@ -185,14 +221,14 @@ export class MemeListComponent implements OnInit, OnDestroy {
 
   private navigateToDefaultPage() {
     const persistedQueryParams: Params = {
+      size: this.size,
+      page: this.currentPage,
       approved: this.isApproved,
       pending: this.isPending
     };
 
-    // todo check if isApproved or isPending is undefined
-
     this.router.navigate([], {
-      relativeTo: this.route,
+      // relativeTo: this.route,
       queryParams: persistedQueryParams
     });
   }
