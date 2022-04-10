@@ -1,18 +1,19 @@
 import {SafeUrl} from "@angular/platform-browser";
 
 export interface Meme {
-  id: number;
-  title: string;
-  description?: string;
-  imageUrl: SafeUrl;
-  publisherUsername: string;
-  publishedOn: Date;
-  isApproved?: boolean
+  id: number,
+  title: string,
+  description?: string,
+  imageUrl: SafeUrl,
+  publisherUsername: string,
+  publishedOn: Date,
+  isApproved?: boolean,
+  donations: number
 }
 
 export interface MemePage {
-  memes: Meme[];
-  totalCount: number;
+  memes: Meme[],
+  totalCount: number
 }
 
 export interface MemeFilter {

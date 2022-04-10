@@ -5,8 +5,10 @@
          [alt]="meme.publisherUsername + '-picture'"
          [routerLink]="'/profile/' + meme.publisherUsername">
     <div class="header-content">
-      <div class="description" [routerLink]="'/profile/' + meme.publisherUsername">{{ meme.publisherUsername }}</div>
-      <div class="name">{{ meme.title }}</div>
+      <div class="name" [routerLink]="'/profile/' + meme.publisherUsername">{{ meme.publisherUsername }}</div>
+      <div class="description" *ngIf="meme.isApproved || meme.isApproved == undefined">{{ meme.donations }} DOGE received</div>
+      <div *ngIf="isModeratorMode" class="description"><span class="name">Title: </span> {{ meme.title }}</div>
+      <div class="description">{{ meme.publishedOn + 'Z' | date:'short' }}</div>
     </div>
     <app-meme-drop-down *ngIf="authService.user | async"
                         class="meme-drop-down"
@@ -14,7 +16,7 @@
                         [meme]="meme"
                         (deleteOption)="delete()"></app-meme-drop-down>
   </div>
-  <img [src]="meme.imageUrl" [alt]="meme.description" class="meme no-select">
+  <img [src]="meme.imageUrl" [alt]="meme.title" [title]="meme.title" class="meme no-select">
   <div class="meme-navigation">
     <ng-template [ngIf]="meme.isApproved == undefined || meme.isApproved" [ngIfElse]="notApprovedNavigation">
       <ng-container *ngIf="authService.user | async as user">

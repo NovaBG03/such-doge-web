@@ -46,6 +46,7 @@
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+  cursor: default;
 }
 
 .meme-drop-down {

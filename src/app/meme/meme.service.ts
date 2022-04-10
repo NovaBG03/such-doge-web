@@ -121,7 +121,8 @@ export class MemeService {
       imageUrl: this.createImageUrl(dto.imageKey),
       publisherUsername: dto.publisherUsername,
       publishedOn: new Date(dto.publishedOn),
-      isApproved: dto.approved
+      isApproved: dto.approved,
+      donations: dto.donations
     };
   }
 
