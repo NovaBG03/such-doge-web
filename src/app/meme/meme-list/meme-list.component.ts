@@ -87,6 +87,12 @@ export class MemeListComponent implements OnInit, OnDestroy {
           const orderFilter: MemeOrderFilter = MemeOrderFilter[params.order?.toUpperCase() as keyof typeof MemeOrderFilter]
           if (orderFilter) {
             this.orderOptions.selectedFilter = orderFilter;
+          } else if (this.orderOptions.isTimeOrderAllowed) {
+            this.orderOptions.selectedFilter = MemeOrderFilter.NEWEST;
+          } else if (this.orderOptions.isTopFilterAllowed) {
+            this.orderOptions.selectedFilter = MemeOrderFilter.TOP_TIPPED_LAST_3_DAYS;
+          } else if (this.orderOptions.isTippedOrderAllowed) {
+            this.orderOptions.selectedFilter = MemeOrderFilter.LATEST_TIPPED;
           }
 
           if (!params.size) {
@@ -200,15 +206,10 @@ export class MemeListComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // todo check if isApproved or isPending is undefined
-    // const updatedQueryParams: Params = {
-    //   approved: this.isApproved,
-    //   pending: this.isPending,
-    //   size: this.size,
-    //   page: page
-    // };
-
     const updatedQueryParams: Params = {
+      approved: this.isApproved,
+      pending: this.isPending,
+      order: this.orderOptions.selectedFilter,
       size: this.size,
       page: page
     };

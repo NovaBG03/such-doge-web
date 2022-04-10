@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {MemePublishFilter} from "../../model/meme.model";
+import {MemeOrderFilter, MemePublishFilter, OrderOptions} from "../../model/meme.model";
 
 @Component({
   selector: 'app-meme-pending',
@@ -7,7 +7,15 @@ import {MemePublishFilter} from "../../model/meme.model";
   styleUrls: ['./meme-pending.component.css']
 })
 export class MemePendingComponent implements OnInit {
+  orderOptions: OrderOptions = {
+    selectedFilter: MemeOrderFilter.NEWEST,
+    isTimeOrderAllowed: true,
+    isTippedOrderAllowed: false,
+    isTopFilterAllowed: false
+  }
+
   publishType = MemePublishFilter.PENDING;
+
   constructor() {
   }
 

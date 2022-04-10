@@ -73,6 +73,7 @@ export class MemeOrderFilterComponent implements OnInit {
     if (orderFilter && orderFilter !== this.orderOptions.selectedFilter) {
       const persistedQueryParams: Params = {
         order: orderFilter,
+        page: 1
       };
 
       if (orderFilter != MemeOrderFilter.NEWEST && orderFilter != MemeOrderFilter.OLDEST) {
