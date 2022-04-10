@@ -5,9 +5,9 @@
 }
 
 .circle-border {
-  width: 150px;
-  height: 150px;
-  padding: 3px;
+  width: 9.375rem;
+  height: 9.375rem;
+  padding: 0.1875rem;
   display: flex;
   justify-content: center;
   align-items: center;

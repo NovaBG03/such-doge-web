@@ -1,10 +1,10 @@
 .page-navigation-block {
   display: block;
-  margin-top: 20px;
+  margin-top: 1.25rem;
 }
 
 .page-selector {
-  --selector-size: 40px;
+  --selector-size: 2.5rem;
   --selector-ratio: 0.1;
   display: flex;
   gap: calc(var(--selector-size) / 4);
@@ -62,15 +62,15 @@
 
 
 /* Landscape phone to portrait tablet */
-@media (max-width: 768px) {
+@media (max-width: 48rem) {
   .page-selector {
-    --selector-size: 38px;
+    --selector-size: 2.375rem;
   }
 }
 
 /* Landscape phones and down */
-@media (max-width: 480px) {
+@media (max-width: 30rem) {
   .page-selector {
-    --selector-size: 36px;
+    --selector-size: 2.25rem;
   }
 }

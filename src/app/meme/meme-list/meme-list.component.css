@@ -7,7 +7,7 @@
 }
 
 .not-found-center {
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: var(--weight-medium);
   grid-column: 1/-1;
   text-align: center;
@@ -21,7 +21,7 @@
 }
 
 /* Landscape phone to portrait tablet */
-@media (max-width: 768px) {
+@media (max-width: 48rem) {
   .filter-controls {
     justify-content: center;
   }

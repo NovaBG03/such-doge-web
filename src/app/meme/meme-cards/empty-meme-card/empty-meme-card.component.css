@@ -4,8 +4,8 @@
 }
 
 .empty-user-image {
-  width: 54px;
-  height: 50px;
+  width: 3.375rem;
+  height: 3.125rem;
   border-radius: 100%;
   background: var(--color-info);
   display: inline-block;
@@ -13,28 +13,28 @@
 
 .empty-name {
   width: 100%;
-  height: 18px;
-  border-radius: 15px;
+  height: 1.125rem;
+  border-radius: 1rem;
   background: var(--color-info);
   display: inline-block;
 }
 
 .empty-description {
   width: 70%;
-  height: 14px;
-  border-radius: 15px;
+  height: 0.875rem;
+  border-radius: 1rem;
   background: var(--color-info);
   display: inline-block;
 }
 
 .empty-options {
   margin: 0 0 auto auto;
-  width: 14px;
+  width: 0.875rem;
 }
 
 .empty-meme {
   position: relative;
-  margin: 20px 0;
+  margin: 1.25rem 0;
   aspect-ratio: 25 / 18;
   background-color: var(--color-info);
   border-radius: 1rem;
@@ -54,9 +54,9 @@
 .btn-empty {
   display: inline;
   width: 100%;
-  height: 50px;
+  height: 3.125rem;
   background-color: var(--color-info);
-  border-radius: 15px;
+  border-radius: 1rem;
   border: none;
   cursor: default;
   position: relative;
@@ -65,9 +65,9 @@
 .btn-empty:after {
   content: '';
   position: absolute;
-  width: 100px;
-  height: 20px;
-  border-radius: 15px;
+  width: 6.25rem;
+  height: 1.25rem;
+  border-radius: 1rem;
   background: var(--color-text-unselected);
   top: 50%;
   left: 50%;

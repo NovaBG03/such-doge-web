@@ -79,24 +79,15 @@
 
 /* Responsive */
 /* Large desktop */
-@media (min-width: 1200px) {
+@media (min-width: 75rem) {
   .notification-panel {
     width: 40%;
   }
 }
 
-/* Portrait tablet to landscape and desktop */
-@media (min-width: 769px) and (max-width: 979px) {
-
-}
-
 /* Landscape phone to portrait tablet */
-@media (max-width: 768px) {
+@media (max-width: 48rem) {
   .notification-panel {
-    bottom: calc(10px + var(--bottom-navigation-height));
+    bottom: calc(0.625rem + var(--bottom-navigation-height));
   }
-}
-
-/* Landscape phones and down */
-@media (max-width: 480px) {
 }

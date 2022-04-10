@@ -1,20 +1,20 @@
 .close-icon {
   display: inline-block;
   position: fixed;
-  right: 9px;
-  top: 5px;
-  font-size: 30px;
+  right: 0.5625rem;
+  top: 0.3125rem;
+  font-size: 1.875rem;
   line-height: 0.5;
-  padding: 4px;
+  padding: 0.25rem;
   cursor: pointer;
 }
 
 .doge-card {
-  padding: 20px 40px;
+  padding: 1.25em 2.5em;
 }
 
 .doge-card > .message {
-  margin: 0 auto 20px;
+  margin: 0 auto 1.25rem;
 }
 
 .doge-card.hidden-cropper {
@@ -31,15 +31,15 @@
 }
 
 /* Portrait tablet to landscape and desktop */
-@media (min-width: 769px) and (max-width: 979px) {
+@media (min-width: 48.0625rem) and (max-width: 61.1875rem) {
   .doge-card {
     min-width: 70%;
   }
 }
 
 /* Landscape phone to portrait tablet */
-@media (max-width: 768px) {
+@media (max-width: 48rem) {
   .doge-card {
-    padding: 20px 30px;
+    padding: 1.25em 1.875em;
   }
 }

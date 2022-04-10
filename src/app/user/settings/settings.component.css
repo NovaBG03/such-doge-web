@@ -26,14 +26,14 @@
 
 /* Responsive */
 /* Large desktop */
-@media (min-width: 1200px) {
+@media (min-width: 75rem) {
   .settings {
     margin: 0 5%;
   }
 }
 
 /* Landscape phone to portrait tablet */
-@media (max-width: 768px) {
+@media (max-width: 48rem) {
   .content-grid {
     grid-template-columns: 1fr;
     gap: 2rem 0;
@@ -52,7 +52,7 @@
 }
 
 /* Landscape phones and down */
-@media (max-width: 480px) {
+@media (max-width: 30rem) {
   .content-grid>* {
     width: 95%;
   }

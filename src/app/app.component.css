@@ -1,12 +1,12 @@
 .main-container {
-  padding-top: 20px;
-  padding-bottom: 60px;
-  margin-top: 70px;
+  padding-top: 1.25em;
+  padding-bottom: 5em;
+  margin-top: 4.375rem;
 }
 
 /* Landscape phone to portrait tablet */
-@media (max-width: 768px) {
+@media (max-width: 48rem) {
   .main-container {
-    padding-bottom: 120px;
+    padding-bottom: 7.5em;
   }
 }

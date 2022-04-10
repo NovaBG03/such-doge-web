@@ -8,25 +8,25 @@
   align-items: center;
   background: var(--color-main);
   z-index: 10;
-  border-bottom: 2px solid var(--color-background);
+  border-bottom: 0.125em solid var(--color-background);
 }
 
 .logo {
-  min-width: 130px;
+  min-width: 8.125rem;
   overflow: hidden;
-  height: 30px;
+  height: 1.875rem;
   align-items: center;
   cursor: pointer;
 }
 
 .logo img {
-  height: 30px;
+  height: 1.875rem;
 }
 
 .logo-text {
-  font-size: 20px;
-  padding-left: 5px;
-  height: 30px;
+  font-size: 1.25rem;
+  padding-left: 0.25em;
+  height: 1.875rem;
   display: inline-block;
   vertical-align: middle;
   transform: translateY(-0.5em);
@@ -73,9 +73,9 @@ ul ul li {
 
 .icon {
   transform: translateY(0.4rem);
-  padding-right: 5px;
-  width: 24px;
-  height: 24px;
+  padding-right: 0.3125em;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .link.active .icon-fill {
@@ -93,22 +93,22 @@ ul ul li {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
-  min-width: 170px;
+  min-width: 10.625rem;
 }
 
 .profile-picture {
-  height: 40px;
+  height: 2.5rem;
   border-radius: 100%;
   aspect-ratio: 1 / 1;
-  margin-left: 5px;
+  margin-left: 0.3125rem;
   cursor: pointer;
   object-fit: cover;
 }
 
 .arrow-down-icon {
-  width: 32px;
-  height: 32px;
-  margin-left: 5px;
+  width: 2rem;
+  height: 2rem;
+  margin-left: 0.3125rem;
   cursor: pointer;
 }
 
@@ -134,7 +134,7 @@ ul ul li {
 }
 
 .authentication .btn-outline {
-  padding: 5px 10px;
+  padding: 0.3125em 0.625em;
 }
 
 .btn-link {
@@ -146,16 +146,8 @@ ul ul li {
   color: var(--color-text-unselected);
 }
 
-/* Large desktop */
-@media (min-width: 1200px) {
-}
-
-/* Portrait tablet to landscape and desktop */
-@media (min-width: 768px) and (max-width: 979px) {
-}
-
 /* Landscape phone to portrait tablet */
-@media (max-width: 768px) {
+@media (max-width: 48rem) {
   .user-info {
     justify-content: flex-end;
   }
@@ -174,10 +166,10 @@ ul ul li {
     bottom: 0;
     width: 100vw;
     height: var(--bottom-navigation-height);
-    padding-bottom: 2px;
+    padding-bottom: 0.125em;
     background: var(--color-main);
-    transform: translateY(2px);
-    border-top: 2px solid var(--color-background);
+    transform: translateY(0.125em);
+    border-top: 0.125em solid var(--color-background);
     z-index: 10;
   }
 
@@ -191,8 +183,8 @@ ul ul li {
 
   .link {
     margin: 0;
-    width: 58px;
-    height: 42px;
+    width: 3.625rem;
+    height: 2.625rem;
   }
 
   .authentication .link {
@@ -207,21 +199,17 @@ ul ul li {
   .icon {
     display: block;
     margin: 0 auto;
-    width: 32px;
-    height: 32px;
-    transform: translate(3px, 3px);
+    width: 2rem;
+    height: 2rem;
+    transform: translate(0.1875rem, 0.1875rem);
   }
 
   .link-text {
-    font-size: 12px;
+    font-size: 0.75rem;
     display: block;
-    margin: 2px auto 0;
+    margin: 0.125rem auto 0;
     text-align: center;
     height: 1rem;
     overflow: hidden;
   }
-}
-
-/* Landscape phones and down */
-@media (max-width: 480px) {
 }
