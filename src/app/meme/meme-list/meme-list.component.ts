@@ -6,6 +6,7 @@ import {map, switchMap, tap} from "rxjs/operators";
 import {environment} from "../../../environments/environment";
 import {Subscription} from "rxjs";
 import {AuthService} from "../../auth/auth.service";
+import {NgxMasonryOptions} from "ngx-masonry/lib/ngx-masonry-options";
 
 @Component({
   selector: 'app-meme-list',
@@ -40,6 +41,12 @@ export class MemeListComponent implements OnInit, OnDestroy {
   isPending = false;
   approvedCheckboxValue = false;
   pendingCheckboxValue = false;
+
+  masonryOptions: NgxMasonryOptions = {
+    gutter: 10,
+    animations: {},
+    fitWidth: true
+  };
 
   private loadMemesSub!: Subscription;
 

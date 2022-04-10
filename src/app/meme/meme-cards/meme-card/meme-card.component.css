@@ -6,6 +6,8 @@
   padding: 1.25rem;
   background-color: var(--color-main);
   box-shadow: var(--box-shadow-card);
+  width: 24em;
+  margin-bottom: 0.75rem;
 }
 
 .card-header {
@@ -56,7 +58,6 @@
 .meme {
   object-fit: cover;
   margin: 20px 0;
-  /*aspect-ratio: 25 / 18;*/
   border-radius: 0.75rem;
   outline: 0.125rem solid var(--color-text-unselected);
   cursor: pointer;
@@ -70,3 +71,30 @@
   align-items: center;
   gap: 0.6rem;
 }
+
+/* Responsive */
+/* Large desktop */
+@media (min-width: 1200px) {
+}
+
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 769px) and (max-width: 979px) {
+  .card {
+    width: 18.125em;
+  }
+}
+
+/* Landscape phone to portrait tablet */
+@media (max-width: 768px) {
+  .card {
+    width: 85vw;
+  }
+}
+
+/* Landscape phones and down */
+@media (max-width: 480px) {
+  .card {
+    width: 95vw;
+  }
+}
+

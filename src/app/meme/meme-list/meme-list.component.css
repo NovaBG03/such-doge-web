@@ -1,3 +1,11 @@
+.meme-list {
+  margin: 0.625rem auto 0;
+}
+
+.meme-masonry {
+  margin: 0 auto;
+}
+
 .not-found-center {
   font-size: 24px;
   font-weight: var(--weight-medium);

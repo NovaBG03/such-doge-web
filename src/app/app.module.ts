@@ -49,6 +49,8 @@ import { ProfileAchievementsComponent } from './user/profile/achievements/profil
 import { AlertPanelComponent } from './util/alert/alert-panel/alert-panel.component';
 import { MemeOrderFilterComponent } from './meme/meme-list/meme-order-filter/meme-order-filter.component';
 import { TopComponent } from './top/top.component';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {NgxMasonryModule} from "ngx-masonry";
 
 @NgModule({
   declarations: [
@@ -89,9 +91,11 @@ import { TopComponent } from './top/top.component';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     ReactiveFormsModule,
     ImageCropperModule,
+    NgxMasonryModule,
     AppRoutingModule,
     FormsModule
   ],

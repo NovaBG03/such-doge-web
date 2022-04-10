@@ -510,16 +510,6 @@ form .hint {
   z-index: 0 !important;
 }
 
-
-/* Meme Grid*/
-.meme-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-  grid-gap: 1.5rem 2rem;
-  margin-top: 10px;
-}
-
-
 /* Responsive */
 /* Large desktop */
 @media (min-width: 1200px) {
