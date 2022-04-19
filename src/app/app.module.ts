@@ -126,7 +126,7 @@ export class AppModule {
 }
 
 function validateDomain() {
-  if (environment.production && location.hostname !== environment.domain) {
-    window.location.href = location.protocol + "//" + environment.domain + location.pathname;
+  if (environment.production && location.hostname !== environment.suchDogeDomain) {
+    window.location.href = location.protocol + "//" + environment.suchDogeDomain + location.pathname;
   }
 }

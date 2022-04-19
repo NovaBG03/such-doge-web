@@ -29,7 +29,7 @@ export class AuthService {
   }
 
   register(username: string, email: string, password: string): Observable<any> {
-    const url = `${environment.suchDogeApi}/register`;
+    const url = `${environment.suchDogeApiUrl}/api/v1/register`;
     const body = {username, email, password};
     return this.http.post(url, body, {observe: "response"})
       .pipe(
@@ -57,26 +57,19 @@ export class AuthService {
   }
 
   activate(token: string): Observable<any> {
-    const url = `${environment.suchDogeApi}/activate/${token}`;
+    const url = `${environment.suchDogeApiUrl}/api/v1/activate/${token}`;
     const body = {};
     return this.http.post(url, body, {observe: "response"})
       .pipe(
-        catchError(err => {
+        catchError(() => {
           let message = 'Invalid or expired token!';
-
-          // switch (err.error.message) {
-          //   case 'ERROR':
-          //     message = 'mess';
-          //     break;
-          // }
-
           return throwError(message);
         })
       );
   }
 
   requestActivationLink(): Observable<number> {
-    const url = `${environment.suchDogeApi}/requestActivation`;
+    const url = `${environment.suchDogeApiUrl}/api/v1/requestActivation`;
     const body = {};
     return this.http.post<{ secondsTillNextRequest: number }>(url, body)
       .pipe(
@@ -96,7 +89,7 @@ export class AuthService {
   }
 
   refreshAccess(refreshToken: string): Observable<DogeUser> {
-    const url = `${environment.suchDogeApi}/refresh/${refreshToken}`;
+    const url = `${environment.suchDogeApiUrl}/api/v1/refresh/${refreshToken}`;
     const body = {};
     return this.http.post(url, body, {observe: "response"}).pipe(
       map(resp => {
@@ -126,7 +119,7 @@ export class AuthService {
   }
 
   login(username: string, password: string): Observable<DogeUser> {
-    const url = `${environment.suchDogeApi}/login`;
+    const url = `${environment.suchDogeApiUrl}/login`;
     const body = {username, password};
 
     return this.http.post(url, body, {observe: "response"})
@@ -191,7 +184,7 @@ export class AuthService {
     this.refreshAccess(refreshToken)
       .subscribe(
         () => this.autoLoginFinished.next(true),
-        err => this.autoLoginFinished.next(true));
+        () => this.autoLoginFinished.next(true));
   }
 
   private autoLogout(user: DogeUser): void {

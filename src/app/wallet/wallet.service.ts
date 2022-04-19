@@ -47,7 +47,7 @@ export class WalletService {
 
   updateBalance(): void {
     this.scheduleBalanceCheck(this.timeoutMinutes);
-    const url = `${environment.suchDogeApi}/wallet`;
+    const url = `${environment.suchDogeApiUrl}/api/v1/wallet`;
     this.http.get<BalanceDto>(url)
       .pipe(
         map(dto => WalletService.balanceDtoToBalance(dto))
@@ -58,7 +58,7 @@ export class WalletService {
   }
 
   getTransactionRequirements(): Observable<TransactionRequirements> {
-    const url = `${environment.suchDogeApi}/wallet/transaction/requirements`;
+    const url = `${environment.suchDogeApiUrl}/api/v1/wallet/transaction/requirements`;
     return this.http.get<TransactionRequirementsDto>(url)
       .pipe(
         map(dto => WalletService.transactionRequirementsDtoToTransactionRequirements(dto))
@@ -67,7 +67,7 @@ export class WalletService {
 
   estimateTransactionFee(receiverUsername: string, transaction: Transaction): Observable<TransactionFee> {
     const params = new HttpParams().append('receiverUsername', receiverUsername);
-    const url = `${environment.suchDogeApi}/wallet/transaction/estimatedFee`;
+    const url = `${environment.suchDogeApiUrl}/api/v1/wallet/transaction/estimatedFee`;
     return this.http.post<TransactionFeeDto>(url, transaction, {params})
       .pipe(
         map(dto => WalletService.transactionFeeDtoToTransactionFee(dto)),
@@ -88,7 +88,7 @@ export class WalletService {
 
   summarizeDonation(memeId: number, transaction: Transaction): Observable<SummarizedTransaction> {
     const params = new HttpParams().append('memeId', memeId);
-    const url = `${environment.suchDogeApi}/wallet/transaction/summarized`;
+    const url = `${environment.suchDogeApiUrl}/api/v1/wallet/transaction/summarized`;
     return this.http.post<SummarizedTransactionDto>(url, transaction, {params})
       .pipe(
         map(dto => WalletService.summarizedTransactionDtoToSummarizedTransaction(dto)),
@@ -112,7 +112,7 @@ export class WalletService {
 
   donate(memeId: number, transaction: Transaction): Observable<SubmittedTransaction> {
     const params = new HttpParams().append('memeId', memeId);
-    const url = `${environment.suchDogeApi}/wallet/transaction/donation`;
+    const url = `${environment.suchDogeApiUrl}/api/v1/wallet/transaction/donation`;
     return this.http.post<SubmittedTransactionDto>(url, transaction, {params})
       .pipe(
         tap(() => this.updateBalance()),

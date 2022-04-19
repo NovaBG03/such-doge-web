@@ -10,8 +10,7 @@ import {
   ChangePasswordDto,
   UserAchievementsDto,
   UserInfoDto,
-  UserInfoPatchResponseDto,
-  UserInfoUpdateDto
+  ChangeEmailDto
 } from "./model/user.dto";
 
 @Injectable({providedIn: 'root'})
@@ -26,7 +25,7 @@ export class UserService {
       return throwError("Invalid username");
     }
 
-    const url = `${environment.suchDogeApi}/achievements/${username}`;
+    const url = `${environment.suchDogeApiUrl}/api/v1/achievements/${username}`;
     return this.http.get<UserAchievementsDto>(url)
       .pipe(
         map(dto => UserService.userAchievementsDtoToUserAchievements(dto)),
@@ -34,33 +33,35 @@ export class UserService {
   }
 
   getUserInfo(): Observable<UserInfo> {
-    const url = `${environment.suchDogeApi}/me`;
+    const url = `${environment.suchDogeApiUrl}/api/v1/me`;
     return this.http.get<UserInfoDto>(url)
       .pipe(
         map(userInfoDto => this.userInfoDtoToUserInfo(userInfoDto)),
       );
   }
 
-  updateUserInfo(userInfo: UserInfoUpdateDto): Observable<{ userInfo: UserInfo, errors: string[] }> {
-    const url = `${environment.suchDogeApi}/me`;
-    return this.http.patch<UserInfoPatchResponseDto>(url, userInfo)
+  changeEmail(emailDto: ChangeEmailDto): Observable<any> {
+    const url = `${environment.suchDogeApiUrl}/api/v1/me/email`;
+    return this.http.post(url, emailDto)
       .pipe(
-        map(userInfoResponseDto => {
-          return {
-            userInfo: this.userInfoDtoToUserInfo(userInfoResponseDto.userInfo),
-            errors: userInfoResponseDto.errMessages.map(err =>
-              UserService.mapUpdateProfileErrorMessage(err, userInfo))
-          }
-        }),
         catchError(err => {
-          const message = UserService.mapUpdateProfileErrorMessage(err.error.message, userInfo);
+          let message = 'Something went wrong!';
+          switch (err.error.message) {
+            case 'DOGE_USER_EMAIL_EXISTS':
+              message = `There is already user with email ${emailDto.email}`;
+              break;
+            case 'DOGE_USER_EMAIL_INVALID':
+              message = `Invalid email ${emailDto.email}`;
+              break;
+          }
+
           return throwError(message);
         })
       );
   }
 
   changePassword(passwords: ChangePasswordDto): Observable<any> {
-    const url = `${environment.suchDogeApi}/me/password`
+    const url = `${environment.suchDogeApiUrl}/api/v1/me/password`
     return this.http.post(url, passwords, {observe: 'response'})
       .pipe(
         catchError(err => {
@@ -83,7 +84,7 @@ export class UserService {
   }
 
   updateProfileImage(image: Blob): Observable<any> {
-    const url = `${environment.suchDogeApi}/me/image`
+    const url = `${environment.suchDogeApiUrl}/api/v1/me/image`
     const formData = new FormData();
     formData.append('image', image);
 
@@ -101,19 +102,6 @@ export class UserService {
       );
   }
 
-  private static mapUpdateProfileErrorMessage(error: String, userInfo: UserInfoUpdateDto): string {
-    let message = 'Something went wrong!';
-    switch (error) {
-      case 'DOGE_USER_EMAIL_EXISTS':
-        message = `There is already user with email ${userInfo.email}`;
-        break;
-      case 'DOGE_USER_EMAIL_INVALID':
-        message = `Invalid email ${userInfo.email}`;
-        break;
-    }
-    return message;
-  }
-
   private userInfoDtoToUserInfo(dto: UserInfoDto): UserInfo {
     return new UserInfo(
       dto.username,
@@ -125,7 +113,7 @@ export class UserService {
   }
 
   getProfilePicUrl(username: string): string {
-    return `${environment.imageUrlPrefix}/user/${username}.png` + this.postFix;
+    return `${environment.suchDogeCdnUrl}/user/${username}.png` + this.postFix;
   }
 
   resetProfileImageCache(): void {

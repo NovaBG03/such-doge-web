@@ -17,9 +17,8 @@ export interface UserInfoPatchResponseDto {
   errMessages: string[]
 }
 
-export interface UserInfoUpdateDto {
-  email?: string,
-  publicKey?: string,
+export interface ChangeEmailDto {
+  email: string,
 }
 
 export interface UserAchievementsDto {

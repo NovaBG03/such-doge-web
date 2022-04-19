@@ -82,25 +82,19 @@ export class SettingsFormComponent implements OnInit {
       return;
     }
 
-    this.userService.updateUserInfo({
-      email: this.isEmailChanged ? this.email.value : null,
-      publicKey: this.isPublicKeyChanged ? this.publicKey.value : null
-    }).pipe(
-      tap(() => {
-        if (this.isEmailChanged) {
-          this.authService.refresh();
-        }
-      })
-    ).subscribe(
-      response => {
-        this.userInfo = response.userInfo;
-        if (response.errors && response.errors.length > 0) {
-          this.alertService.showErrorAlert(response.errors[0]);
-          return;
-        }
+    this.userService.changeEmail({email: this.email.value})
+      .pipe(
+        tap(() => {
+          if (this.isEmailChanged) {
+            this.authService.refresh();
+          }
+        })
+      ).subscribe(
+      () => {
+        this.userInfo.email = this.email.value;
         this.resetUserInfoForm();
         this.alertService.showSuccessAlert(
-          'Your profile info has been <span class="success-colored-text">updated successfully</span>',
+          'Your email has been <span class="success-colored-text">updated successfully</span>',
           'Click below to continue');
       },
       error => this.alertService.showErrorAlert(error)

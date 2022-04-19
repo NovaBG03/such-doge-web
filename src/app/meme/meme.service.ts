@@ -13,7 +13,7 @@ export class MemeService {
   }
 
   getMemes(page: number, size: number, options?: MemeFilter): Observable<MemePage> {
-    const url = `${environment.suchDogeApi}/meme`;
+    const url = `${environment.suchDogeApiUrl}/api/v1/meme`;
     const params = {page, size, ...options};
     return this.http.get<MemePageResponseDto>(url, {params})
       .pipe(
@@ -27,7 +27,7 @@ export class MemeService {
   }
 
   postMeme(image: Blob, title: string, description: string): Observable<any> {
-    const url = `${environment.suchDogeApi}/meme`;
+    const url = `${environment.suchDogeApiUrl}/api/v1/meme`;
     const formData = new FormData();
     formData.append('image', image);
     formData.append('title', title);
@@ -50,7 +50,7 @@ export class MemeService {
   }
 
   approveMeme(memeId: number): Observable<any> {
-    const url = `${environment.suchDogeApi}/meme/approve/${memeId}`
+    const url = `${environment.suchDogeApiUrl}/api/v1/meme/approve/${memeId}`
     return this.http.post(url, {}, {observe: 'response'})
       .pipe(
         catchError(err => {
@@ -71,7 +71,7 @@ export class MemeService {
   }
 
   rejectMeme(memeId: number): Observable<any> {
-    const url = `${environment.suchDogeApi}/meme/reject/${memeId}`;
+    const url = `${environment.suchDogeApiUrl}/api/v1/meme/reject/${memeId}`;
     return this.http.delete(url, {observe: 'response'})
       .pipe(
         catchError(err => {
@@ -93,7 +93,7 @@ export class MemeService {
 
 
   deleteMeme(memeId: number): Observable<any> {
-    const url = `${environment.suchDogeApi}/meme/${memeId}`;
+    const url = `${environment.suchDogeApiUrl}/api/v1/meme/${memeId}`;
     return this.http.delete(url, {observe: 'response'})
       .pipe(
         catchError(err => {
@@ -127,7 +127,7 @@ export class MemeService {
   }
 
   private createImageUrl(imageKey: string) {
-    const objectUrl = `${environment.imageUrlPrefix}/meme/${imageKey}`;
+    const objectUrl = `${environment.suchDogeCdnUrl}/meme/${imageKey}`;
     return this.sanitizer.bypassSecurityTrustUrl(objectUrl);
   }
 }

@@ -136,7 +136,7 @@ export class NotificationService implements OnDestroy {
   }
 
   deleteNotificationsFromDb(...ids: number[]) {
-    const url = `${environment.suchDogeApi}/notification`
+    const url = `${environment.suchDogeApiUrl}/api/v1/notification`
     const options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -150,7 +150,7 @@ export class NotificationService implements OnDestroy {
   }
 
   private fetchNotifications(): void {
-    const url = `${environment.suchDogeApi}/notification`
+    const url = `${environment.suchDogeApiUrl}/api/v1/notification`
     this.http.get<NotificationDtoList>(url)
       .pipe(
         map(dtoList => dtoList.notifications.map(dto =>

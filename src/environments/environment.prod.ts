@@ -1,8 +1,9 @@
 export const environment = {
   production: true,
-  domain: "suchdoge.xyz",
+  suchDogeDomain: "suchdoge.xyz",
   suchDogeApiDomain: "api.suchdoge.xyz",
-  suchDogeApi: "https://api.suchdoge.xyz",
+  suchDogeApiUrl: "https://api.suchdoge.xyz",
+  suchDogeCdnUrl: "https://suchdoge-storage-dev.s3.amazonaws.com",
   authPrefix: "Bearer ",
   authHeader: "Authorization",
   authTokenKey: "dogeAuthToken",
@@ -18,7 +19,6 @@ export const environment = {
   minPasswordLength: 6,
   maxPasswordLength: 50,
   newRequestDateKey: "dogeNewRequestDateKey",
-  imageUrlPrefix: "https://suchdoge-storage-dev.s3.amazonaws.com",
   chainSoUrlPrefix: "https://chain.so/address",
   qrGeneratorUrlPrefix: "https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl="
 };
