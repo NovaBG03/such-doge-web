@@ -112,6 +112,7 @@ export class DonationComponent implements OnInit, OnDestroy {
             message: `Successfully donated ${this.amountControl.value} ${submittedTransaction.network} to ${this.meme.publisherUsername}.`
           })
           this.close.emit();
+          this.meme.donations += transaction.amount;
           this.isLoading = false;
         },
         error: err => {

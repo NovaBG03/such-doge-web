@@ -2,6 +2,11 @@ import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {AuthService} from "./auth/auth.service";
 import {ThemeService} from "./util/theme.service";
 import {RxStompService} from "@stomp/ng2-stompjs";
+import {NotificationService} from "./util/notification/notification.service";
+import {
+  InfoNotificationComponent
+} from "./util/notification/notification-components/info-notification/info-notification.component";
+import {NotificationCategory} from "./util/notification/model/notification.model";
 
 @Component({
   selector: 'app-root',

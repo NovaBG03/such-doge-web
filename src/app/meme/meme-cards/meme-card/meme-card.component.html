@@ -6,7 +6,7 @@
          [routerLink]="'/profile/' + meme.publisherUsername">
     <div class="header-content">
       <div class="name" [routerLink]="'/profile/' + meme.publisherUsername">{{ meme.publisherUsername }}</div>
-      <div class="description" *ngIf="meme.isApproved || meme.isApproved == undefined">{{ meme.donations }} DOGE received</div>
+      <div class="description" *ngIf="meme.isApproved || meme.isApproved == undefined">{{ meme.donations | number: '0.0-4' }} DOGE received</div>
       <div *ngIf="isModeratorMode" class="description"><span class="name">Title: </span> {{ meme.title }}</div>
       <div class="description">{{ meme.publishedOn + 'Z' | date:'short' }}</div>
     </div>
